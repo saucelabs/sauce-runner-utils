@@ -1,5 +1,5 @@
 {
-  "name": "sauce-runner-utils",
+  "name": "sauce-testrunner-utils",
   "version": "0.0.2",
   "description": "Sauce Labs test runner helper libary.",
   "author": "devx <dev@saucelabs.com>",
