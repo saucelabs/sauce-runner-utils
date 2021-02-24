@@ -11,4 +11,5 @@ sauceRunnerUtils.
 
 ## Publishing
 * Log in to NPM with internal release bot
-* Update the "tag" version
+* Run `npm run release`
+* Follow the interactive prompts (try to respect semantic versioning rules)
