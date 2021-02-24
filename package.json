@@ -33,6 +33,9 @@
     "mocha": "^8.2.1",
     "typescript": "^3.9.7"
   },
+  "files": [
+    "src"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
