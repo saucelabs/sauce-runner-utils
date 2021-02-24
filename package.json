@@ -16,6 +16,7 @@
     "npm": "^6.14.9"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@types/chai": "^4.2.12",
     "@types/jest": "^26.0.19",
     "@types/jquery": "^3.5.5",
