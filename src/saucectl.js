@@ -1,25 +1,21 @@
 const fs = require('fs');
 
-// Store file containing job-details url.
-// Path has to match the value of the Dockerfile label com.saucelabs.job-info !
-const OUTPUT_FILE_PATH = '/tmp/output.json';
-
-function exportValue (payload) {
-  fs.writeFileSync(OUTPUT_FILE_PATH, JSON.stringify(payload));
+function exportValue (filepath, payload) {
+  fs.writeFileSync(filepath, JSON.stringify(payload));
 }
 
-function updateExportedValue (data) {
+function updateExportedValue (filepath, data) {
   let fileData;
   try {
-    const st = fs.statSync(OUTPUT_FILE_PATH);
+    const st = fs.statSync(filepath);
     if (st.isFile()) {
-      fileData = JSON.parse(fs.readFileSync(OUTPUT_FILE_PATH)) || {};
+      fileData = JSON.parse(fs.readFileSync(filepath)) || {};
     }
   } catch (e) {}
   fileData = { ...fileData, ...data };
-  exportValue(fileData);
+  exportValue(filepath, fileData);
 }
 
 module.exports = {
-  OUTPUT_FILE_PATH, exportValue, updateExportedValue,
+  exportValue, updateExportedValue,
 };
