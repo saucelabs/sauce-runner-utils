@@ -1,9 +1,5 @@
 const fs = require('fs');
 
-// Store file containing job-details url.
-// Path has to match the value of the Dockerfile label com.saucelabs.job-info !
-const DEFAULT_OUTPUT_FILEPATH = '/tmp/output.json';
-
 function exportValue (filepath, payload) {
   fs.writeFileSync(filepath, JSON.stringify(payload));
 }
@@ -21,5 +17,5 @@ function updateExportedValue (filepath, data) {
 }
 
 module.exports = {
-  DEFAULT_OUTPUT_FILEPATH, exportValue, updateExportedValue,
+  exportValue, updateExportedValue,
 };
