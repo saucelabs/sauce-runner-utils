@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Store file containing job-details url.
-// Path is similar to com.saucelabs.job-info LABEL in Dockerfile.
+// Path has to match the value of the Dockerfile label com.saucelabs.job-info !
 const OUTPUT_FILE_PATH = '/tmp/output.json';
 
 function exportValue (payload) {
