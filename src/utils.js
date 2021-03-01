@@ -55,6 +55,12 @@ async function setUpNpmConfig (registry) {
 async function installNpmDependencies (packageList) {
   console.log(`\nInstalling packages: ${packageList.join(' ')}`);
   await npm.install(...packageList);
+  console.log(`\nRebuilding packages:`);
+  await npm.rebuild();
+}
+
+async function rebuildNpmDependencies () {
+  console.log(`\nRebuilding packages:`);
   await npm.rebuild();
 }
 
@@ -73,6 +79,27 @@ async function prepareNpmEnv (runCfg) {
   await setUpNpmConfig(registry);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
+
+  // Check if node_modules already exists
+  let npmModuleExists = false;
+  try {
+    const st = fs.statSync('./node_modules');
+    if (!st || !st.isDirectory()) {
+      npmModuleExists = true;
+    }
+  } catch (e) {
+    console.debug('node_modules folder does not does exists');
+  }
+
+  // rebuild npm packages if node_modules provided
+  if (npmModuleExists) {
+    npmMetrics.data.rebuild = {};
+    startTime = (new Date()).getTime();
+    rebuildNpmDependencies();
+    endTime = (new Date()).getTime();
+    npmMetrics.data.rebuild = {duration: endTime - startTime};
+    return npmMetrics;
+  }
 
   // install npm packages
   npmMetrics.data.install = {};
@@ -157,6 +184,6 @@ function renameAsset (specFile, oldFilePath, resultsFolder) {
 
 module.exports = {
   getAbsolutePath, shouldRecordVideo, loadRunConfig,
-  prepareNpmEnv, setUpNpmConfig, installNpmDependencies,
+  prepareNpmEnv, setUpNpmConfig, installNpmDependencies, rebuildNpmDependencies,
   getArgs, getEnv, getSuite, renameScreenshot, renameAsset
 };
