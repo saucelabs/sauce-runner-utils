@@ -64,6 +64,33 @@ async function rebuildNpmDependencies () {
   await npm.rebuild();
 }
 
+// Check if node_modules already exists in project
+function findNodeModulesParentFolder () {
+  // SAUCE_VM:
+  //   Check only for folder presence as it will be already in __project__
+  if (process.env.SAUCE_VM) {
+    try {
+      const st = fs.statSync('node_modules');
+      if (!st || !st.isDirectory()) {
+        return '.';
+      }
+    } catch (e) {}
+    return;
+  }
+  // Docker:
+  //   Check that project_folder is different from HOME. Otherwise, it
+  //   will be always rebuilt as node_modules from runner is HOME.
+  if (process.env.SAUCE_PROJECT_DIR && process.env.SAUCE_PROJECT_DIR !== process.env.HOME) {
+    try {
+      const st = fs.statSync(path.join(process.env.SAUCE_PROJECT_DIR, 'node_modules'));
+      if (!st || !st.isDirectory()) {
+        return process.env.SAUCE_PROJECT_DIR;
+      }
+    } catch (e) {}
+  }
+  return;
+}
+
 async function prepareNpmEnv (runCfg) {
   const npmMetrics = {
     name: 'npm_metrics.json', data: {}
@@ -80,19 +107,11 @@ async function prepareNpmEnv (runCfg) {
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
-  // Check if node_modules already exists
-  let npmModuleExists = false;
-  try {
-    const st = fs.statSync('./node_modules');
-    if (!st || !st.isDirectory()) {
-      npmModuleExists = true;
-    }
-  } catch (e) {
-    console.debug('node_modules folder does not does exists');
-  }
+  let nodeModulesFolderParent = findNodeModulesParentFolder();
 
   // rebuild npm packages if node_modules provided
-  if (npmModuleExists) {
+  if (nodeModulesFolderParent) {
+    console.log(`Detected node_modules in ${nodeModulesFolderParent}`);
     npmMetrics.data.rebuild = {};
     startTime = (new Date()).getTime();
     rebuildNpmDependencies();
