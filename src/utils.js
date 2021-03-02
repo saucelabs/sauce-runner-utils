@@ -59,9 +59,18 @@ async function installNpmDependencies (packageList) {
   await npm.rebuild();
 }
 
-async function rebuildNpmDependencies () {
+async function rebuildNpmDependencies (path) {
+  let previousCwd = process.cwd();
+  if (path) {
+    console.log(`Changing directory to ${path}`);
+    process.chdir(path);
+  }
   console.log(`\nRebuilding packages:`);
   await npm.rebuild();
+  if (path) {
+    console.log(`Changing directory to ${previousCwd}`);
+    process.chdir(previousCwd);
+  }
 }
 
 // Check if node_modules already exists in project
@@ -114,7 +123,7 @@ async function prepareNpmEnv (runCfg) {
     console.log(`Detected node_modules in ${nodeModulesFolderParent}`);
     npmMetrics.data.rebuild = {};
     startTime = (new Date()).getTime();
-    rebuildNpmDependencies();
+    rebuildNpmDependencies(nodeModulesFolderParent);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
     return npmMetrics;
