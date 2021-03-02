@@ -80,7 +80,7 @@ function findNodeModulesParentFolder () {
   if (process.env.SAUCE_VM) {
     try {
       const st = fs.statSync('node_modules');
-      if (!st || !st.isDirectory()) {
+      if (st && st.isDirectory()) {
         return '.';
       }
     } catch (e) {}
@@ -92,7 +92,7 @@ function findNodeModulesParentFolder () {
   if (process.env.SAUCE_PROJECT_DIR && process.env.SAUCE_PROJECT_DIR !== process.env.HOME) {
     try {
       const st = fs.statSync(path.join(process.env.SAUCE_PROJECT_DIR, 'node_modules'));
-      if (!st || !st.isDirectory()) {
+      if (st || st.isDirectory()) {
         return process.env.SAUCE_PROJECT_DIR;
       }
     } catch (e) {}
