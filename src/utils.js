@@ -60,16 +60,12 @@ async function installNpmDependencies (packageList) {
 }
 
 async function rebuildNpmDependencies (path) {
-  let previousCwd = process.cwd();
-  if (path) {
-    console.log(`Changing directory to ${path}`);
-    process.chdir(path);
-  }
   console.log(`\nRebuilding packages:`);
-  await npm.rebuild();
   if (path) {
-    console.log(`Changing directory to ${previousCwd}`);
-    process.chdir(previousCwd);
+    console.log(`Rebuilding in ${path}`);
+    await npm.rebuild('--prefix', path);
+  } else {
+    await npm.rebuild();
   }
 }
 
@@ -123,7 +119,7 @@ async function prepareNpmEnv (runCfg) {
     console.log(`Detected node_modules in ${nodeModulesFolderParent}`);
     npmMetrics.data.rebuild = {};
     startTime = (new Date()).getTime();
-    rebuildNpmDependencies(nodeModulesFolderParent);
+    await rebuildNpmDependencies(nodeModulesFolderParent);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
     return npmMetrics;
