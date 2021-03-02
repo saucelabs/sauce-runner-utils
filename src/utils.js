@@ -55,7 +55,6 @@ async function setUpNpmConfig (registry) {
 async function installNpmDependencies (packageList) {
   console.log(`\nInstalling packages: ${packageList.join(' ')}`);
   await npm.install(...packageList);
-  console.log(`\nRebuilding packages:`);
   await npm.rebuild();
 }
 
@@ -68,31 +67,26 @@ async function rebuildNpmDependencies (path) {
   }
 }
 
-// Check if node_modules already exists in project
-function findNodeModulesParentFolder () {
-  // SAUCE_VM:
-  //   Check only for folder presence as it will be already in __project__
-  if (process.env.SAUCE_VM) {
-    try {
-      const st = fs.statSync('node_modules');
-      if (st && st.isDirectory()) {
-        return '.';
-      }
-    } catch (e) {}
-    return;
+// Check if node_modules already exists in provided project
+function hasNodeModulesFolder (runCfg) {
+  const projectFolder = path.dirname(runCfg.path);
+
+  // Docker: if sauce-runner.json is in home, node_module won't be users'
+  //         but the one of the runner => Discard it.
+  if (!process.SAUCE_VM && projectFolder === process.env.HOME) {
+    return false;
   }
-  // Docker:
-  //   Check that project_folder is different from HOME. Otherwise, it
-  //   will be always rebuilt as node_modules from runner is HOME.
-  if (process.env.SAUCE_PROJECT_DIR && process.env.SAUCE_PROJECT_DIR !== process.env.HOME) {
-    try {
-      const st = fs.statSync(path.join(process.env.SAUCE_PROJECT_DIR, 'node_modules'));
-      if (st || st.isDirectory()) {
-        return process.env.SAUCE_PROJECT_DIR;
-      }
-    } catch (e) {}
-  }
-  return;
+
+  // Assumption: sauce-runner.json is at the root level of project folder.
+  // With this location, the presence of node_modules can be checked.
+  const nodeModulePath = path.join(projectFolder, 'node_modules');
+  try {
+    const st = fs.statSync(nodeModulePath);
+    if (st && st.isDirectory()) {
+      return true;
+    }
+  } catch (e) {}
+  return false;
 }
 
 async function prepareNpmEnv (runCfg) {
@@ -111,14 +105,16 @@ async function prepareNpmEnv (runCfg) {
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
-  let nodeModulesFolderParent = findNodeModulesParentFolder();
+  let nodeModulesPresent = hasNodeModulesFolder(runCfg);
 
   // rebuild npm packages if node_modules provided
-  if (nodeModulesFolderParent) {
-    console.log(`Detected node_modules in ${nodeModulesFolderParent}`);
+  if (nodeModulesPresent) {
+    console.log(`Detected node_modules, running npm rebuilding.`);
+
+    const projectPath = path.dirname(runCfg.path);
     npmMetrics.data.rebuild = {};
     startTime = (new Date()).getTime();
-    await rebuildNpmDependencies(nodeModulesFolderParent);
+    await rebuildNpmDependencies(projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
     return npmMetrics;
