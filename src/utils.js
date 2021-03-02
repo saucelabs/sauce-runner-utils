@@ -62,7 +62,6 @@ async function installNpmDependencies (packageList) {
 async function rebuildNpmDependencies (path) {
   console.log(`\nRebuilding packages:`);
   if (path) {
-    console.log(`Rebuilding in ${path}`);
     await npm.rebuild('--prefix', path);
   } else {
     await npm.rebuild();
