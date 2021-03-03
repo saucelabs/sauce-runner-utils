@@ -55,7 +55,6 @@ async function setUpNpmConfig (registry) {
 async function installNpmDependencies (packageList) {
   console.log(`\nInstalling packages: ${packageList.join(' ')}`);
   await npm.install(...packageList);
-  await npm.rebuild();
 }
 
 async function rebuildNpmDependencies (path) {
