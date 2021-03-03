@@ -117,7 +117,6 @@ async function prepareNpmEnv (runCfg) {
     await rebuildNpmDependencies(projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
-    return npmMetrics;
   }
 
   // install npm packages
