@@ -7,6 +7,7 @@ describe('utils', function () {
   describe('.prepareNpmEnv', function () {
     let backupEnv;
     const runCfg = {
+      path: '/fake/runner/path',
       npm: {
         packages: {
           'left-pad': '1.3.0',

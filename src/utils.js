@@ -55,7 +55,37 @@ async function setUpNpmConfig (registry) {
 async function installNpmDependencies (packageList) {
   console.log(`\nInstalling packages: ${packageList.join(' ')}`);
   await npm.install(...packageList);
-  await npm.rebuild();
+}
+
+async function rebuildNpmDependencies (path) {
+  console.log(`\nRebuilding packages:`);
+  if (path) {
+    await npm.rebuild('--prefix', path);
+  } else {
+    await npm.rebuild();
+  }
+}
+
+// Check if node_modules already exists in provided project
+function hasNodeModulesFolder (runCfg) {
+  const projectFolder = path.dirname(runCfg.path);
+
+  // Docker: if sauce-runner.json is in home, node_module won't be users'
+  //         but the one of the runner => Discard it.
+  if (!process.SAUCE_VM && projectFolder === process.env.HOME) {
+    return false;
+  }
+
+  // Assumption: sauce-runner.json is at the root level of project folder.
+  // With this location, the presence of node_modules can be checked.
+  const nodeModulePath = path.join(projectFolder, 'node_modules');
+  try {
+    const st = fs.statSync(nodeModulePath);
+    if (st && st.isDirectory()) {
+      return true;
+    }
+  } catch (e) {}
+  return false;
 }
 
 async function prepareNpmEnv (runCfg) {
@@ -73,6 +103,20 @@ async function prepareNpmEnv (runCfg) {
   await setUpNpmConfig(registry);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
+
+  let nodeModulesPresent = hasNodeModulesFolder(runCfg);
+
+  // rebuild npm packages if node_modules provided
+  if (nodeModulesPresent) {
+    console.log(`Detected node_modules, running npm rebuilding.`);
+
+    const projectPath = path.dirname(runCfg.path);
+    npmMetrics.data.rebuild = {};
+    startTime = (new Date()).getTime();
+    await rebuildNpmDependencies(projectPath);
+    endTime = (new Date()).getTime();
+    npmMetrics.data.rebuild = {duration: endTime - startTime};
+  }
 
   // install npm packages
   npmMetrics.data.install = {};
@@ -157,6 +201,6 @@ function renameAsset (specFile, oldFilePath, resultsFolder) {
 
 module.exports = {
   getAbsolutePath, shouldRecordVideo, loadRunConfig,
-  prepareNpmEnv, setUpNpmConfig, installNpmDependencies,
+  prepareNpmEnv, setUpNpmConfig, installNpmDependencies, rebuildNpmDependencies,
   getArgs, getEnv, getSuite, renameScreenshot, renameAsset
 };
