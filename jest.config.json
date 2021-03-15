@@ -1,5 +1,13 @@
 {
     "testMatch": ["**/tests/unit/**/*.[jt]s?(x)"],
     "collectCoverageFrom": ["src/**/*.js"],
-    "collectCoverage": true
+    "collectCoverage": true,
+    "coverageThreshold": {
+        "global": {
+            "branches": 60,
+            "functions": 76,
+            "lines": 75,
+            "statements": 75
+        }
+    }
 }
