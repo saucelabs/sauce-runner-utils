@@ -10,6 +10,9 @@ sauceRunnerUtils.
 ```
 
 ## Publishing
-* Log in to NPM with internal release bot
-* Run `npm run release`
-* Follow the interactive prompts (try to respect semantic versioning rules)
+
+This package is published through a GitHub workflow. In order to trigger a new release, do the following steps:
+
+* Open the [workflow page](https://github.com/saucelabs/sauce-runner-utils/actions/workflows/release.yml)
+* Click on the `Run workflow` drop down menu
+* Enter a release type (`patch`, `minor` or `major`) - please follow [semver](https://semver.org/) semantics
