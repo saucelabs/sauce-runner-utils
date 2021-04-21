@@ -32,6 +32,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "my.registry",
       "retry": Object {
         "retries": 3,
@@ -50,6 +51,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "my.registry",
       "retry": Object {
         "retries": 3,
@@ -63,6 +65,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "npmland.io",
       "retry": Object {
         "retries": 3,
@@ -76,6 +79,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "registryland.io",
       "retry": Object {
         "retries": 3,
@@ -89,6 +93,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "registryland.io",
       "retry": Object {
         "retries": 3,
@@ -107,6 +112,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "my.registry",
       "retry": Object {
         "retries": 3,
@@ -120,6 +126,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "npmland.io",
       "retry": Object {
         "retries": 3,
@@ -138,6 +145,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "my.registry",
       "retry": Object {
         "retries": 3,
@@ -151,6 +159,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "npmland.io",
       "retry": Object {
         "retries": 3,
@@ -164,6 +173,7 @@ Array [
       "audit": false,
       "fund": false,
       "json": false,
+      "proxy": "http://http.proxy",
       "registry": "registryland.io",
       "retry": Object {
         "retries": 3,

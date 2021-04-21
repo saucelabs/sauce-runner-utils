@@ -26,6 +26,7 @@ describe('utils', function () {
       process.env = backupEnv;
     });
     it('should set right registry for npm', async function () {
+      process.env.HTTP_PROXY = 'http://http.proxy';
       await setUpNpmConfig('my.registry');
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
@@ -35,16 +36,19 @@ describe('utils', function () {
     });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
+      process.env.HTTP_PROXY = 'http://http.proxy';
       await prepareNpmEnv(runCfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
     it('should use user registry', async function () {
+      process.env.HTTP_PROXY = 'http://http.proxy';
       let cfg = _.clone(runCfg);
       cfg.npm.registry = 'registryland.io';
       await prepareNpmEnv(cfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
     it('should use default registry', async function () {
+      process.env.HTTP_PROXY = 'http://http.proxy';
       await prepareNpmEnv(runCfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
