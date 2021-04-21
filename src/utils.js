@@ -48,7 +48,8 @@ async function setUpNpmConfig (registry) {
     save: false,
     audit: false,
     rollback: false,
-    fund: false
+    fund: false,
+    proxy: process.env.HTTP_PROXY
   });
 }
 
