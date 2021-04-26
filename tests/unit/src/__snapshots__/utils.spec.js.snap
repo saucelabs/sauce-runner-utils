@@ -38,7 +38,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
 ]
@@ -57,7 +57,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -71,7 +71,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -85,7 +85,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -99,7 +99,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
 ]
@@ -118,7 +118,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -132,7 +132,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
 ]
@@ -151,7 +151,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -165,7 +165,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
   Array [
@@ -179,7 +179,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": undefined,
     },
   ],
 ]

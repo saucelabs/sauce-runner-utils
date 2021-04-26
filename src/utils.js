@@ -49,7 +49,7 @@ async function setUpNpmConfig (registry) {
     audit: false,
     rollback: false,
     fund: false,
-    strictSSL: false,
+    strictSSL: process.env.NPM_STRICT_SSL,
   });
 }
 
