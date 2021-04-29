@@ -52,6 +52,13 @@ describe('utils', function () {
       await prepareNpmEnv(runCfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
+    it('should use true as the default value for strictSSL if it\'s null in cfg', async function () {
+      let cfg = _.clone(runCfg);
+      cfg.npm.strictSSL = null;
+      cfg.npm.registry = 'test.strictSSL.null';
+      await prepareNpmEnv(runCfg);
+      expect(npm.load.mock.calls).toMatchSnapshot();
+    });
     it('should be able to set strictSSL to false', async function () {
       let cfg = _.clone(runCfg);
       cfg.npm.strictSSL = false;
