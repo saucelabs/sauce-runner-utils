@@ -41,6 +41,10 @@ function getDefaultRegistry () {
 
 async function setUpNpmConfig (registry) {
   console.log('Preparing npm environment');
+  let strictSSL = true; // strictSSL is true by default
+  if (process.env.SAUCE_NPM_STRICT_SSL) {
+    strictSSL = process.env.SAUCE_NPM_STRICT_SSL === 'true' ? true : false;
+  }
   await npm.load({
     registry,
     retry: { retries: 3 },
@@ -49,7 +53,7 @@ async function setUpNpmConfig (registry) {
     audit: false,
     rollback: false,
     fund: false,
-    strictSSL: process.env.NPM_STRICT_SSL,
+    strictSSL
   });
 }
 
