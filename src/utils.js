@@ -39,12 +39,8 @@ function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-async function setUpNpmConfig (registry) {
+async function setUpNpmConfig (registry, strictSSL) {
   console.log('Preparing npm environment');
-  let strictSSL = true; // strictSSL is true by default
-  if (process.env.SAUCE_NPM_STRICT_SSL) {
-    strictSSL = process.env.SAUCE_NPM_STRICT_SSL === 'true' ? true : false;
-  }
   await npm.load({
     registry,
     retry: { retries: 3 },
@@ -104,8 +100,12 @@ async function prepareNpmEnv (runCfg) {
   }
   // prepares npm config
   const registry = runCfg.npm.registry || getDefaultRegistry();
+  let strictSSL = true; // strictSSL is true by default
+  if (runCfg.npm.strictSSL === false) {
+    strictSSL = false;
+  }
   let startTime = (new Date()).getTime();
-  await setUpNpmConfig(registry);
+  await setUpNpmConfig(registry, strictSSL);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 

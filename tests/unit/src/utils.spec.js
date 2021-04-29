@@ -26,8 +26,7 @@ describe('utils', function () {
       process.env = backupEnv;
     });
     it('should set right registry for npm', async function () {
-      process.env.SAUCE_NPM_STRICT_SSL = false;
-      await setUpNpmConfig('my.registry');
+      await setUpNpmConfig('my.registry', true);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
     it('should call npm install', async function () {
@@ -35,21 +34,36 @@ describe('utils', function () {
       expect(npm.install.mock.calls).toMatchSnapshot();
     });
     it('should use env var for registry', async function () {
-      process.env.SAUCE_NPM_STRICT_SSL = false;
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
       await prepareNpmEnv(runCfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
     it('should use user registry', async function () {
-      process.env.SAUCE_NPM_STRICT_SSL = false;
       let cfg = _.clone(runCfg);
       cfg.npm.registry = 'registryland.io';
       await prepareNpmEnv(cfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
     it('should use default registry', async function () {
-      process.env.SAUCE_NPM_STRICT_SSL = false;
       await prepareNpmEnv(runCfg);
+      expect(npm.load.mock.calls).toMatchSnapshot();
+    });
+    it('should use true as the default value for strictSSL', async function () {
+      await prepareNpmEnv(runCfg);
+      expect(npm.load.mock.calls).toMatchSnapshot();
+    });
+    it('should be able to set strictSSL to false', async function () {
+      let cfg = _.clone(runCfg);
+      cfg.npm.strictSSL = false;
+      cfg.npm.registry = 'test.strictSSL.false';
+      await prepareNpmEnv(cfg);
+      expect(npm.load.mock.calls).toMatchSnapshot();
+    });
+    it('should be able to set strictSSL to true', async function () {
+      let cfg = _.clone(runCfg);
+      cfg.npm.strictSSL = true;
+      cfg.npm.registry = 'test.strictSSL.true';
+      await prepareNpmEnv(cfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
   });

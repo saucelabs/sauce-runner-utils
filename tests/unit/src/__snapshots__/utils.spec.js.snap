@@ -17,6 +17,198 @@ Object {
 }
 `;
 
+exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
+Array [
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "my.registry",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "npmland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "test.strictSSL.false",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": false,
+    },
+  ],
+]
+`;
+
+exports[`utils .prepareNpmEnv should be able to set strictSSL to true 1`] = `
+Array [
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "my.registry",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "npmland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "test.strictSSL.false",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": false,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "test.strictSSL.true",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+]
+`;
+
 exports[`utils .prepareNpmEnv should call npm install 1`] = `
 Array [
   Array [
@@ -38,7 +230,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": true,
     },
   ],
 ]
@@ -57,7 +249,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": true,
     },
   ],
   Array [
@@ -118,7 +310,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": true,
     },
   ],
   Array [
@@ -127,6 +319,81 @@ Array [
       "fund": false,
       "json": false,
       "registry": "npmland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+]
+`;
+
+exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
+Array [
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "my.registry",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "npmland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strictSSL": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "registry": "registryland.io",
       "retry": Object {
         "retries": 3,
       },
@@ -151,7 +418,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strictSSL": true,
     },
   ],
   Array [
