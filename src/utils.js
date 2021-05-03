@@ -49,7 +49,7 @@ async function setUpNpmConfig (registry, strictSSL) {
     audit: false,
     rollback: false,
     fund: false,
-    strictSSL
+    'strict-ssl': strictSSL
   });
 }
 

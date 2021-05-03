@@ -30,7 +30,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -44,7 +44,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -58,7 +58,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -72,7 +72,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -86,7 +86,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -100,7 +100,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -114,7 +114,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strict-ssl": false,
     },
   ],
 ]
@@ -133,7 +133,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -147,7 +147,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -161,7 +161,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -175,7 +175,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -189,7 +189,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -203,7 +203,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -217,7 +217,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": false,
+      "strict-ssl": false,
     },
   ],
   Array [
@@ -231,7 +231,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -258,7 +258,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -277,7 +277,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -291,7 +291,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -305,7 +305,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -319,7 +319,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -338,7 +338,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -352,7 +352,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -371,7 +371,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -385,7 +385,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -399,7 +399,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -413,7 +413,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -427,7 +427,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -446,7 +446,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -460,7 +460,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -474,7 +474,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -488,7 +488,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -502,7 +502,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -516,7 +516,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
@@ -535,7 +535,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -549,7 +549,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
   Array [
@@ -563,7 +563,7 @@ Array [
       },
       "rollback": false,
       "save": false,
-      "strictSSL": true,
+      "strict-ssl": true,
     },
   ],
 ]
