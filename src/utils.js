@@ -49,7 +49,8 @@ async function setUpNpmConfig (registry, strictSSL) {
     audit: false,
     rollback: false,
     fund: false,
-    'strict-ssl': strictSSL
+    'strict-ssl': strictSSL,
+    noproxy: 'registry.npmjs.org'
   });
 }
 
