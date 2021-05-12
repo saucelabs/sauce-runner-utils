@@ -73,6 +73,13 @@ describe('utils', function () {
       await prepareNpmEnv(cfg);
       expect(npm.load.mock.calls).toMatchSnapshot();
     });
+    it('should be able to set cafile', async function () {
+      let cfg = _.clone(runCfg);
+      cfg.npm.registry = 'test.cafile';
+      process.env.CA_FILE = '/fake/path';
+      await prepareNpmEnv(cfg);
+      expect(npm.load.mock.calls).toMatchSnapshot();
+    });
   });
   describe('.renameScreenshot', function () {
     it('replace path separator (backslash for Windows, forward slash for mac/linux) with __', function () {

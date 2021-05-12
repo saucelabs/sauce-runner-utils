@@ -17,12 +17,11 @@ Object {
 }
 `;
 
-exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
+exports[`utils .prepareNpmEnv should be able to set cafile 1`] = `
 Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -38,7 +37,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -54,7 +52,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -70,7 +67,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -86,7 +82,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -102,7 +97,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -118,7 +112,147 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "test.strictSSL.false",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": false,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "test.strictSSL.true",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "cafile": "/fake/path",
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "test.cafile",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+]
+`;
+
+exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
+Array [
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "my.registry",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "npmland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "registryland.io",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
+      "fund": false,
+      "json": false,
+      "noproxy": "registry.npmjs.org",
+      "registry": "test.strictSSL.null",
+      "retry": Object {
+        "retries": 3,
+      },
+      "rollback": false,
+      "save": false,
+      "strict-ssl": true,
+    },
+  ],
+  Array [
+    Object {
+      "audit": false,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -139,7 +273,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -155,7 +288,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -171,7 +303,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -187,7 +318,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -203,7 +333,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -219,7 +348,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -235,7 +363,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -251,7 +378,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -280,7 +406,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -301,7 +426,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -317,7 +441,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -333,7 +456,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -349,7 +471,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -370,7 +491,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -386,7 +506,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -407,7 +526,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -423,7 +541,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -439,7 +556,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -455,7 +571,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -471,7 +586,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -492,7 +606,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -508,7 +621,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -524,7 +636,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -540,7 +651,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -556,7 +666,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -572,7 +681,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -593,7 +701,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -609,7 +716,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
@@ -625,7 +731,6 @@ Array [
   Array [
     Object {
       "audit": false,
-      "cafile": undefined,
       "fund": false,
       "json": false,
       "noproxy": "registry.npmjs.org",
