@@ -50,7 +50,8 @@ async function setUpNpmConfig (registry, strictSSL) {
     rollback: false,
     fund: false,
     'strict-ssl': strictSSL,
-    noproxy: 'registry.npmjs.org'
+    noproxy: 'registry.npmjs.org',
+    cafile: process.env.CA_FILE || null
   });
 }
 
