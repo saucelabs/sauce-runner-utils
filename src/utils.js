@@ -41,7 +41,7 @@ function getDefaultRegistry () {
 
 async function setUpNpmConfig (registry, strictSSL) {
   console.log('Preparing npm environment');
-  let config = {
+  await npm.load({
     registry,
     retry: { retries: 3 },
     json: false,
@@ -51,12 +51,8 @@ async function setUpNpmConfig (registry, strictSSL) {
     fund: false,
     'strict-ssl': strictSSL,
     noproxy: 'registry.npmjs.org',
-  };
-  if (process.env.CA_FILE) {
-    config.cafile = process.env.CA_FILE;
-  }
-
-  await npm.load(config);
+    cafile: process.env.CA_FILE || null
+  });
 }
 
 async function installNpmDependencies (packageList) {
