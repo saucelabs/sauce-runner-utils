@@ -51,7 +51,13 @@ async function setUpNpmConfig (registry, strictSSL) {
     fund: false,
     'strict-ssl': strictSSL,
     noproxy: 'registry.npmjs.org',
-    cafile: process.env.CA_FILE || null
+    cafile: process.env.CA_FILE || null,
+    // https://docs.npmjs.com/cli/v6/using-npm/config#package-lock
+    // By default, `npm install $package` will install `$package` as well
+    // as any dependency defined in package-lock.json that is missing from
+    // node_modules.
+    // Setting to false means `npm install $package` only installs `$package`
+    'package-lock': false
   });
 }
 
