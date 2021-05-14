@@ -24,6 +24,12 @@ describe('utils', function () {
       npm: {}
     };
 
+    it('should return empty dict when runner config is empty', function () {
+      const npmConfig = getNpmConfig({});
+
+      expect(npmConfig).toStrictEqual({});
+    });
+
     it('should set values when runner npm config is empty', function () {
       const npmConfig = getNpmConfig(emptyConfig);
 

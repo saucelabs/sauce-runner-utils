@@ -50,7 +50,10 @@ async function setUpNpmConfig (userConfig) {
     rollback: false,
     fund: false,
     noproxy: 'registry.npmjs.org',
-    cafile: process.env.CA_FILE || null
+    cafile: process.env.CA_FILE || null,
+    'package-lock': false,
+    'strict-ssl': true,
+    registry: getDefaultRegistry()
   };
   await npm.load(Object.assign({}, defaultConfig, userConfig));
 }
@@ -92,6 +95,9 @@ function hasNodeModulesFolder (runCfg) {
 }
 
 function getNpmConfig (runnerConfig) {
+  if (runnerConfig.npm === undefined) {
+    return {};
+  }
   return {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
