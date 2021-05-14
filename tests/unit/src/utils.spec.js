@@ -1,13 +1,103 @@
+// vim: tabstop=2 shiftwidth=2 expandtab
 jest.mock('child_process');
 jest.mock('../../../src/npm');
 
 const path = require('path');
 const fs = require('fs');
-const { getAbsolutePath, shouldRecordVideo, getArgs, getEnv, getSuite, renameScreenshot, renameAsset, prepareNpmEnv, setUpNpmConfig, installNpmDependencies } = require('../../../src/utils');
+const { getAbsolutePath,
+        shouldRecordVideo,
+        getArgs,
+        getEnv,
+        getSuite,
+        renameScreenshot,
+        renameAsset,
+        prepareNpmEnv,
+        setUpNpmConfig,
+        getNpmConfig,
+        installNpmDependencies } = require('../../../src/utils');
 const _ = require('lodash');
 const npm = require('../../../src/npm');
 
 describe('utils', function () {
+  describe('.getNpmConfig', function () {
+    const emptyConfig = {
+      npm: {}
+    };
+
+    it('should set values when runner npm config is empty', function () {
+      const npmConfig = getNpmConfig(emptyConfig);
+
+      expect(npmConfig).toHaveProperty('strict-ssl');
+      expect(npmConfig).toHaveProperty('registry');
+      expect(npmConfig).toHaveProperty('package-lock');
+    });
+
+    it('should set strictSSL to true by default', function () {
+      const npmConfig = getNpmConfig(emptyConfig);
+      expect(npmConfig).toHaveProperty('strict-ssl', true);
+    });
+
+    it('should set strictSSL from runner config', function () {
+      const runnerConfig = {
+        npm: {
+          strictSSL: false
+        }
+      };
+      let npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('strict-ssl', false);
+
+      runnerConfig.npm.strictSSL = true;
+      npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('strict-ssl', true);
+
+      runnerConfig.npm.strictSSL = 'truthy?';
+      npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('strict-ssl', true);
+    });
+
+    it('should set packageLock to false by default', function () {
+      const npmConfig = getNpmConfig(emptyConfig);
+
+      expect(npmConfig).toHaveProperty('package-lock', false);
+    });
+
+    it('should set packageLock from runner config', function () {
+      const runnerConfig = {
+        npm: {
+          'packageLock': true
+        }
+      };
+      let npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('package-lock', true);
+
+      runnerConfig.npm.packageLock = false;
+      npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('package-lock', false);
+
+      runnerConfig.npm.packageLock = 'truthy?';
+      npmConfig = getNpmConfig(runnerConfig);
+      expect(npmConfig).toHaveProperty('package-lock', false);
+    });
+
+    it('should set the default npm registry by default', function () {
+      const npmConfig = getNpmConfig(emptyConfig);
+
+      expect(npmConfig).toHaveProperty('registry');
+      expect(npmConfig.registry).not.toBe('');
+    });
+
+    it('should set registry from runner config', function () {
+      const runnerConfig = {
+        npm: {
+          registry: 'http://my-private-registry.com'
+        }
+      };
+      const npmConfig = getNpmConfig(runnerConfig);
+
+      expect(npmConfig).toHaveProperty('registry', 'http://my-private-registry.com');
+    });
+  });
+
   describe('.prepareNpmEnv', function () {
     let backupEnv;
     const runCfg = {
@@ -26,7 +116,12 @@ describe('utils', function () {
       process.env = backupEnv;
     });
     it('should set right registry for npm', async function () {
-      await setUpNpmConfig('my.registry', true);
+      const config = {
+        registry: 'my.registry',
+        'strict-ssl': true,
+        'package-lock': false
+      };
+      await setUpNpmConfig(config);
       expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should call npm install', async function () {
