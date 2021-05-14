@@ -19,773 +19,177 @@ Object {
 
 exports[`utils .prepareNpmEnv should be able to set cafile 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": "/fake/path",
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "test.cafile",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.null",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.false",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": false,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.true",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": "/fake/path",
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.cafile",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "test.strictSSL.false",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.null",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.false",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": false,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": false,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should be able to set strictSSL to true 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "test.strictSSL.true",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.null",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.false",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": false,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.true",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should call npm install 1`] = `
 Array [
-  Array [
-    "mypackage@1.2.3",
-  ],
+  "mypackage@1.2.3",
 ]
 `;
 
 exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "my.registry",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should use default registry 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "https://registry.npmjs.org",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should use env var for registry 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "npmland.io",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "https://registry.npmjs.org",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL if it's null in cfg 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "https://registry.npmjs.org",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "test.strictSSL.null",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should use user registry 1`] = `
 Array [
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "my.registry",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
+  Object {
+    "audit": false,
+    "cafile": null,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "registry": "registryland.io",
+    "retry": Object {
+      "retries": 3,
     },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "npmland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
-  Array [
-    Object {
-      "audit": false,
-      "cafile": null,
-      "fund": false,
-      "json": false,
-      "noproxy": "registry.npmjs.org",
-      "registry": "registryland.io",
-      "retry": Object {
-        "retries": 3,
-      },
-      "rollback": false,
-      "save": false,
-      "strict-ssl": true,
-    },
-  ],
+    "rollback": false,
+    "save": false,
+    "strict-ssl": true,
+  },
 ]
 `;
