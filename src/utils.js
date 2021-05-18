@@ -1,3 +1,4 @@
+// vim: tabstop=2 shiftwidth=2 expandtab
 const path = require('path');
 const fs = require('fs');
 const _ = require('lodash');
@@ -39,20 +40,22 @@ function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-async function setUpNpmConfig (registry, strictSSL) {
+async function setUpNpmConfig (userConfig) {
   console.log('Preparing npm environment');
-  await npm.load({
-    registry,
+  const defaultConfig = {
     retry: { retries: 3 },
     json: false,
     save: false,
     audit: false,
     rollback: false,
     fund: false,
-    'strict-ssl': strictSSL,
     noproxy: 'registry.npmjs.org',
-    cafile: process.env.CA_FILE || null
-  });
+    cafile: process.env.CA_FILE || null,
+    'package-lock': false,
+    'strict-ssl': true,
+    registry: getDefaultRegistry()
+  };
+  await npm.load(Object.assign({}, defaultConfig, userConfig));
 }
 
 async function installNpmDependencies (packageList) {
@@ -91,23 +94,35 @@ function hasNodeModulesFolder (runCfg) {
   return false;
 }
 
+function getNpmConfig (runnerConfig) {
+  if (runnerConfig.npm === undefined) {
+    return {};
+  }
+  return {
+    registry: runnerConfig.npm.registry || getDefaultRegistry(),
+    'strict-ssl': runnerConfig.npm.strictSSL !== false,
+    // https://docs.npmjs.com/cli/v6/using-npm/config#package-lock
+    // By default, `npm install $package` will install `$package` as well
+    // as any dependency defined in package-lock.json that is missing from
+    // node_modules.
+    // Setting to false means `npm install $package` only installs `$package`
+    'package-lock': runnerConfig.npm.packageLock === true
+  };
+}
+
 async function prepareNpmEnv (runCfg) {
   const npmMetrics = {
     name: 'npm_metrics.json', data: {}
   };
-  const npmConfig = runCfg && runCfg.npm && runCfg.npm.packages || {};
-  const packageList = Object.entries(npmConfig).map(([pkg, version]) => `${pkg}@${version}`);
-  if (packageList.length === 0) {
+  const packageList = runCfg && runCfg.npm && runCfg.npm.packages || {};
+  const npmPackages = Object.entries(packageList).map(([pkg, version]) => `${pkg}@${version}`);
+  if (npmPackages.length === 0) {
     return npmMetrics;
   }
-  // prepares npm config
-  const registry = runCfg.npm.registry || getDefaultRegistry();
-  let strictSSL = true; // strictSSL is true by default
-  if (runCfg.npm.strictSSL === false) {
-    strictSSL = false;
-  }
+
+  const npmConfig = getNpmConfig(runCfg);
   let startTime = (new Date()).getTime();
-  await setUpNpmConfig(registry, strictSSL);
+  await setUpNpmConfig(npmConfig);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
@@ -128,7 +143,7 @@ async function prepareNpmEnv (runCfg) {
   // install npm packages
   npmMetrics.data.install = {};
   startTime = (new Date()).getTime();
-  await installNpmDependencies(packageList);
+  await installNpmDependencies(npmPackages);
   endTime = (new Date()).getTime();
   npmMetrics.data.install = {duration: endTime - startTime};
   return npmMetrics;
@@ -208,5 +223,5 @@ function renameAsset ({specFile, oldFilePath, resultsFolder}) {
 module.exports = {
   getAbsolutePath, shouldRecordVideo, loadRunConfig,
   prepareNpmEnv, setUpNpmConfig, installNpmDependencies, rebuildNpmDependencies,
-  getArgs, getEnv, getSuite, renameScreenshot, renameAsset
+  getArgs, getEnv, getSuite, renameScreenshot, renameAsset, getNpmConfig
 };
