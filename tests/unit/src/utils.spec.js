@@ -14,7 +14,8 @@ const { getAbsolutePath,
         prepareNpmEnv,
         setUpNpmConfig,
         getNpmConfig,
-        installNpmDependencies } = require('../../../src/utils');
+        installNpmDependencies,
+        escapeXML } = require('../../../src/utils');
 const _ = require('lodash');
 const npm = require('../../../src/npm');
 
@@ -306,6 +307,13 @@ describe('utils', function () {
       const env = getEnv(suite);
       expect(env).toMatchSnapshot();
       expect(env.FOO).toBeUndefined();
+    });
+  });
+  describe('.escapeXML', function () {
+    it('should escape special characters for XML', function () {
+      const str = `<>&\\"`;
+      const result = escapeXML(str);
+      expect(result).toBe('&lt;&gt;&amp;\\&quot;');
     });
   });
 });
