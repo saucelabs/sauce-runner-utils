@@ -220,8 +220,20 @@ function renameAsset ({specFile, oldFilePath, resultsFolder}) {
   return newFilePath;
 }
 
+function escapeXML (val) {
+  return val.replace(/[<>&'"]/g, function (c) {
+    switch (c) {
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '&': return '&amp;';
+      case '\'': return '&apos;';
+      case '"': return '&quot;';
+    }
+  });
+}
+
 module.exports = {
   getAbsolutePath, shouldRecordVideo, loadRunConfig,
   prepareNpmEnv, setUpNpmConfig, installNpmDependencies, rebuildNpmDependencies,
-  getArgs, getEnv, getSuite, renameScreenshot, renameAsset, getNpmConfig
+  getArgs, getEnv, getSuite, renameScreenshot, renameAsset, getNpmConfig, escapeXML
 };
