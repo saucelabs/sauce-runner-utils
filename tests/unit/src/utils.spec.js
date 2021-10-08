@@ -1,5 +1,6 @@
 // vim: tabstop=2 shiftwidth=2 expandtab
 jest.mock('child_process');
+jest.mock('fs');
 jest.mock('../../../src/npm');
 
 const path = require('path');
@@ -181,6 +182,19 @@ describe('utils', function () {
       process.env.CA_FILE = '/fake/path';
       await prepareNpmEnv(cfg);
       expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+    });
+    it('should use rebuild node_modules', async function () {
+      fs.statSync.mockReturnValue({ isDirectory: () => true });
+      await prepareNpmEnv(runCfg);
+      expect(npm.rebuild.mock.calls[npm.rebuild.mock.calls.length - 1]).toMatchSnapshot();
+
+    });
+    it('should use rebuild node_modules when not package installed', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      delete cfg.npm;
+      fs.statSync.mockReturnValue({ isDirectory: () => true });
+      await prepareNpmEnv(cfg);
+      expect(npm.rebuild.mock.calls[npm.rebuild.mock.calls.length - 1]).toMatchSnapshot();
     });
   });
   describe('.renameScreenshot', function () {

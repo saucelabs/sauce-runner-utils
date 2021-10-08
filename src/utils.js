@@ -116,17 +116,14 @@ async function prepareNpmEnv (runCfg) {
   };
   const packageList = runCfg && runCfg.npm && runCfg.npm.packages || {};
   const npmPackages = Object.entries(packageList).map(([pkg, version]) => `${pkg}@${version}`);
-  if (npmPackages.length === 0) {
-    return npmMetrics;
-  }
+
+  const nodeModulesPresent = hasNodeModulesFolder(runCfg);
 
   const npmConfig = getNpmConfig(runCfg);
   let startTime = (new Date()).getTime();
   await setUpNpmConfig(npmConfig);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
-
-  let nodeModulesPresent = hasNodeModulesFolder(runCfg);
 
   // rebuild npm packages if node_modules provided
   if (nodeModulesPresent) {
@@ -138,6 +135,10 @@ async function prepareNpmEnv (runCfg) {
     await rebuildNpmDependencies(projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
+  }
+
+  if (npmPackages.length === 0) {
+    return npmMetrics;
   }
 
   // install npm packages
