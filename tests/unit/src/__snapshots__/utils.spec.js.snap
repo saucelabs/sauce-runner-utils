@@ -143,6 +143,20 @@ Array [
 ]
 `;
 
+exports[`utils .prepareNpmEnv should use rebuild node_modules 1`] = `
+Array [
+  "--prefix",
+  "/fake/runner",
+]
+`;
+
+exports[`utils .prepareNpmEnv should use rebuild node_modules when not package installed 1`] = `
+Array [
+  "--prefix",
+  "/fake/runner",
+]
+`;
+
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
 Array [
   Object {
