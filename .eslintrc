@@ -1,8 +1,17 @@
 {
+    "env": {
+        "jest/globals": true
+    },
     "extends": [
-        "eslint-config-appium"
+        "eslint-config-appium",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "plugins": ["jest"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "jest",
+        "@typescript-eslint"
+    ],
     "rules": {
         "no-console": "off",
         "promise/no-native": "off",
@@ -10,7 +19,11 @@
         "promise/prefer-await-to-then": "off",
         "promise/catch-or-return": "off"
     },
-    "env": {
-        "jest/globals": true
+    "settings": {
+        "import/resolver": {
+            "node": {
+            "extensions": [".js",".ts"]
+            }
+        }
     }
 }
