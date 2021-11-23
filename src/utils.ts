@@ -56,7 +56,7 @@ export async function setUpNpmConfig (userConfig: any) { //FIXME change type
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.load(Object.assign({}, defaultConfig, userConfig));
+  await npm.load(/*Object.assign({}, defaultConfig, userConfig)*/);
 }
 
 export async function installNpmDependencies (packageList: string[]) {
@@ -179,18 +179,18 @@ export function getArgs () {
 }
 
 export function getEnv (suite: Suite) {
-  let env = new Map<string, string>();
+  let env: {[key: string]: string} = {};
   if (_.isObject(suite.env)) {
     env = {...env, ...suite.env};
   }
   if (_.isObject(suite.config?.env)) {
-    env = {...env, ...suite.config.env};
+    env = {...env, ...suite?.config?.env};
   }
   // If the variable starts with $, pull that environment variable from the process
   for (const [name, value] of _.toPairs(env)) {
     const expectedValue = process.env[value.substring(1)];
     if (value.startsWith('$') && expectedValue) {
-      env.set(name, expectedValue);
+      env[name] = expectedValue;
     }
   }
   return env;

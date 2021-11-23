@@ -9,7 +9,7 @@ export function updateExportedValue (filepath: string, data: object | null) {
   try {
     const st = statSync(filepath);
     if (st.isFile()) {
-      fileData = JSON.parse(readFileSync(filepath).toString()) || {}; // FIXME: handle warning
+      fileData = JSON.parse(readFileSync(filepath).toString()) || {};
     }
   } catch (e) {}
   fileData = { ...fileData, ...data };

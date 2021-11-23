@@ -3,22 +3,24 @@ jest.mock('child_process');
 jest.mock('fs');
 jest.mock('../../../src/npm');
 
-const path = require('path');
-const fs = require('fs');
-const { getAbsolutePath,
-        shouldRecordVideo,
-        getArgs,
-        getEnv,
-        getSuite,
-        renameScreenshot,
-        renameAsset,
-        prepareNpmEnv,
-        setUpNpmConfig,
-        getNpmConfig,
-        installNpmDependencies,
-        escapeXML } = require('../../../src/utils');
-const _ = require('lodash');
-const npm = require('../../../src/npm');
+import path from 'path';
+import fs from 'fs';
+import {
+  getAbsolutePath,
+  shouldRecordVideo,
+  getArgs,
+  getEnv,
+  getSuite,
+  renameScreenshot,
+  renameAsset,
+  prepareNpmEnv,
+  setUpNpmConfig,
+  getNpmConfig,
+  installNpmDependencies,
+  escapeXML } from '../../../src/utils';
+import _ from 'lodash';
+import { NPM as npm } from '../../../src/npm';
+import { IHasNpmConfig, IHasPath, IHasSuites, Suite } from '../../../src/types';
 
 describe('utils', function () {
   describe('.getNpmConfig', function () {
@@ -46,7 +48,7 @@ describe('utils', function () {
     });
 
     it('should set strictSSL from runner config', function () {
-      const runnerConfig = {
+      const runnerConfig: IHasNpmConfig = {
         npm: {
           strictSSL: false
         }
@@ -54,6 +56,7 @@ describe('utils', function () {
       let npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('strict-ssl', false);
 
+      runnerConfig.npm ||= {};
       runnerConfig.npm.strictSSL = true;
       npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('strict-ssl', true);
@@ -70,7 +73,7 @@ describe('utils', function () {
     });
 
     it('should set packageLock from runner config', function () {
-      const runnerConfig = {
+      const runnerConfig: IHasNpmConfig = {
         npm: {
           'packageLock': true
         }
@@ -78,6 +81,7 @@ describe('utils', function () {
       let npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('package-lock', true);
 
+      runnerConfig.npm ||= {};
       runnerConfig.npm.packageLock = false;
       npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('package-lock', false);
@@ -107,8 +111,8 @@ describe('utils', function () {
   });
 
   describe('.prepareNpmEnv', function () {
-    let backupEnv;
-    const runCfg = {
+    let backupEnv: any;
+    const runCfg: IHasNpmConfig & IHasPath = {
       path: '/fake/runner/path',
       npm: {
         packages: {
@@ -129,77 +133,100 @@ describe('utils', function () {
         'strict-ssl': true,
         'package-lock': false
       };
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await setUpNpmConfig(config);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should call npm install', async function () {
+      const installSpyOn = jest.spyOn(npm, 'install');
       await installNpmDependencies(['mypackage@1.2.3']);
-      expect(npm.install.mock.calls[npm.install.mock.calls.length - 1]).toMatchSnapshot();
+      expect(installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(runCfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use user registry', async function () {
-      let cfg = _.cloneDeep(runCfg);
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
       cfg.npm.registry = 'registryland.io';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(cfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use default registry', async function () {
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(runCfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL', async function () {
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(runCfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL if it\'s null in cfg', async function () {
-      let cfg = _.cloneDeep(runCfg);
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
       cfg.npm.strictSSL = null;
       cfg.npm.registry = 'test.strictSSL.null';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(runCfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set strictSSL to false', async function () {
-      let cfg = _.cloneDeep(runCfg);
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
       cfg.npm.strictSSL = false;
       cfg.npm.registry = 'test.strictSSL.false';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(cfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set strictSSL to true', async function () {
-      let cfg = _.cloneDeep(runCfg);
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
       cfg.npm.strictSSL = true;
       cfg.npm.registry = 'test.strictSSL.true';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(cfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set cafile', async function () {
-      let cfg = _.cloneDeep(runCfg);
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
       cfg.npm.registry = 'test.cafile';
       process.env.CA_FILE = '/fake/path';
+      const loadSpyOn = jest.spyOn(npm, 'load');
       await prepareNpmEnv(cfg);
-      expect(npm.load.mock.calls[npm.load.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use rebuild node_modules', async function () {
-      fs.statSync.mockReturnValue({ isDirectory: () => true });
+      const rebuildSpyOn = jest.spyOn(npm, 'rebuild');
+      const statSyncSpyOn = jest.spyOn(fs, 'statSync');
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      statSyncSpyOn.mockReturnValue({ isDirectory: () => true });
       await prepareNpmEnv(runCfg);
-      expect(npm.rebuild.mock.calls[npm.rebuild.mock.calls.length - 1]).toMatchSnapshot();
+      expect(rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1]).toMatchSnapshot();
 
     });
     it('should use rebuild node_modules when not package installed', async function () {
       const cfg = _.cloneDeep(runCfg);
       delete cfg.npm;
-      fs.statSync.mockReturnValue({ isDirectory: () => true });
+      const rebuildSpyOn = jest.spyOn(npm, 'rebuild');
+      const statSyncSpyOn = jest.spyOn(fs, 'statSync');
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      statSyncSpyOn.mockReturnValue({ isDirectory: () => true });
       await prepareNpmEnv(cfg);
-      expect(npm.rebuild.mock.calls[npm.rebuild.mock.calls.length - 1]).toMatchSnapshot();
+      expect(rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
   });
   describe('.renameScreenshot', function () {
     it('replace path separator (backslash for Windows, forward slash for mac/linux) with __', function () {
-      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () {});
+      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () { return undefined; });
       const nestedExample = path.join('nested', 'example.test.js');
       expect(renameScreenshot(nestedExample, 'old_path', 'new_path', 'screenshot.png')).toEqual(path.join('new_path', 'nested__example.test.js__screenshot.png'));
       expect(spy).toHaveBeenCalled();
@@ -216,7 +243,7 @@ describe('utils', function () {
     });
     it('asset is in nested folder and replacing path separator with __', function () {
       const nestedExampleTest = path.join('nested', 'example.test.js.xml');
-      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () {});
+      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () { return undefined;});
       expect(renameAsset({
         specFile: nestedExampleTest,
         oldFilePath: '/assets/example.test.js.xml',
@@ -235,7 +262,7 @@ describe('utils', function () {
     });
   });
   describe('.shouldRecordVideo', function () {
-    let previousEnv;
+    let previousEnv: any;
     beforeEach(function () {
       previousEnv = process.env.SAUCE_CYPRESS_VIDEO_RECORDING;
     });
@@ -246,24 +273,24 @@ describe('utils', function () {
       expect(shouldRecordVideo()).toEqual(true);
     });
     it('returns false when SAUCE_CYPRESS_VIDEO_RECORDING is 0', function () {
-      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = 0;
+      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = '0';
       expect(shouldRecordVideo()).toEqual(false);
     });
     it('returns true when SAUCE_CYPRESS_VIDEO_RECORDING is 1', function () {
-      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = 1;
+      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = '1';
       expect(shouldRecordVideo()).toEqual(true);
     });
     it('returns true when SAUCE_CYPRESS_VIDEO_RECORDING is true', function () {
-      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = true;
+      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = 'true';
       expect(shouldRecordVideo()).toEqual(true);
     });
     it('returns false when SAUCE_CYPRESS_VIDEO_RECORDING is false', function () {
-      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = false;
+      process.env.SAUCE_CYPRESS_VIDEO_RECORDING = 'false';
       expect(shouldRecordVideo()).toEqual(false);
     });
   });
   describe('.getArgs', function () {
-    let backupArgv;
+    let backupArgv: any;
     beforeEach(function () {
       backupArgv = process.argv;
       process.argv = [
@@ -284,17 +311,17 @@ describe('utils', function () {
   });
   describe('.getSuite', function () {
     it('should get a suite from a list', function () {
-      const runCfg = {
+      const runCfg: IHasSuites = {
         suites: [
-          {name: 'hello', arg: 'world'}
+          {name: 'hello'}
         ]
       };
-      expect(getSuite(runCfg, 'hello').arg).toEqual('world');
+      expect(getSuite(runCfg, 'hello')?.name).toEqual('hello');
       expect(getSuite(runCfg, 'non-existent')).toBeUndefined();
     });
   });
   describe('.getEnv', function () {
-    let backupEnv;
+    let backupEnv: any;
     beforeEach(function () {
       backupEnv = process.env;
       process.env = {
@@ -306,7 +333,8 @@ describe('utils', function () {
       process.env = backupEnv;
     });
     it('should parse env variables from runConfig', function () {
-      const suite = {
+      const suite: Suite = {
+        name: 'Demo suite',
         env: {
           'A': '1',
           'B': '2',

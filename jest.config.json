@@ -1,6 +1,8 @@
 {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
     "testMatch": ["**/tests/unit/**/*.[jt]s?(x)"],
-    "collectCoverageFrom": ["src/**/*.js"],
+    "collectCoverageFrom": ["src/**/*.[jt]s"],
     "collectCoverage": true,
     "coverageThreshold": {
         "global": {
