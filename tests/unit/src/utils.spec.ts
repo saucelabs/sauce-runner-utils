@@ -19,7 +19,7 @@ import {
   installNpmDependencies,
   escapeXML } from '../../../src/utils';
 import _ from 'lodash';
-import { NPM as npm } from '../../../src/npm';
+import npm from '../../../src/npm';
 import { IHasNpmConfig, IHasPath, IHasSuites, Suite } from '../../../src/types';
 
 describe('utils', function () {

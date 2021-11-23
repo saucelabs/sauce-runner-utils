@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
-import { NPM as npm } from './npm';
+import npm from './npm';
 import { IHasNpmConfig, IHasPath, IHasSuites, Suite } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
@@ -56,7 +56,7 @@ export async function setUpNpmConfig (userConfig: any) { //FIXME change type
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.load(/*Object.assign({}, defaultConfig, userConfig)*/);
+  await npm.load(Object.assign({}, defaultConfig, userConfig));
 }
 
 export async function installNpmDependencies (packageList: string[]) {

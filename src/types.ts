@@ -12,7 +12,7 @@ export interface IHasPath {
   path: string;
 }
 
-export interface INpmConfig {
+export type NpmConfig = {
   registry?: string;
   strictSSL?: boolean | string | null;
   packageLock?: boolean | string | null;
@@ -20,7 +20,7 @@ export interface INpmConfig {
 }
 
 export interface IHasNpmConfig {
-  npm?: INpmConfig;
+  npm?: NpmConfig;
 }
 
 export interface IHasSuites {
