@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import * as saucectl from './saucectl';
 import * as npm from './npm';
 import * as utils from './utils';
