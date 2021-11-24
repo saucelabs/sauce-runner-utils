@@ -7,8 +7,12 @@ export default class NPM {
     await npmInstall(args);
   }
 
-  public static load (cfg: any) {
-    npm.load(cfg);
+  public static async load (cfg: any) {
+    await new Promise((resolve) => {
+      npm.load(cfg, () => {
+        resolve(null);
+      });
+    });
   }
 
   public static async rebuild (...args: string[]) {
