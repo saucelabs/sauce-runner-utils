@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { IHasNpmConfig, IHasPath, IHasSuites, Suite } from './types';
+import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -41,7 +41,7 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (userConfig: any) { //FIXME change type
+export async function setUpNpmConfig (userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     retry: { retries: 3 },

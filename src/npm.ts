@@ -7,7 +7,7 @@ export default class NPM {
     await npmInstall(args);
   }
 
-  public static async load (cfg: any) {
+  public static async load (cfg: {[key: string]: object | string | number | boolean | null }) {
     await new Promise((resolve) => {
       npm.load(cfg, () => {
         resolve(null);
