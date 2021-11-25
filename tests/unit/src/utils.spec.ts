@@ -111,7 +111,7 @@ describe('utils', function () {
   });
 
   describe('.prepareNpmEnv', function () {
-    let backupEnv: any;
+    let backupEnv: {[key: string]: string | undefined};
     const runCfg: IHasNpmConfig & IHasPath = {
       path: '/fake/runner/path',
       npm: {
@@ -262,7 +262,7 @@ describe('utils', function () {
     });
   });
   describe('.shouldRecordVideo', function () {
-    let previousEnv: any;
+    let previousEnv: string | undefined;
     beforeEach(function () {
       previousEnv = process.env.SAUCE_CYPRESS_VIDEO_RECORDING;
     });
@@ -290,7 +290,7 @@ describe('utils', function () {
     });
   });
   describe('.getArgs', function () {
-    let backupArgv: any;
+    let backupArgv: string[];
     beforeEach(function () {
       backupArgv = process.argv;
       process.argv = [
@@ -321,7 +321,7 @@ describe('utils', function () {
     });
   });
   describe('.getEnv', function () {
-    let backupEnv: any;
+    let backupEnv: {[key: string]: string | undefined};
     beforeEach(function () {
       backupEnv = process.env;
       process.env = {
