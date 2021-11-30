@@ -1,31 +1,32 @@
 // vim: tabstop=2 shiftwidth=2 expandtab
-const path = require('path');
-const fs = require('fs');
-const _ = require('lodash');
-const yargs = require('yargs/yargs');
-const npm = require('./npm');
+import path from 'path';
+import fs from 'fs';
+import _ from 'lodash';
+import yargs from 'yargs/yargs';
+import npm from './npm';
+import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
-function getAbsolutePath (pathToDir) {
+export function getAbsolutePath (pathToDir: string) {
   if (path.isAbsolute(pathToDir)) {
     return pathToDir;
   }
   return path.join(process.cwd(), pathToDir);
 }
 
-function shouldRecordVideo () {
-  let isVideoRecording = process.env.SAUCE_CYPRESS_VIDEO_RECORDING;
+export function shouldRecordVideo () {
+  const isVideoRecording = process.env.SAUCE_CYPRESS_VIDEO_RECORDING;
   if (isVideoRecording === undefined) {
     return true;
   }
-  let videoOption = String(isVideoRecording).toLowerCase();
+  const videoOption = String(isVideoRecording).toLowerCase();
   return videoOption === 'true' || videoOption === '1';
 }
 
-let runConfig = null;
+let runConfig: IHasNpmConfig | IHasPath | IHasSuites;
 
-function loadRunConfig (cfgPath) {
+export function loadRunConfig (cfgPath: string) {
   if (runConfig) {
     return runConfig;
   }
@@ -36,11 +37,11 @@ function loadRunConfig (cfgPath) {
   throw new Error(`Runner config (${cfgPath}) unavailable.`);
 }
 
-function getDefaultRegistry () {
+export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-async function setUpNpmConfig (userConfig) {
+export async function setUpNpmConfig (userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     retry: { retries: 3 },
@@ -58,12 +59,12 @@ async function setUpNpmConfig (userConfig) {
   await npm.load(Object.assign({}, defaultConfig, userConfig));
 }
 
-async function installNpmDependencies (packageList) {
+export async function installNpmDependencies (packageList: string[]) {
   console.log(`\nInstalling packages: ${packageList.join(' ')}`);
   await npm.install(...packageList);
 }
 
-async function rebuildNpmDependencies (path) {
+export async function rebuildNpmDependencies (path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
     await npm.rebuild('--prefix', path);
@@ -73,12 +74,12 @@ async function rebuildNpmDependencies (path) {
 }
 
 // Check if node_modules already exists in provided project
-function hasNodeModulesFolder (runCfg) {
+export function hasNodeModulesFolder (runCfg: IHasPath) {
   const projectFolder = path.dirname(runCfg.path);
 
   // Docker: if sauce-runner.json is in home, node_module won't be users'
   //         but the one of the runner => Discard it.
-  if (!process.SAUCE_VM && projectFolder === process.env.HOME) {
+  if (!process.env.SAUCE_VM && projectFolder === process.env.HOME) {
     return false;
   }
 
@@ -94,7 +95,7 @@ function hasNodeModulesFolder (runCfg) {
   return false;
 }
 
-function getNpmConfig (runnerConfig) {
+export function getNpmConfig (runnerConfig: IHasNpmConfig) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
@@ -110,11 +111,14 @@ function getNpmConfig (runnerConfig) {
   };
 }
 
-async function prepareNpmEnv (runCfg) {
-  const npmMetrics = {
-    name: 'npm_metrics.json', data: {}
-  };
-  const packageList = runCfg && runCfg.npm && runCfg.npm.packages || {};
+export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
+  const data: {
+    install: {duration: number},
+    rebuild?: {duration: number},
+    setup: {duration: number},
+  } = { install: { duration: 0 }, setup: { duration: 0 } };
+  const npmMetrics = { name: 'npm_metrics.json', data };
+  const packageList = runCfg?.npm?.packages || {};
   const npmPackages = Object.entries(packageList).map(([pkg, version]) => `${pkg}@${version}`);
 
   const nodeModulesPresent = hasNodeModulesFolder(runCfg);
@@ -130,7 +134,6 @@ async function prepareNpmEnv (runCfg) {
     console.log(`Detected node_modules, running npm rebuilding.`);
 
     const projectPath = path.dirname(runCfg.path);
-    npmMetrics.data.rebuild = {};
     startTime = (new Date()).getTime();
     await rebuildNpmDependencies(projectPath);
     endTime = (new Date()).getTime();
@@ -142,7 +145,6 @@ async function prepareNpmEnv (runCfg) {
   }
 
   // install npm packages
-  npmMetrics.data.install = {};
   startTime = (new Date()).getTime();
   await installNpmDependencies(npmPackages);
   endTime = (new Date()).getTime();
@@ -150,9 +152,9 @@ async function prepareNpmEnv (runCfg) {
   return npmMetrics;
 }
 
-let args = null;
+let args: { nodeBin: string, runCfgPath: string, suiteName: string } | null = null;
 
-function getArgs () {
+export function getArgs () {
   if (args) {
     return args;
   }
@@ -176,32 +178,33 @@ function getArgs () {
   return args;
 }
 
-function getEnv (suite) {
-  let env = {};
+export function getEnv (suite: Suite) {
+  let env: {[key: string]: string} = {};
   if (_.isObject(suite.env)) {
     env = {...env, ...suite.env};
   }
-  if (_.isObject(suite.config) && _.isObject(suite.config.env)) {
-    env = {...env, ...suite.config.env};
+  if (_.isObject(suite.config?.env)) {
+    env = {...env, ...suite?.config?.env};
   }
   // If the variable starts with $, pull that environment variable from the process
   for (const [name, value] of _.toPairs(env)) {
-    if (value.startsWith('$')) {
-      env[name] = process.env[value.slice(1)];
+    const expectedValue = process.env[value.substring(1)];
+    if (value.startsWith('$') && expectedValue) {
+      env[name] = expectedValue;
     }
   }
   return env;
 }
 
-function getSuite (runConfig, suiteName) {
+export function getSuite (runConfig: IHasSuites, suiteName: string) {
   return runConfig.suites.find((testSuite) => testSuite.name === suiteName);
 }
 
 // renameScreenshot renames screenshot.
 // nested/example.test.js/screenshot.png will be renamed to nested__example.test.js__screenshot.png
 // example.test.js/screenshot.png will be renamed to example.test.js__screenshot.png
-function renameScreenshot (specFile, oldFilePath, folderName, fileName) {
-  let newName = path.join(folderName, specFile.replace(path.sep, '__') + '__' + fileName);
+export function renameScreenshot (specFile: string, oldFilePath: string, folderName: string, fileName: string) {
+  const newName = path.join(folderName, specFile.replace(path.sep, '__') + '__' + fileName);
   fs.renameSync(oldFilePath, newName);
   return newName;
 }
@@ -209,20 +212,20 @@ function renameScreenshot (specFile, oldFilePath, folderName, fileName) {
 // renameAsset renames asset.
 // nested/example.test.js.xml will be renamed to nested__example.test.js.xml
 // example.test.js.xml will not be renamed and stay example.test.js.xml
-function renameAsset ({specFile, oldFilePath, resultsFolder}) {
+export function renameAsset ({specFile, oldFilePath, resultsFolder}: { specFile: string, oldFilePath: string, resultsFolder: string}) {
   const splittedSpecFile = specFile.split(path.sep);
   if (splittedSpecFile.length < 2) {
     return oldFilePath;
   }
   // create new file name
-  let newFile = splittedSpecFile.slice(0, splittedSpecFile.length).join('__');
-  let newFilePath = path.join(resultsFolder, newFile);
+  const newFile = splittedSpecFile.slice(0, splittedSpecFile.length).join('__');
+  const newFilePath = path.join(resultsFolder, newFile);
   fs.renameSync(oldFilePath, newFilePath);
   return newFilePath;
 }
 
-function escapeXML (val) {
-  return val.replace(/[<>&'"]/g, function (c) {
+export function escapeXML (val: string) {
+  return val.replace(/[<>&'"]/g, (c: string) => {
     switch (c) {
       case '<': return '&lt;';
       case '>': return '&gt;';
@@ -230,11 +233,6 @@ function escapeXML (val) {
       case '\'': return '&apos;';
       case '"': return '&quot;';
     }
+    return c;
   });
 }
-
-module.exports = {
-  getAbsolutePath, shouldRecordVideo, loadRunConfig,
-  prepareNpmEnv, setUpNpmConfig, installNpmDependencies, rebuildNpmDependencies,
-  getArgs, getEnv, getSuite, renameScreenshot, renameAsset, getNpmConfig, escapeXML
-};

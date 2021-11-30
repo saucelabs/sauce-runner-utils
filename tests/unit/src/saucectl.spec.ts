@@ -1,6 +1,6 @@
-const fs = require('fs');
-const mock = require('mock-fs');
-const saucectl = require('../../../src/saucectl');
+import fs from 'fs';
+import mock from 'mock-fs';
+import * as saucectl from '../../../src/saucectl';
 
 const TEST_OUTPUT_FILEPATH = '/tmp/output.json';
 
@@ -16,7 +16,7 @@ describe('saucectl', function () {
 
     saucectl.exportValue(TEST_OUTPUT_FILEPATH, { jobDetailsUrl: 'myurl' });
 
-    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH));
+    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH).toString());
     expect(data.jobDetailsUrl).toBe('myurl');
   });
 
@@ -27,7 +27,7 @@ describe('saucectl', function () {
 
     saucectl.exportValue(TEST_OUTPUT_FILEPATH, { jobDetailsUrl: 'myurl' });
 
-    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH));
+    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH).toString());
     expect(data.jobDetailsUrl).toBe('myurl');
     expect(data.previousField).toBeUndefined();
   });
@@ -39,7 +39,7 @@ describe('saucectl', function () {
 
     saucectl.updateExportedValue(TEST_OUTPUT_FILEPATH, { jobDetailsUrl: 'myurl' });
 
-    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH));
+    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH).toString());
     expect(data.jobDetailsUrl).toBe('myurl');
   });
 
@@ -50,7 +50,7 @@ describe('saucectl', function () {
 
     saucectl.updateExportedValue(TEST_OUTPUT_FILEPATH, { jobDetailsUrl: 'myurl' });
 
-    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH));
+    const data = JSON.parse(fs.readFileSync(TEST_OUTPUT_FILEPATH).toString());
     expect(data.jobDetailsUrl).toBe('myurl');
     expect(data.previousField).toBe('present');
   });
