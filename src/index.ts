@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import * as saucectl from './saucectl';
 import * as npm from './npm';
+import * as preExec from './preExec';
 import * as utils from './utils';
 import {
   getAbsolutePath,
@@ -25,6 +26,7 @@ export {
   npm,
   saucectl,
   utils,
+  preExec,
 
   // Exporting all to keep compatibility with previous API
   getAbsolutePath,
