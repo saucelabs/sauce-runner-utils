@@ -2,6 +2,7 @@
 import * as saucectl from './saucectl';
 import * as npm from './npm';
 import * as utils from './utils';
+import * as preExec from './preExec';
 import {
   getAbsolutePath,
   shouldRecordVideo,
@@ -25,6 +26,7 @@ export {
   npm,
   saucectl,
   utils,
+  preExec,
 
   // Exporting all to keep compatibility with previous API
   getAbsolutePath,
