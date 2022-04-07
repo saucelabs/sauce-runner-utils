@@ -36,7 +36,7 @@ async function preExecRunner (preExecs: string[]) {
   return true;
 }
 
-export default async function preExec (suite: { preExec: string[] | undefined | null }, timeoutSec: number): Promise<boolean> {
+export async function run (suite: { preExec: string[] | undefined | null }, timeoutSec: number): Promise<boolean> {
   if (!suite.preExec) {
     return true;
   }
@@ -52,3 +52,5 @@ export default async function preExec (suite: { preExec: string[] | undefined | 
   clearTimeout(timeout);
   return hasPassed;
 }
+
+export default run;

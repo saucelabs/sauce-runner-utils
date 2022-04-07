@@ -2,7 +2,7 @@ import childProcess from 'child_process';
 import events from 'events';
 import stream from 'stream';
 import os from 'os';
-import preExec from '../../../src/preExec';
+import { run } from '../../../src/preExec';
 
 describe('preExec', function () {
   it('should return true when passing', async function () {
@@ -21,7 +21,7 @@ describe('preExec', function () {
       fakeProc.emit('exit', 0);
     }, 100);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 10);
+    const hasPassed = await run({ preExec: ['npm install'] }, 10);
 
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(true);
@@ -41,7 +41,7 @@ describe('preExec', function () {
       fakeProc.emit('exit', 1);
     }, 100);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 10);
+    const hasPassed = await run({ preExec: ['npm install'] }, 10);
 
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(false);
@@ -57,7 +57,7 @@ describe('preExec', function () {
     fakeProc.stderr = <stream.Readable> new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 1);
+    const hasPassed = await run({ preExec: ['npm install'] }, 1);
 
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(false);
@@ -77,7 +77,7 @@ describe('preExec', function () {
       fakeProc.emit('error', 'Unable to start command');
     }, 100);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 10);
+    const hasPassed = await run({ preExec: ['npm install'] }, 10);
 
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(false);
@@ -86,7 +86,7 @@ describe('preExec', function () {
   it('should return true when no preExecs', async function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
-    const hasPassed = await preExec({ preExec: undefined }, 1);
+    const hasPassed = await run({ preExec: undefined }, 1);
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(true);
   });
@@ -106,7 +106,7 @@ describe('preExec', function () {
       fakeProc.emit('error', 'invalid start error');
     }, 100);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 10);
+    const hasPassed = await run({ preExec: ['npm install'] }, 10);
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(false);
   });
@@ -126,7 +126,7 @@ describe('preExec', function () {
       fakeProc.emit('error', 'invalid start error');
     }, 100);
 
-    const hasPassed = await preExec({ preExec: ['npm install'] }, 10);
+    const hasPassed = await run({ preExec: ['npm install'] }, 10);
     expect(spawnSpy.mock.calls).toMatchSnapshot();
     expect(hasPassed).toBe(false);
   });

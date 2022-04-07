@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import * as saucectl from './saucectl';
 import * as npm from './npm';
-import * as preExec from './preExec';
 import * as utils from './utils';
+import preExec from './preExec';
 import {
   getAbsolutePath,
   shouldRecordVideo,
