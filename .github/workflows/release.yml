@@ -6,7 +6,7 @@ on:
       releaseType:
         description: 'Release type - major, minor or patch'
         required: true
-        default: ''
+        default: 'patch'
       preReleaseFlavor:
         description: 'Pre-Release flavor - rc, beta, or anything'
         required: false
