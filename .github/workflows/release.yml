@@ -38,7 +38,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Repository
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Node
