@@ -5,7 +5,7 @@ on:
     inputs:
       releaseType:
         description: 'Release type - major, minor or patch'
-        required: false
+        required: true
         default: ''
       preReleaseFlavor:
         description: 'Pre-Release flavor - rc, beta, or anything'
