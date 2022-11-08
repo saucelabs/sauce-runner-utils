@@ -7,6 +7,10 @@ on:
         description: 'Release type - major, minor or patch'
         required: true
         default: 'patch'
+      preReleaseFlavor:
+        description: 'Pre-Release flavor - rc, beta, or anything'
+        required: false
+        default: ''
 
 env:
   NPM_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -15,36 +19,46 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Repository
-        uses: actions/checkout@v2
-      - name: Setup Node version
-        uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: 14
-      - name: Install dependencies
+          cache: npm
+
+      - name: Install Dependencies
         run: npm ci
-      - name: Run tests
+
+      - name: Run Tests
         run: npm test
 
   release:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Repository
-        uses: actions/checkout@v2
-      - name: Setup Node version
-        uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: 14
+          cache: npm
           registry-url: https://registry.npmjs.org/
+
       - name: Setup Git
         run: |
           git config --global user.name "oss-sauce-bot"
           git config --global user.email "66365630+oss-sauce-bot@users.noreply.github.com"
-      - name: Install dependencies
+
+      - name: Install Dependencies
         run: npm ci
+
       - name: Build
         run: npm run build
+
       - name: Release
         run: npm run release:ci -- ${{github.event.inputs.releaseType}}
         env:
