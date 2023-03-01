@@ -56,12 +56,13 @@ export async function setUpNpmConfig (userConfig: NpmConfig) {
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.load(Object.assign({}, defaultConfig, userConfig));
+  await npm.configure(Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (packageList: string[]) {
-  console.log(`\nInstalling packages: ${packageList.join(' ')}`);
-  await npm.install(...packageList);
+export async function installNpmDependencies (packageList: {[key:string]: string}) {
+  const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
+  console.log(`\nInstalling packages: ${packages.join(' ')}`);
+  await npm.install(packageList);
 }
 
 export async function rebuildNpmDependencies (path: string) {
@@ -119,7 +120,6 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
   } = { install: { duration: 0 }, setup: { duration: 0 } };
   const npmMetrics = { name: 'npm_metrics.json', data };
   const packageList = runCfg?.npm?.packages || {};
-  const npmPackages = Object.entries(packageList).map(([pkg, version]) => `${pkg}@${version}`);
 
   const nodeModulesPresent = hasNodeModulesFolder(runCfg);
 
@@ -140,13 +140,18 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
     npmMetrics.data.rebuild = {duration: endTime - startTime};
   }
 
-  if (npmPackages.length === 0) {
+  if (Object.keys(packageList).length === 0) {
     return npmMetrics;
   }
 
+  // Ensure version is a string value as NPM only accept strings.
+  const fixedPackageList = Object.fromEntries(
+    Object.entries(packageList).map(([k, v]) => [k, String(v)])
+  );
+
   // install npm packages
   startTime = (new Date()).getTime();
-  await installNpmDependencies(npmPackages);
+  await installNpmDependencies(fixedPackageList);
   endTime = (new Date()).getTime();
   npmMetrics.data.install = {duration: endTime - startTime};
   return npmMetrics;
