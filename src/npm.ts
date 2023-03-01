@@ -59,13 +59,14 @@ export default class NPM {
 
   public static configure (cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
     return new Promise((resolve) => {
-      const args = Object.entries(cfg).map((k, v) => `${k}=${v}`);
+      const args = Object.keys(cfg).map((k,) => `${k}=${cfg[k]}`);
       // FIXME: fix path to NPM
-      const p = spawn('npm', args);
+      const p = spawn('npm', ['config', 'set', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
-      p.on('exit', (exitCode) => {
-        resolve(exitCode);
+      p.on('exit', () => {
+        console.log('Finished');
+        resolve(0);
       });
     });
   }
