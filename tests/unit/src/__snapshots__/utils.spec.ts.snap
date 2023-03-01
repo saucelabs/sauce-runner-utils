@@ -27,9 +27,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.cafile",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -47,9 +44,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.strictSSL.false",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": false,
@@ -67,9 +61,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.strictSSL.true",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -79,7 +70,9 @@ Array [
 
 exports[`utils .prepareNpmEnv should call npm install 1`] = `
 Array [
-  "mypackage@1.2.3",
+  Object {
+    "mypackage": "1.2.3",
+  },
 ]
 `;
 
@@ -93,9 +86,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "my.registry",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -113,9 +103,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -133,9 +120,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "npmland.io",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -167,9 +151,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -187,9 +168,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,
@@ -207,9 +185,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "registryland.io",
-    "retry": Object {
-      "retries": 3,
-    },
     "rollback": false,
     "save": false,
     "strict-ssl": true,

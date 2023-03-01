@@ -133,18 +133,18 @@ describe('utils', function () {
         'strict-ssl': true,
         'package-lock': false
       };
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await setUpNpmConfig(config);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should call npm install', async function () {
       const installSpyOn = jest.spyOn(npm, 'install');
-      await installNpmDependencies(['mypackage@1.2.3']);
+      await installNpmDependencies({'mypackage': '1.2.3'});
       expect(installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
@@ -152,17 +152,17 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.registry = 'registryland.io';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use default registry', async function () {
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL', async function () {
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
@@ -171,7 +171,7 @@ describe('utils', function () {
       cfg.npm ||= {};
       cfg.npm.strictSSL = null;
       cfg.npm.registry = 'test.strictSSL.null';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
@@ -180,7 +180,7 @@ describe('utils', function () {
       cfg.npm ||= {};
       cfg.npm.strictSSL = false;
       cfg.npm.registry = 'test.strictSSL.false';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
@@ -189,7 +189,7 @@ describe('utils', function () {
       cfg.npm ||= {};
       cfg.npm.strictSSL = true;
       cfg.npm.registry = 'test.strictSSL.true';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
@@ -198,7 +198,7 @@ describe('utils', function () {
       cfg.npm ||= {};
       cfg.npm.registry = 'test.cafile';
       process.env.CA_FILE = '/fake/path';
-      const loadSpyOn = jest.spyOn(npm, 'load');
+      const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
