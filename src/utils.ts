@@ -44,8 +44,6 @@ export function getDefaultRegistry () {
 export async function setUpNpmConfig (nodePath: IHasNodePath, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
-    // Note: This is temporarily removed, waiting to get the cli-version of it.
-    // retry: { retries: 3 },
     json: false,
     save: false,
     audit: false,
