@@ -60,7 +60,7 @@ export default class NPM {
 
   public static configure (nodePath: IHasNodePath, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
     return new Promise((resolve) => {
-      const args = Object.keys(cfg).map((k,) => `${k}=${cfg[k]}`);
+      const args = Object.keys(cfg).filter((k) => cfg[k] !== null && cfg[k] !== undefined).map((k) => `${k}=${cfg[k]}`);
       const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'config', 'set', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);

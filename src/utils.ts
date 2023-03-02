@@ -49,7 +49,6 @@ export async function setUpNpmConfig (nodePath: IHasNodePath, userConfig: NpmCon
     json: false,
     save: false,
     audit: false,
-    rollback: false,
     fund: false,
     noproxy: 'registry.npmjs.org',
     cafile: process.env.CA_FILE || null,
