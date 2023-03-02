@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig, IHasNodePath } from './types';
+import { HasNpmConfig, HasPath, HasSuites, Suite, NpmConfig, NodePath } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -24,7 +24,7 @@ export function shouldRecordVideo () {
   return videoOption === 'true' || videoOption === '1';
 }
 
-let runConfig: IHasNpmConfig | IHasPath | IHasSuites;
+let runConfig: HasNpmConfig | HasPath | HasSuites;
 
 export function loadRunConfig (cfgPath: string) {
   if (runConfig) {
@@ -41,7 +41,7 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (nodePath: IHasNodePath, userConfig: NpmConfig) {
+export async function setUpNpmConfig (nodePath: NodePath, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     json: false,
@@ -57,13 +57,13 @@ export async function setUpNpmConfig (nodePath: IHasNodePath, userConfig: NpmCon
   await npm.configure(nodePath, Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (nodePath: IHasNodePath, packageList: {[key:string]: string}) {
+export async function installNpmDependencies (nodePath: NodePath, packageList: {[key:string]: string}) {
   const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
   await npm.install(nodePath, packageList);
 }
 
-export async function rebuildNpmDependencies (nodePath: IHasNodePath, path: string) {
+export async function rebuildNpmDependencies (nodePath: NodePath, path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
     await npm.rebuild(nodePath, '--prefix', path);
@@ -73,7 +73,7 @@ export async function rebuildNpmDependencies (nodePath: IHasNodePath, path: stri
 }
 
 // Check if node_modules already exists in provided project
-export function hasNodeModulesFolder (runCfg: IHasPath) {
+export function hasNodeModulesFolder (runCfg: HasPath) {
   const projectFolder = path.dirname(runCfg.path);
 
   // Docker: if sauce-runner.json is in home, node_module won't be users'
@@ -94,7 +94,7 @@ export function hasNodeModulesFolder (runCfg: IHasPath) {
   return false;
 }
 
-export function getNpmConfig (runnerConfig: IHasNpmConfig) {
+export function getNpmConfig (runnerConfig: HasNpmConfig) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
@@ -106,7 +106,7 @@ export function getNpmConfig (runnerConfig: IHasNpmConfig) {
   };
 }
 
-export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath, nodePath: IHasNodePath) {
+export async function prepareNpmEnv (runCfg: HasNpmConfig & HasPath, nodePath: NodePath) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},
@@ -195,7 +195,7 @@ export function getEnv (suite: Suite) {
   return env;
 }
 
-export function getSuite (runConfig: IHasSuites, suiteName: string) {
+export function getSuite (runConfig: HasSuites, suiteName: string) {
   return runConfig.suites.find((testSuite) => testSuite.name === suiteName);
 }
 

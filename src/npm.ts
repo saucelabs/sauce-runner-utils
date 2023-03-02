@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
 import { lstat, rename, rm, writeFile } from 'fs/promises';
-import { IHasNodePath } from './types';
+import { NodePath } from './types';
 
 const temporarilyMovedFiles: {[key: string]: string} = {
   'package.json': `.package.json-${process.pid}`,
@@ -34,7 +34,7 @@ export default class NPM {
     }
   }
 
-  public static async install (nodePath: IHasNodePath, pkg: {[key: string]: string}) {
+  public static async install (nodePath: NodePath, pkg: {[key: string]: string}) {
     await this.renamePackageJson();
     await writeFile('package.json', JSON.stringify({
       dependencies: pkg,
@@ -58,7 +58,7 @@ export default class NPM {
     return exitCode;
   }
 
-  public static configure (nodePath: IHasNodePath, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
+  public static configure (nodePath: NodePath, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
     return new Promise((resolve) => {
       const args = Object.keys(cfg).filter((k) => cfg[k] !== null && cfg[k] !== undefined).map((k) => `${k}=${cfg[k]}`);
       const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'config', 'set', ...args]);
@@ -71,7 +71,7 @@ export default class NPM {
     });
   }
 
-  public static rebuild (nodePath: IHasNodePath, ...args: string[]): Promise<number | null> {
+  public static rebuild (nodePath: NodePath, ...args: string[]): Promise<number | null> {
     return new Promise((resolve) => {
       const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'rebuild', ...args]);
       p.stdout.pipe(process.stdout);

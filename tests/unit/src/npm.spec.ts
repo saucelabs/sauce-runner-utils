@@ -7,10 +7,10 @@ import fs from 'fs/promises';
 const fsMocked = fs as jest.Mocked<typeof fs>;
 
 import NPM from '../../../src/npm';
-import { IHasNodePath } from '../../../src/types';
+import { NodePath } from '../../../src/types';
 
 describe('NPM', function () {
-  const nodePath: IHasNodePath = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+  const nodePath: NodePath = { nodePath: 'node-bin', npmPath: 'npm-bin' };
 
   beforeEach(function () {
     spawk.load();

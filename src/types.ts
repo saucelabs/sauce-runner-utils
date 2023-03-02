@@ -8,9 +8,6 @@ export type Suite = {
   }
 }
 
-export interface IHasPath {
-  path: string;
-}
 
 export type NpmConfig = {
   registry?: string;
@@ -19,15 +16,19 @@ export type NpmConfig = {
   packages?: { [key: string]: string | number };
 }
 
-export interface IHasNpmConfig {
+export interface HasPath {
+  path: string;
+}
+
+export interface HasNpmConfig {
   npm?: NpmConfig;
 }
 
-export interface IHasSuites {
+export interface HasSuites {
   suites: Suite[];
 }
 
-export interface IHasNodePath {
+export interface NodePath {
   nodePath: string;
   npmPath: string;
 }
