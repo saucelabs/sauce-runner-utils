@@ -104,11 +104,7 @@ export function getNpmConfig (runnerConfig: IHasNpmConfig) {
   return {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
-    // https://docs.npmjs.com/cli/v6/using-npm/config#package-lock
-    // By default, `npm install $package` will install `$package` as well
-    // as any dependency defined in package-lock.json that is missing from
-    // node_modules.
-    // Setting to false means `npm install $package` only installs `$package`
+    // Setting to false avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
 }
