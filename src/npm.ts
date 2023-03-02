@@ -8,7 +8,7 @@ const temporarilyMovedFiles: {[key: string]: string} = {
 };
 
 export default class NPM {
-  static async removePackageJson () {
+  static async renamePackageJson () {
     for (const [name, replacement] of Object.entries(temporarilyMovedFiles)) {
       try {
         // Note: we don't need the return value.
