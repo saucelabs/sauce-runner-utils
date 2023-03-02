@@ -138,7 +138,7 @@ export async function prepareNpmEnv (runCfg: HasNpmConfig & HasPath, nodePath: N
     return npmMetrics;
   }
 
-  // Ensure version is a string value as NPM only accept strings.
+  // Ensure version is a string value as NPM only accepts strings.
   const fixedPackageList = Object.fromEntries(
     Object.entries(packageList).map(([k, v]) => [k, String(v)])
   );
