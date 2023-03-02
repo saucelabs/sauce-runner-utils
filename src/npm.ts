@@ -35,7 +35,7 @@ export default class NPM {
   }
 
   public static async install (nodePath: IHasNodePath, pkg: {[key: string]: string}) {
-    await this.removePackageJson();
+    await this.renamePackageJson();
     await writeFile('package.json', JSON.stringify({
       dependencies: pkg,
     }));
