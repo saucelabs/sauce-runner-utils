@@ -101,7 +101,7 @@ export function getNpmConfig (runnerConfig: IHasNpmConfig) {
   return {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
-    // Setting to false avoid dealing with the generated file.
+    // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
 }
