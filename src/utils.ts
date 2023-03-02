@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { HasNpmConfig, HasPath, HasSuites, Suite, NpmConfig, NodePath } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodePath } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -24,7 +24,7 @@ export function shouldRecordVideo () {
   return videoOption === 'true' || videoOption === '1';
 }
 
-let runConfig: HasNpmConfig | HasPath | HasSuites;
+let runConfig: NpmConfigContainer | PathContainer | SuitesContainer;
 
 export function loadRunConfig (cfgPath: string) {
   if (runConfig) {
@@ -73,7 +73,7 @@ export async function rebuildNpmDependencies (nodePath: NodePath, path: string) 
 }
 
 // Check if node_modules already exists in provided project
-export function hasNodeModulesFolder (runCfg: HasPath) {
+export function hasNodeModulesFolder (runCfg: PathContainer) {
   const projectFolder = path.dirname(runCfg.path);
 
   // Docker: if sauce-runner.json is in home, node_module won't be users'
@@ -94,7 +94,7 @@ export function hasNodeModulesFolder (runCfg: HasPath) {
   return false;
 }
 
-export function getNpmConfig (runnerConfig: HasNpmConfig) {
+export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
@@ -106,7 +106,7 @@ export function getNpmConfig (runnerConfig: HasNpmConfig) {
   };
 }
 
-export async function prepareNpmEnv (runCfg: HasNpmConfig & HasPath, nodePath: NodePath) {
+export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodePath: NodePath) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},
@@ -195,7 +195,7 @@ export function getEnv (suite: Suite) {
   return env;
 }
 
-export function getSuite (runConfig: HasSuites, suiteName: string) {
+export function getSuite (runConfig: SuitesContainer, suiteName: string) {
   return runConfig.suites.find((testSuite) => testSuite.name === suiteName);
 }
 

@@ -8,7 +8,6 @@ export type Suite = {
   }
 }
 
-
 export type NpmConfig = {
   registry?: string;
   strictSSL?: boolean | string | null;
@@ -16,15 +15,15 @@ export type NpmConfig = {
   packages?: { [key: string]: string | number };
 }
 
-export interface HasPath {
+export interface PathContainer {
   path: string;
 }
 
-export interface HasNpmConfig {
+export interface NpmConfigContainer {
   npm?: NpmConfig;
 }
 
-export interface HasSuites {
+export interface SuitesContainer {
   suites: Suite[];
 }
 

@@ -20,7 +20,7 @@ import {
   escapeXML } from '../../../src/utils';
 import _ from 'lodash';
 import npm from '../../../src/npm';
-import { NodePath, HasNpmConfig, HasPath, HasSuites, Suite } from '../../../src/types';
+import { NodePath, NpmConfigContainer, PathContainer, SuitesContainer, Suite } from '../../../src/types';
 
 describe('utils', function () {
   const nodePath: NodePath = { nodePath: 'node-bin', npmPath: 'npm-bin' };
@@ -50,7 +50,7 @@ describe('utils', function () {
     });
 
     it('should set strictSSL from runner config', function () {
-      const runnerConfig: HasNpmConfig = {
+      const runnerConfig: NpmConfigContainer = {
         npm: {
           strictSSL: false
         }
@@ -75,7 +75,7 @@ describe('utils', function () {
     });
 
     it('should set packageLock from runner config', function () {
-      const runnerConfig: HasNpmConfig = {
+      const runnerConfig: NpmConfigContainer = {
         npm: {
           'packageLock': true
         }
@@ -114,7 +114,7 @@ describe('utils', function () {
 
   describe('.prepareNpmEnv', function () {
     let backupEnv: {[key: string]: string | undefined};
-    const runCfg: HasNpmConfig & HasPath = {
+    const runCfg: NpmConfigContainer & PathContainer = {
       path: '/fake/runner/path',
       npm: {
         packages: {
@@ -313,7 +313,7 @@ describe('utils', function () {
   });
   describe('.getSuite', function () {
     it('should get a suite from a list', function () {
-      const runCfg: HasSuites = {
+      const runCfg: SuitesContainer = {
         suites: [
           {name: 'hello'}
         ]
