@@ -20,6 +20,10 @@ Object {
 exports[`utils .prepareNpmEnv should be able to set cafile 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": "/fake/path",
     "fund": false,
@@ -36,6 +40,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   Object {
     "audit": false,
     "cafile": null,
@@ -54,6 +62,10 @@ Array [
 exports[`utils .prepareNpmEnv should be able to set strictSSL to true 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -71,6 +83,10 @@ Array [
 exports[`utils .prepareNpmEnv should call npm install 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "mypackage": "1.2.3",
   },
 ]
@@ -78,6 +94,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   Object {
     "audit": false,
     "cafile": null,
@@ -96,6 +116,10 @@ Array [
 exports[`utils .prepareNpmEnv should use default registry 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -113,6 +137,10 @@ Array [
 exports[`utils .prepareNpmEnv should use env var for registry 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -129,6 +157,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use rebuild node_modules 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   "--prefix",
   "/fake/runner",
 ]
@@ -136,6 +168,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use rebuild node_modules when not package installed 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   "--prefix",
   "/fake/runner",
 ]
@@ -143,6 +179,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   Object {
     "audit": false,
     "cafile": null,
@@ -161,6 +201,10 @@ Array [
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL if it's null in cfg 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -177,6 +221,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use user registry 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   Object {
     "audit": false,
     "cafile": null,

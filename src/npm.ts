@@ -1,5 +1,6 @@
 import { spawn } from 'child_process';
 import { lstat, rename, rm, writeFile } from 'fs/promises';
+import { IHasNodePath } from './types';
 
 const temporarilyMovedFiles: {[key: string]: string} = {
   'package.json': `.package.json-${process.pid}`,
@@ -33,13 +34,13 @@ export default class NPM {
     }
   }
 
-  public static async install (pkg: {[key: string]: string}) {
+  public static async install (nodePath: IHasNodePath, pkg: {[key: string]: string}) {
     await this.removePackageJson();
     await writeFile('package.json', JSON.stringify({
       dependencies: pkg,
     }));
 
-    const p = spawn('npm', ['install']);
+    const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'install']);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
 
@@ -57,11 +58,10 @@ export default class NPM {
     return exitCode;
   }
 
-  public static configure (cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
+  public static configure (nodePath: IHasNodePath, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
     return new Promise((resolve) => {
       const args = Object.keys(cfg).map((k,) => `${k}=${cfg[k]}`);
-      // FIXME: fix path to NPM
-      const p = spawn('npm', ['config', 'set', ...args]);
+      const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'config', 'set', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', () => {
@@ -71,10 +71,9 @@ export default class NPM {
     });
   }
 
-  public static rebuild (...args: string[]): Promise<number | null> {
+  public static rebuild (nodePath: IHasNodePath, ...args: string[]): Promise<number | null> {
     return new Promise((resolve) => {
-      // FIXME: fix path to NPM
-      const p = spawn('npm', ['rebuild', ...args]);
+      const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'rebuild', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', (exitCode) => {

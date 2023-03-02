@@ -26,3 +26,8 @@ export interface IHasNpmConfig {
 export interface IHasSuites {
   suites: Suite[];
 }
+
+export interface IHasNodePath {
+  nodePath: string;
+  npmPath: string;
+}

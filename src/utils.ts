@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig } from './types';
+import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig, IHasNodePath } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -41,7 +41,7 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (userConfig: NpmConfig) {
+export async function setUpNpmConfig (nodePath: IHasNodePath, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     // Note: This is temporarily removed, waiting to get the cli-version of it.
@@ -57,21 +57,21 @@ export async function setUpNpmConfig (userConfig: NpmConfig) {
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.configure(Object.assign({}, defaultConfig, userConfig));
+  await npm.configure(nodePath, Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (packageList: {[key:string]: string}) {
+export async function installNpmDependencies (nodePath: IHasNodePath, packageList: {[key:string]: string}) {
   const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
-  await npm.install(packageList);
+  await npm.install(nodePath, packageList);
 }
 
-export async function rebuildNpmDependencies (path: string) {
+export async function rebuildNpmDependencies (nodePath: IHasNodePath, path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
-    await npm.rebuild('--prefix', path);
+    await npm.rebuild(nodePath, '--prefix', path);
   } else {
-    await npm.rebuild();
+    await npm.rebuild(nodePath);
   }
 }
 
@@ -109,7 +109,7 @@ export function getNpmConfig (runnerConfig: IHasNpmConfig) {
   };
 }
 
-export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
+export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath, nodePath: IHasNodePath) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},
@@ -122,7 +122,7 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
 
   const npmConfig = getNpmConfig(runCfg);
   let startTime = (new Date()).getTime();
-  await setUpNpmConfig(npmConfig);
+  await setUpNpmConfig(nodePath, npmConfig);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
@@ -132,7 +132,7 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
 
     const projectPath = path.dirname(runCfg.path);
     startTime = (new Date()).getTime();
-    await rebuildNpmDependencies(projectPath);
+    await rebuildNpmDependencies(nodePath, projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
   }
@@ -148,7 +148,7 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
 
   // install npm packages
   startTime = (new Date()).getTime();
-  await installNpmDependencies(fixedPackageList);
+  await installNpmDependencies(nodePath, fixedPackageList);
   endTime = (new Date()).getTime();
   npmMetrics.data.install = {duration: endTime - startTime};
   return npmMetrics;

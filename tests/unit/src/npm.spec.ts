@@ -7,8 +7,11 @@ import fs from 'fs/promises';
 const fsMocked = fs as jest.Mocked<typeof fs>;
 
 import NPM from '../../../src/npm';
+import { IHasNodePath } from '../../../src/types';
 
 describe('NPM', function () {
+  const nodePath: IHasNodePath = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+
   beforeEach(function () {
     spawk.load();
     spawk.preventUnmatched();
@@ -20,21 +23,22 @@ describe('NPM', function () {
   });
 
   it('.configure must invoke npm config set', async function () {
-    const interceptor = spawk.spawn('npm').stdout('npm runned').exit(0);
+    const interceptor = spawk.spawn(nodePath.nodePath).stdout('npm runned').exit(0);
+    await NPM.configure(nodePath, { registry: 'myregistry' });
 
-    await NPM.configure({ registry: 'myregistry' });
-
-    expect(interceptor.calledWith.args).toEqual(['config', 'set', 'registry=myregistry']);
+    expect(interceptor.calledWith.command).toEqual(nodePath.nodePath);
+    expect(interceptor.calledWith.args).toEqual([nodePath.npmPath, 'config', 'set', 'registry=myregistry']);
   });
 
   it('.rebuild must invoke npm rebuild', async function () {
-    const interceptor = spawk.spawn('npm').stdout('npm runned').exit(0);
-    await NPM.rebuild();
-    expect(interceptor.calledWith.args).toEqual(['rebuild']);
+    const interceptor = spawk.spawn(nodePath.nodePath).stdout('npm runned').exit(0);
+    await NPM.rebuild(nodePath);
+    expect(interceptor.calledWith.command).toEqual(nodePath.nodePath);
+    expect(interceptor.calledWith.args).toEqual([nodePath.npmPath, 'rebuild']);
   });
 
   it('.install must invoke npm install', async function () {
-    const interceptor = spawk.spawn('npm').stdout('npm runned').exit(0);
+    const interceptor = spawk.spawn(nodePath.nodePath).stdout('npm runned').exit(0);
     fsMocked.lstat.mockRejectedValue('non-existing');
     let writeFile, writeContent;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,10 +49,11 @@ describe('NPM', function () {
         resolve();
       });
     });
-    await NPM.install({
+    await NPM.install(nodePath, {
       cypress: '12.6.0'
     });
-    expect(interceptor.calledWith.args).toEqual(['install']);
+    expect(interceptor.calledWith.command).toEqual(nodePath.nodePath);
+    expect(interceptor.calledWith.args).toEqual([nodePath.npmPath, 'install']);
     expect(fsMocked.lstat).toBeCalledTimes(4);
     expect(fsMocked.writeFile).toBeCalledTimes(1);
     expect(writeFile).toEqual('package.json');
@@ -56,17 +61,18 @@ describe('NPM', function () {
   });
 
   it('.install moves package.json / package-lock.json', async function () {
-    const interceptor = spawk.spawn('npm').stdout('npm runned').exit(0);
+    const interceptor = spawk.spawn(nodePath.nodePath).stdout('npm runned').exit(0);
     fsMocked.lstat.mockRejectedValue('non-existing');
 
     fsMocked.lstat.mockResolvedValue({} as Stats);
     fsMocked.rename.mockResolvedValue();
     fsMocked.writeFile.mockResolvedValue();
 
-    await NPM.install({
+    await NPM.install(nodePath, {
       cypress: '12.6.0'
     });
-    expect(interceptor.calledWith.args).toEqual(['install']);
+    expect(interceptor.calledWith.command).toEqual(nodePath.nodePath);
+    expect(interceptor.calledWith.args).toEqual([nodePath.npmPath, 'install']);
     expect(fsMocked.rename.mock.calls).toEqual([
       ['package.json', `.package.json-${process.pid}`],
       ['package-lock.json', `.package-lock.json-${process.pid}`],
