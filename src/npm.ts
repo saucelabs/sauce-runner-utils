@@ -71,9 +71,9 @@ export default class NPM {
     });
   }
 
-  public static rebuild (nodePath: NodeContext, ...args: string[]): Promise<number | null> {
+  public static rebuild (nodeCtx: NodeContext, ...args: string[]): Promise<number | null> {
     return new Promise((resolve) => {
-      const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'rebuild', ...args]);
+      const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', (exitCode) => {
