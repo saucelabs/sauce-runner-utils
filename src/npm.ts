@@ -34,13 +34,13 @@ export default class NPM {
     }
   }
 
-  public static async install (nodePath: NodeContext, pkg: {[key: string]: string}) {
+  public static async install (nodeCtx: NodeContext, pkg: {[key: string]: string}) {
     await this.renamePackageJson();
     await writeFile('package.json', JSON.stringify({
       dependencies: pkg,
     }));
 
-    const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'install']);
+    const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install']);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
 
