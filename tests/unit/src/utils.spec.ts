@@ -20,10 +20,10 @@ import {
   escapeXML } from '../../../src/utils';
 import _ from 'lodash';
 import npm from '../../../src/npm';
-import { NodePath, NpmConfigContainer, PathContainer, SuitesContainer, Suite } from '../../../src/types';
+import { NodeContext, NpmConfigContainer, PathContainer, SuitesContainer, Suite } from '../../../src/types';
 
 describe('utils', function () {
-  const nodePath: NodePath = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+  const nodePath: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
 
   describe('.getNpmConfig', function () {
     const emptyConfig = {

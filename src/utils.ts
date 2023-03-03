@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodePath } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -41,7 +41,7 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (nodePath: NodePath, userConfig: NpmConfig) {
+export async function setUpNpmConfig (nodePath: NodeContext, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     json: false,
@@ -57,13 +57,13 @@ export async function setUpNpmConfig (nodePath: NodePath, userConfig: NpmConfig)
   await npm.configure(nodePath, Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (nodePath: NodePath, packageList: {[key:string]: string}) {
+export async function installNpmDependencies (nodePath: NodeContext, packageList: {[key:string]: string}) {
   const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
   await npm.install(nodePath, packageList);
 }
 
-export async function rebuildNpmDependencies (nodePath: NodePath, path: string) {
+export async function rebuildNpmDependencies (nodePath: NodeContext, path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
     await npm.rebuild(nodePath, '--prefix', path);
@@ -106,7 +106,7 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   };
 }
 
-export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodePath: NodePath) {
+export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodePath: NodeContext) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},

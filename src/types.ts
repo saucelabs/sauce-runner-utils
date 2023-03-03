@@ -27,7 +27,7 @@ export interface SuitesContainer {
   suites: Suite[];
 }
 
-export interface NodePath {
+export interface NodeContext {
   nodePath: string;
   npmPath: string;
 }
