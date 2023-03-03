@@ -210,7 +210,7 @@ describe('utils', function () {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       statSyncSpyOn.mockReturnValue({ isDirectory: () => true });
-      await prepareNpmEnv(runCfg, nodePath);
+      await prepareNpmEnv(runCfg, nodeCtx);
       expect(rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1]).toMatchSnapshot();
 
     });
