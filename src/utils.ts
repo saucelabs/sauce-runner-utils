@@ -41,7 +41,7 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (nodePath: NodeContext, userConfig: NpmConfig) {
+export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
     json: false,
@@ -54,7 +54,7 @@ export async function setUpNpmConfig (nodePath: NodeContext, userConfig: NpmConf
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.configure(nodePath, Object.assign({}, defaultConfig, userConfig));
+  await npm.configure(nodeCtx, Object.assign({}, defaultConfig, userConfig));
 }
 
 export async function installNpmDependencies (nodeCtx: NodeContext, packageList: {[key:string]: string}) {
@@ -106,7 +106,7 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   };
 }
 
-export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodePath: NodeContext) {
+export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodeCtx: NodeContext) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},
@@ -119,7 +119,7 @@ export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer,
 
   const npmConfig = getNpmConfig(runCfg);
   let startTime = (new Date()).getTime();
-  await setUpNpmConfig(nodePath, npmConfig);
+  await setUpNpmConfig(nodeCtx, npmConfig);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
@@ -129,7 +129,7 @@ export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer,
 
     const projectPath = path.dirname(runCfg.path);
     startTime = (new Date()).getTime();
-    await rebuildNpmDependencies(nodePath, projectPath);
+    await rebuildNpmDependencies(nodeCtx, projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
   }
@@ -145,7 +145,7 @@ export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer,
 
   // install npm packages
   startTime = (new Date()).getTime();
-  await installNpmDependencies(nodePath, fixedPackageList);
+  await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = (new Date()).getTime();
   npmMetrics.data.install = {duration: endTime - startTime};
   return npmMetrics;
