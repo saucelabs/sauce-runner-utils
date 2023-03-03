@@ -58,10 +58,10 @@ export default class NPM {
     return exitCode;
   }
 
-  public static configure (nodePath: NodeContext, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
+  public static configure (nodeCtx: NodeContext, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
     return new Promise((resolve) => {
       const args = Object.keys(cfg).filter((k) => cfg[k] !== null && cfg[k] !== undefined).map((k) => `${k}=${cfg[k]}`);
-      const p = spawn(nodePath.nodePath, [nodePath.npmPath, 'config', 'set', ...args]);
+      const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'config', 'set', ...args]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', () => {
