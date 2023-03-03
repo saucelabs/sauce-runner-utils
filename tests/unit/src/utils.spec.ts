@@ -192,7 +192,7 @@ describe('utils', function () {
       cfg.npm.strictSSL = true;
       cfg.npm.registry = 'test.strictSSL.true';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(cfg, nodePath);
+      await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set cafile', async function () {
