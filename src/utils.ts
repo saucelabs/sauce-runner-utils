@@ -66,9 +66,9 @@ export async function installNpmDependencies (nodeCtx: NodeContext, packageList:
 export async function rebuildNpmDependencies (nodeCtx: NodeContext, path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
-    await npm.rebuild(nodePath, '--prefix', path);
+    await npm.rebuild(nodeCtx, '--prefix', path);
   } else {
-    await npm.rebuild(nodePath);
+    await npm.rebuild(nodeCtx);
   }
 }
 

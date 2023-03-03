@@ -23,7 +23,7 @@ import npm from '../../../src/npm';
 import { NodeContext, NpmConfigContainer, PathContainer, SuitesContainer, Suite } from '../../../src/types';
 
 describe('utils', function () {
-  const nodePath: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+  const nodeCtx: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
 
   describe('.getNpmConfig', function () {
     const emptyConfig = {
@@ -136,18 +136,18 @@ describe('utils', function () {
         'package-lock': false
       };
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await setUpNpmConfig(nodePath, config);
+      await setUpNpmConfig(nodeCtx, config);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should call npm install', async function () {
       const installSpyOn = jest.spyOn(npm, 'install');
-      await installNpmDependencies(nodePath, {'mypackage': '1.2.3'});
+      await installNpmDependencies(nodeCtx, {'mypackage': '1.2.3'});
       expect(installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(runCfg, nodePath);
+      await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use user registry', async function () {
@@ -155,17 +155,17 @@ describe('utils', function () {
       cfg.npm ||= {};
       cfg.npm.registry = 'registryland.io';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(cfg, nodePath);
+      await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use default registry', async function () {
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(runCfg, nodePath);
+      await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL', async function () {
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(runCfg, nodePath);
+      await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL if it\'s null in cfg', async function () {
@@ -174,7 +174,7 @@ describe('utils', function () {
       cfg.npm.strictSSL = null;
       cfg.npm.registry = 'test.strictSSL.null';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(runCfg, nodePath);
+      await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set strictSSL to false', async function () {
@@ -183,7 +183,7 @@ describe('utils', function () {
       cfg.npm.strictSSL = false;
       cfg.npm.registry = 'test.strictSSL.false';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(cfg, nodePath);
+      await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should be able to set strictSSL to true', async function () {
