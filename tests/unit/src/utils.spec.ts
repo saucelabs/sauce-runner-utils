@@ -201,7 +201,7 @@ describe('utils', function () {
       cfg.npm.registry = 'test.cafile';
       process.env.CA_FILE = '/fake/path';
       const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(cfg, nodePath);
+      await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
     it('should use rebuild node_modules', async function () {
