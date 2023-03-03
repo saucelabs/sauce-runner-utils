@@ -57,10 +57,10 @@ export async function setUpNpmConfig (nodePath: NodeContext, userConfig: NpmConf
   await npm.configure(nodePath, Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (nodePath: NodeContext, packageList: {[key:string]: string}) {
+export async function installNpmDependencies (nodeCtx: NodeContext, packageList: {[key:string]: string}) {
   const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
-  await npm.install(nodePath, packageList);
+  await npm.install(nodeCtx, packageList);
 }
 
 export async function rebuildNpmDependencies (nodeCtx: NodeContext, path: string) {
