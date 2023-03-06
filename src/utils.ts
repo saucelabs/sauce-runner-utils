@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { IHasNpmConfig, IHasPath, IHasSuites, Suite, NpmConfig } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -24,7 +24,7 @@ export function shouldRecordVideo () {
   return videoOption === 'true' || videoOption === '1';
 }
 
-let runConfig: IHasNpmConfig | IHasPath | IHasSuites;
+let runConfig: NpmConfigContainer | PathContainer | SuitesContainer;
 
 export function loadRunConfig (cfgPath: string) {
   if (runConfig) {
@@ -41,14 +41,12 @@ export function getDefaultRegistry () {
   return process.env.SAUCE_NPM_CACHE || DEFAULT_REGISTRY;
 }
 
-export async function setUpNpmConfig (userConfig: NpmConfig) {
+export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfig) {
   console.log('Preparing npm environment');
   const defaultConfig = {
-    retry: { retries: 3 },
     json: false,
     save: false,
     audit: false,
-    rollback: false,
     fund: false,
     noproxy: 'registry.npmjs.org',
     cafile: process.env.CA_FILE || null,
@@ -56,25 +54,26 @@ export async function setUpNpmConfig (userConfig: NpmConfig) {
     'strict-ssl': true,
     registry: getDefaultRegistry()
   };
-  await npm.load(Object.assign({}, defaultConfig, userConfig));
+  await npm.configure(nodeCtx, Object.assign({}, defaultConfig, userConfig));
 }
 
-export async function installNpmDependencies (packageList: string[]) {
-  console.log(`\nInstalling packages: ${packageList.join(' ')}`);
-  await npm.install(...packageList);
+export async function installNpmDependencies (nodeCtx: NodeContext, packageList: {[key:string]: string}) {
+  const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
+  console.log(`\nInstalling packages: ${packages.join(' ')}`);
+  await npm.install(nodeCtx, packageList);
 }
 
-export async function rebuildNpmDependencies (path: string) {
+export async function rebuildNpmDependencies (nodeCtx: NodeContext, path: string) {
   console.log(`\nRebuilding packages:`);
   if (path) {
-    await npm.rebuild('--prefix', path);
+    await npm.rebuild(nodeCtx, '--prefix', path);
   } else {
-    await npm.rebuild();
+    await npm.rebuild(nodeCtx);
   }
 }
 
 // Check if node_modules already exists in provided project
-export function hasNodeModulesFolder (runCfg: IHasPath) {
+export function hasNodeModulesFolder (runCfg: PathContainer) {
   const projectFolder = path.dirname(runCfg.path);
 
   // Docker: if sauce-runner.json is in home, node_module won't be users'
@@ -95,23 +94,19 @@ export function hasNodeModulesFolder (runCfg: IHasPath) {
   return false;
 }
 
-export function getNpmConfig (runnerConfig: IHasNpmConfig) {
+export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
   return {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
-    // https://docs.npmjs.com/cli/v6/using-npm/config#package-lock
-    // By default, `npm install $package` will install `$package` as well
-    // as any dependency defined in package-lock.json that is missing from
-    // node_modules.
-    // Setting to false means `npm install $package` only installs `$package`
+    // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
 }
 
-export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
+export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodeCtx: NodeContext) {
   const data: {
     install: {duration: number},
     rebuild?: {duration: number},
@@ -119,13 +114,12 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
   } = { install: { duration: 0 }, setup: { duration: 0 } };
   const npmMetrics = { name: 'npm_metrics.json', data };
   const packageList = runCfg?.npm?.packages || {};
-  const npmPackages = Object.entries(packageList).map(([pkg, version]) => `${pkg}@${version}`);
 
   const nodeModulesPresent = hasNodeModulesFolder(runCfg);
 
   const npmConfig = getNpmConfig(runCfg);
   let startTime = (new Date()).getTime();
-  await setUpNpmConfig(npmConfig);
+  await setUpNpmConfig(nodeCtx, npmConfig);
   let endTime = (new Date()).getTime();
   npmMetrics.data.setup = {duration: endTime - startTime};
 
@@ -135,18 +129,23 @@ export async function prepareNpmEnv (runCfg: IHasNpmConfig & IHasPath) {
 
     const projectPath = path.dirname(runCfg.path);
     startTime = (new Date()).getTime();
-    await rebuildNpmDependencies(projectPath);
+    await rebuildNpmDependencies(nodeCtx, projectPath);
     endTime = (new Date()).getTime();
     npmMetrics.data.rebuild = {duration: endTime - startTime};
   }
 
-  if (npmPackages.length === 0) {
+  if (Object.keys(packageList).length === 0) {
     return npmMetrics;
   }
 
+  // Ensure version is a string value as NPM only accepts strings.
+  const fixedPackageList = Object.fromEntries(
+    Object.entries(packageList).map(([k, v]) => [k, String(v)])
+  );
+
   // install npm packages
   startTime = (new Date()).getTime();
-  await installNpmDependencies(npmPackages);
+  await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = (new Date()).getTime();
   npmMetrics.data.install = {duration: endTime - startTime};
   return npmMetrics;
@@ -196,7 +195,7 @@ export function getEnv (suite: Suite) {
   return env;
 }
 
-export function getSuite (runConfig: IHasSuites, suiteName: string) {
+export function getSuite (runConfig: SuitesContainer, suiteName: string) {
   return runConfig.suites.find((testSuite) => testSuite.name === suiteName);
 }
 

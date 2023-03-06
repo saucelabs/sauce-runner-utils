@@ -20,6 +20,10 @@ Object {
 exports[`utils .prepareNpmEnv should be able to set cafile 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": "/fake/path",
     "fund": false,
@@ -27,10 +31,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.cafile",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -40,6 +40,10 @@ Array [
 exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -47,10 +51,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.strictSSL.false",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": false,
   },
@@ -60,6 +60,10 @@ Array [
 exports[`utils .prepareNpmEnv should be able to set strictSSL to true 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -67,10 +71,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "test.strictSSL.true",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -79,12 +79,22 @@ Array [
 
 exports[`utils .prepareNpmEnv should call npm install 1`] = `
 Array [
-  "mypackage@1.2.3",
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
+    "mypackage": "1.2.3",
+  },
 ]
 `;
 
 exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   Object {
     "audit": false,
     "cafile": null,
@@ -93,10 +103,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "my.registry",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -106,6 +112,10 @@ Array [
 exports[`utils .prepareNpmEnv should use default registry 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -113,10 +123,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -126,6 +132,10 @@ Array [
 exports[`utils .prepareNpmEnv should use env var for registry 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -133,10 +143,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "npmland.io",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -145,6 +151,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use rebuild node_modules 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   "--prefix",
   "/fake/runner",
 ]
@@ -152,6 +162,10 @@ Array [
 
 exports[`utils .prepareNpmEnv should use rebuild node_modules when not package installed 1`] = `
 Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
   "--prefix",
   "/fake/runner",
 ]
@@ -160,6 +174,10 @@ Array [
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -167,10 +185,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -180,6 +194,10 @@ Array [
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL if it's null in cfg 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -187,10 +205,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
@@ -200,6 +214,10 @@ Array [
 exports[`utils .prepareNpmEnv should use user registry 1`] = `
 Array [
   Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
     "audit": false,
     "cafile": null,
     "fund": false,
@@ -207,10 +225,6 @@ Array [
     "noproxy": "registry.npmjs.org",
     "package-lock": false,
     "registry": "registryland.io",
-    "retry": Object {
-      "retries": 3,
-    },
-    "rollback": false,
     "save": false,
     "strict-ssl": true,
   },
