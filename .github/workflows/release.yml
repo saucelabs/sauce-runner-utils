@@ -1,4 +1,4 @@
-name: Manual NPM Publish
+name: Release New Version
 
 on:
   workflow_dispatch:
@@ -58,16 +58,16 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Release
-        if: ${{ github.event.inputs.preReleaseFlavor == '' }}
-        run: npm run release:ci -- ${{ github.event.inputs.releaseType }}
+      - name: Pre-Release
+        if: ${{ github.event.inputs.preReleaseFlavor != '' }}
+        run: npm run release:ci -- ${{ github.event.inputs.releaseType }} --preRelease=${{ github.event.inputs.preReleaseFlavor }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Pre-Release
-        if: ${{ github.event.inputs.preReleaseFlavor != '' }}
-        run: npm run release:ci -- ${{ github.event.inputs.releaseType }} --preRelease=${{ github.event.inputs.preReleaseFlavor }}
+      - name: Release
+        if: ${{ github.event.inputs.preReleaseFlavor == '' }}
+        run: npm run release:ci -- ${{ github.event.inputs.releaseType }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
