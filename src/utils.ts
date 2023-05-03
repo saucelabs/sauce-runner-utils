@@ -52,7 +52,8 @@ export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfi
     cafile: process.env.CA_FILE || null,
     'package-lock': false,
     'strict-ssl': true,
-    registry: getDefaultRegistry()
+    registry: getDefaultRegistry(),
+    'update-notifier': false
   };
   await npm.configure(nodeCtx, Object.assign({}, defaultConfig, userConfig));
 }

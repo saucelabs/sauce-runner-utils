@@ -33,6 +33,7 @@ Array [
     "registry": "test.cafile",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -53,6 +54,7 @@ Array [
     "registry": "test.strictSSL.false",
     "save": false,
     "strict-ssl": false,
+    "update-notifier": false,
   },
 ]
 `;
@@ -73,6 +75,7 @@ Array [
     "registry": "test.strictSSL.true",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -105,6 +108,7 @@ Array [
     "registry": "my.registry",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -125,6 +129,7 @@ Array [
     "registry": "https://registry.npmjs.org",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -145,6 +150,7 @@ Array [
     "registry": "npmland.io",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -187,6 +193,7 @@ Array [
     "registry": "https://registry.npmjs.org",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -207,6 +214,7 @@ Array [
     "registry": "https://registry.npmjs.org",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;
@@ -227,6 +235,7 @@ Array [
     "registry": "registryland.io",
     "save": false,
     "strict-ssl": true,
+    "update-notifier": false,
   },
 ]
 `;

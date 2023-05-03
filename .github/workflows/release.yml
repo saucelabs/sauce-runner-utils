@@ -50,8 +50,8 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config --global user.name "oss-sauce-bot"
-          git config --global user.email "66365630+oss-sauce-bot@users.noreply.github.com"
+          git config --global user.name "devx-sauce-bot"
+          git config --global user.email "devx.bot@saucelabs.com"
 
       - name: Install Dependencies
         run: npm ci
@@ -60,7 +60,15 @@ jobs:
         run: npm run build
 
       - name: Release
-        run: npm run release:ci -- ${{github.event.inputs.releaseType}}
+        if: ${{ github.event.inputs.preReleaseFlavor == '' }}
+        run: npm run release:ci -- ${{ github.event.inputs.releaseType }}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Pre-Release
+        if: ${{ github.event.inputs.preReleaseFlavor != '' }}
+        run: npm run release:ci -- ${{ github.event.inputs.releaseType }} --preRelease=${{ github.event.inputs.preReleaseFlavor }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
