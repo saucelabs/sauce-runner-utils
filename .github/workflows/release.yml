@@ -58,16 +58,19 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Login to NPM
+        run: npm set "//registry.npmjs.org/:_authToken" ${{ secrets.NPM_TOKEN }}
+
       - name: Pre-Release
         if: ${{ github.event.inputs.preReleaseFlavor != '' }}
         run: npm run release:ci -- ${{ github.event.inputs.releaseType }} --preRelease=${{ github.event.inputs.preReleaseFlavor }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
         if: ${{ github.event.inputs.preReleaseFlavor == '' }}
         run: npm run release:ci -- ${{ github.event.inputs.releaseType }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
