@@ -199,7 +199,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.registry = 'test.cafile';
-      process.env.CA_FILE = '/fake/path';
+      process.env.NPM_CONFIG_CAFILE = '/fake/path';
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
