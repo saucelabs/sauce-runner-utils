@@ -51,7 +51,7 @@ export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfi
     noproxy: 'registry.npmjs.org',
     cafile: process.env.NPM_CONFIG_CAFILE || null,
     'package-lock': false,
-    'strict-ssl': false,
+    'strict-ssl': true,
     registry: getDefaultRegistry(),
     'update-notifier': false
   };
