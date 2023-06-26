@@ -17,27 +17,6 @@ Object {
 }
 `;
 
-exports[`utils .prepareNpmEnv should be able to set cafile 1`] = `
-Array [
-  Object {
-    "nodePath": "node-bin",
-    "npmPath": "npm-bin",
-  },
-  Object {
-    "audit": false,
-    "cafile": "/fake/path",
-    "fund": false,
-    "json": false,
-    "noproxy": "registry.npmjs.org",
-    "package-lock": false,
-    "registry": "test.cafile",
-    "save": false,
-    "strict-ssl": true,
-    "update-notifier": false,
-  },
-]
-`;
-
 exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
 Array [
   Object {
@@ -46,7 +25,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -67,7 +45,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -100,7 +77,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -121,7 +97,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -142,7 +117,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -185,7 +159,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -206,7 +179,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",
@@ -227,7 +199,6 @@ Array [
   },
   Object {
     "audit": false,
-    "cafile": null,
     "fund": false,
     "json": false,
     "noproxy": "registry.npmjs.org",

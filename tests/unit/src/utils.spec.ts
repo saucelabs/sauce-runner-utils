@@ -195,15 +195,6 @@ describe('utils', function () {
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
-    it('should be able to set cafile', async function () {
-      const cfg = _.cloneDeep(runCfg);
-      cfg.npm ||= {};
-      cfg.npm.registry = 'test.cafile';
-      process.env.NPM_CONFIG_CAFILE = '/fake/path';
-      const loadSpyOn = jest.spyOn(npm, 'configure');
-      await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
-    });
     it('should use rebuild node_modules', async function () {
       const rebuildSpyOn = jest.spyOn(npm, 'rebuild');
       const statSyncSpyOn = jest.spyOn(fs, 'statSync');
