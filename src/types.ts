@@ -1,5 +1,3 @@
-
-
 export type Suite = {
   name: string;
   env?: { [key: string]: string };

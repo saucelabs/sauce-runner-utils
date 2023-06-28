@@ -63,9 +63,9 @@ Array [
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
   },
-  Object {
-    "mypackage": "1.2.3",
-  },
+  Array [
+    "mypackage@1.2.3",
+  ],
 ]
 `;
 
