@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { lstat, rename, rm, writeFile } from 'fs/promises';
+import { lstat, rename } from 'fs/promises';
 import { NodeContext } from './types';
 
 const temporarilyMovedFiles: {[key: string]: string} = {
@@ -34,13 +34,9 @@ export default class NPM {
     }
   }
 
-  public static async install (nodeCtx: NodeContext, pkg: {[key: string]: string}) {
+  public static async install (nodeCtx: NodeContext, pkgs: string[]) {
     await this.renamePackageJson();
-    await writeFile('package.json', JSON.stringify({
-      dependencies: pkg,
-    }));
-
-    const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install']);
+    const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
 
@@ -52,7 +48,6 @@ export default class NPM {
 
     const exitCode = await exitPromise;
 
-    await rm('package.json', { force: true });
     await this.restorePackageJson();
 
     return exitCode;

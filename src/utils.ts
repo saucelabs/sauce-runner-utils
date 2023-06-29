@@ -60,7 +60,7 @@ export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfi
 export async function installNpmDependencies (nodeCtx: NodeContext, packageList: {[key:string]: string}) {
   const packages = Object.entries(packageList).map(([k, v]) => (`${k}@${v}`));
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
-  await npm.install(nodeCtx, packageList);
+  await npm.install(nodeCtx, packages);
 }
 
 export async function rebuildNpmDependencies (nodeCtx: NodeContext, path: string) {

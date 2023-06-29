@@ -1,12 +1,13 @@
 # Sauce Runner Utils
 
-A utilities library used by other Sauce Runners (e.g.: https://github.com/saucelabs/sauce-cypress-runner/) to share commonly used code between them
+A utilities library that is shared among Sauce Runners (e.g., https://github.com/saucelabs/sauce-cypress-runner/) to provide commonly used code across different runner implementations.
 
 ## Usage
 
 ```javascript
-const sauceRunnerUtils = require('sauce-runner-utils');
-sauceRunnerUtils.
+const sauceRunnerUtils = require('sauce-testrunner-utils');
+
+sauceRunnerUtils.prepareNpmEnv();
 ```
 
 ## Publishing
