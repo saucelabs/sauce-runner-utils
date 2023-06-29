@@ -1,6 +1,6 @@
 # Sauce Runner Utils
 
-A utilities library is shared among Sauce Runners (e.g., https://github.com/saucelabs/sauce-cypress-runner/) to provide commonly used code across different runner implementations.
+A utilities library that is shared among Sauce Runners (e.g., https://github.com/saucelabs/sauce-cypress-runner/) to provide commonly used code across different runner implementations.
 
 ## Usage
 
