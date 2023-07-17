@@ -116,7 +116,7 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
     'package-lock': runnerConfig.npm.packageLock === true
   };
 
-  // As npm config accepts only key-values pairs, we do the translation
+  // As npm config accepts only key-value pairs, we do the translation
   if (runnerConfig.npm.registries) {
     for (const sr of runnerConfig.npm.registries) {
       if (sr.scope) {
