@@ -206,7 +206,7 @@ describe('utils', function () {
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
-    it('should configure scoped-registry with authtentication', async function () {
+    it('should configure scoped-registry with authentication', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.registries = [{
