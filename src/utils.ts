@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext, ScoredRegistry } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext, Registry } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -107,17 +107,17 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
 
 
   // As npm config accepts only key-values pairs, we do the translation
-  if (runnerConfig.npm.scopedRegistries) {
-    for (const sr of runnerConfig.npm.scopedRegistries) {
+  if (runnerConfig.npm.registries) {
+    for (const sr of runnerConfig.npm.registries) {
       cfg[`${sr.scope}:registry`] = sr.url;
       if (sr.authToken) {
-        let fixedUrl = sr.url;
-        if (fixedUrl.startsWith('http://')) {
-          fixedUrl = sr.url.substring(5);
-        } else if (fixedUrl.startsWith('https://')) {
-          fixedUrl = sr.url.substring(6);
+        let authUrl = sr.url;
+        if (authUrl.startsWith('http://')) {
+          authUrl = sr.url.substring(5);
+        } else if (authUrl.startsWith('https://')) {
+          authUrl = sr.url.substring(6);
         }
-        cfg[`${fixedUrl}`] = sr.authToken;
+        cfg[`${authUrl}:_authToken`] = sr.authToken;
       }
     }
   }

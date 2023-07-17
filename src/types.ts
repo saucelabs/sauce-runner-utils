@@ -6,7 +6,7 @@ export type Suite = {
   }
 }
 
-export type ScoredRegistry = {
+export type Registry = {
   scope: string;
   url: string;
   authToken?: string;
@@ -14,7 +14,7 @@ export type ScoredRegistry = {
 
 export type NpmConfig = {
   registry?: string;
-  scopedRegistries?: ScoredRegistry[];
+  registries?: Registry[];
   strictSSL?: boolean | string | null;
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };

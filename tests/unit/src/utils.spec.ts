@@ -198,7 +198,7 @@ describe('utils', function () {
     it('should configure scoped-registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.scopedRegistries = [{
+      cfg.npm.registries = [{
         url: 'http://demo.registry.com/npm-test/',
         scope: '@saucelabs',
       }];
@@ -209,7 +209,7 @@ describe('utils', function () {
     it('should configure scoped-registry with authtentication', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.scopedRegistries = [{
+      cfg.npm.registries = [{
         url: 'http://demo.registry.com/npm-test/',
         scope: '@saucelabs',
         authToken: 'secretToken',
