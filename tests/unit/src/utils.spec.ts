@@ -218,6 +218,21 @@ describe('utils', function () {
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
+    it('registries should be prioritary on registry', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.registry = 'http://demo.bad-registry.com',
+      cfg.npm.registries = [{
+        url: 'http://demo.registry.com',
+      }, {
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+        authToken: 'secretToken',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      await prepareNpmEnv(cfg, nodeCtx);
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+    });
     it('should use rebuild node_modules', async function () {
       const rebuildSpyOn = jest.spyOn(npm, 'rebuild');
       const statSyncSpyOn = jest.spyOn(fs, 'statSync');

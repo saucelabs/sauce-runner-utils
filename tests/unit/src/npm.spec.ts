@@ -22,7 +22,7 @@ describe('NPM', function () {
     spawk.unload();
   });
 
-  it.only('.configure must invoke npm config set', async function () {
+  it('.configure must invoke npm config set', async function () {
     const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
     await NPM.configure(nodeCtx, { registry: 'myregistry', '@saucelabs:registry': 'https://google.com/' });
 

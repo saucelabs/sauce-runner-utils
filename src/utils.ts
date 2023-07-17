@@ -54,6 +54,7 @@ export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfi
     registry: getDefaultRegistry(),
     'update-notifier': false
   };
+
   await npm.configure(nodeCtx, Object.assign({}, defaultConfig, userConfig));
 }
 
@@ -114,7 +115,6 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
     // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
-
 
   // As npm config accepts only key-values pairs, we do the translation
   if (runnerConfig.npm.registries) {

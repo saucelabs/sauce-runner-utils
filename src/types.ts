@@ -7,7 +7,7 @@ export type Suite = {
 }
 
 export type Registry = {
-  scope: string;
+  scope?: string;
   url: string;
   authToken?: string;
 };
