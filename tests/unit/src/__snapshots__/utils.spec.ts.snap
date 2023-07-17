@@ -112,7 +112,7 @@ Array [
 ]
 `;
 
-exports[`utils .prepareNpmEnv should configure scoped-registry with authtentication 1`] = `
+exports[`utils .prepareNpmEnv should configure scoped-registry with authentication 1`] = `
 Array [
   Object {
     "nodePath": "node-bin",
