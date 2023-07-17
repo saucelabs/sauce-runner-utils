@@ -94,6 +94,16 @@ export function hasNodeModulesFolder (runCfg: PathContainer) {
   return false;
 }
 
+function getRegistryAuthConfigField (url: string): string {
+  let authUrl = url;
+  if (authUrl.startsWith('http://')) {
+    authUrl = url.substring(5);
+  } else if (authUrl.startsWith('https://')) {
+    authUrl = url.substring(6);
+  }
+  return `${authUrl}:_authToken`;
+}
+
 export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   if (runnerConfig.npm === undefined) {
     return {};
@@ -109,15 +119,15 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   // As npm config accepts only key-values pairs, we do the translation
   if (runnerConfig.npm.registries) {
     for (const sr of runnerConfig.npm.registries) {
-      cfg[`${sr.scope}:registry`] = sr.url;
+      if (sr.scope) {
+        cfg[`${sr.scope}:registry`] = sr.url;
+      } else {
+        cfg.registry = sr.url;
+      }
+
       if (sr.authToken) {
-        let authUrl = sr.url;
-        if (authUrl.startsWith('http://')) {
-          authUrl = sr.url.substring(5);
-        } else if (authUrl.startsWith('https://')) {
-          authUrl = sr.url.substring(6);
-        }
-        cfg[`${authUrl}:_authToken`] = sr.authToken;
+        const field = getRegistryAuthConfigField(sr.url);
+        cfg[field] = sr.authToken;
       }
     }
   }
