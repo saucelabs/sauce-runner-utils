@@ -69,6 +69,69 @@ Array [
 ]
 `;
 
+exports[`utils .prepareNpmEnv should configure scoped-registry 1`] = `
+Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
+    "@saucelabs:registry": "http://demo.registry.com/npm-test/",
+    "audit": false,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "package-lock": false,
+    "registry": "https://registry.npmjs.org",
+    "save": false,
+    "strict-ssl": true,
+    "update-notifier": false,
+  },
+]
+`;
+
+exports[`utils .prepareNpmEnv should configure scoped-registry with authtentication 1`] = `
+Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
+    "//demo.registry.com/npm-test/": "secretToken",
+    "@saucelabs:registry": "http://demo.registry.com/npm-test/",
+    "audit": false,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "package-lock": false,
+    "registry": "https://registry.npmjs.org",
+    "save": false,
+    "strict-ssl": true,
+    "update-notifier": false,
+  },
+]
+`;
+
+exports[`utils .prepareNpmEnv should make flat scopedRegistries 1`] = `
+Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
+    "audit": false,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "package-lock": false,
+    "registry": "https://registry.npmjs.org",
+    "save": false,
+    "strict-ssl": true,
+    "update-notifier": false,
+  },
+]
+`;
+
 exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
 Array [
   Object {
@@ -152,6 +215,26 @@ Array [
 `;
 
 exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 1`] = `
+Array [
+  Object {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+  },
+  Object {
+    "audit": false,
+    "fund": false,
+    "json": false,
+    "noproxy": "registry.npmjs.org",
+    "package-lock": false,
+    "registry": "https://registry.npmjs.org",
+    "save": false,
+    "strict-ssl": true,
+    "update-notifier": false,
+  },
+]
+`;
+
+exports[`utils .prepareNpmEnv should use true as the default value for strictSSL 2`] = `
 Array [
   Object {
     "nodePath": "node-bin",

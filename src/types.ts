@@ -6,8 +6,15 @@ export type Suite = {
   }
 }
 
+export type ScoredRegistry = {
+  scope: string;
+  url: string;
+  authToken?: string;
+};
+
 export type NpmConfig = {
   registry?: string;
+  scopedRegistries?: ScoredRegistry[];
   strictSSL?: boolean | string | null;
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };

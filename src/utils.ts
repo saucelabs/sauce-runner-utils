@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext, ScoredRegistry } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 
@@ -98,12 +98,30 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
-  return {
+  const cfg: { [key:string]: string | boolean | null } = {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
     // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
+
+
+  // As npm config accepts only key-values pairs, we do the translation
+  if (runnerConfig.npm.scopedRegistries) {
+    for (const sr of runnerConfig.npm.scopedRegistries) {
+      cfg[`${sr.scope}:registry`] = sr.url;
+      if (sr.authToken) {
+        let fixedUrl = sr.url;
+        if (fixedUrl.startsWith('http://')) {
+          fixedUrl = sr.url.substring(5);
+        } else if (fixedUrl.startsWith('https://')) {
+          fixedUrl = sr.url.substring(6);
+        }
+        cfg[`${fixedUrl}`] = sr.authToken;
+      }
+    }
+  }
+  return cfg;
 }
 
 export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodeCtx: NodeContext) {

@@ -195,6 +195,29 @@ describe('utils', function () {
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
     });
+    it('should configure scoped-registry', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.scopedRegistries = [{
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      await prepareNpmEnv(cfg, nodeCtx);
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+    });
+    it('should configure scoped-registry with authtentication', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.scopedRegistries = [{
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+        authToken: 'secretToken',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      await prepareNpmEnv(cfg, nodeCtx);
+      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+    });
     it('should use rebuild node_modules', async function () {
       const rebuildSpyOn = jest.spyOn(npm, 'rebuild');
       const statSyncSpyOn = jest.spyOn(fs, 'statSync');
