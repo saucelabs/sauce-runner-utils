@@ -13,6 +13,9 @@ export type Registry = {
 };
 
 export type NpmConfig = {
+  /**
+   * @deprecated: registry should be avoided in favor of a "registries" entry.
+   */
   registry?: string;
   registries?: Registry[];
   strictSSL?: boolean | string | null;
