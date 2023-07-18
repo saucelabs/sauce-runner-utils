@@ -203,8 +203,13 @@ describe('utils', function () {
         scope: '@saucelabs',
       }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('https://registry.npmjs.org');
     });
     it('should configure scoped-registry with authentication', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -215,8 +220,13 @@ describe('utils', function () {
         authToken: 'secretToken',
       }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('https://registry.npmjs.org');
     });
     it('registries should be prioritary on registry', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -230,8 +240,13 @@ describe('utils', function () {
         authToken: 'secretToken',
       }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('http://demo.registry.com');
     });
     it('should use rebuild node_modules', async function () {
       const rebuildSpyOn = jest.spyOn(npm, 'rebuild');

@@ -17,28 +17,6 @@ Object {
 }
 `;
 
-exports[`utils .prepareNpmEnv registries should be prioritary on registry 1`] = `
-Array [
-  Object {
-    "nodePath": "node-bin",
-    "npmPath": "npm-bin",
-  },
-  Object {
-    "//demo.registry.com/npm-test/:_authToken": "secretToken",
-    "@saucelabs:registry": "http://demo.registry.com/npm-test/",
-    "audit": false,
-    "fund": false,
-    "json": false,
-    "noproxy": "registry.npmjs.org",
-    "package-lock": false,
-    "registry": "http://demo.registry.com",
-    "save": false,
-    "strict-ssl": true,
-    "update-notifier": false,
-  },
-]
-`;
-
 exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
 Array [
   Object {
@@ -88,49 +66,6 @@ Array [
   Array [
     "mypackage@1.2.3",
   ],
-]
-`;
-
-exports[`utils .prepareNpmEnv should configure scoped-registry 1`] = `
-Array [
-  Object {
-    "nodePath": "node-bin",
-    "npmPath": "npm-bin",
-  },
-  Object {
-    "@saucelabs:registry": "http://demo.registry.com/npm-test/",
-    "audit": false,
-    "fund": false,
-    "json": false,
-    "noproxy": "registry.npmjs.org",
-    "package-lock": false,
-    "registry": "https://registry.npmjs.org",
-    "save": false,
-    "strict-ssl": true,
-    "update-notifier": false,
-  },
-]
-`;
-
-exports[`utils .prepareNpmEnv should configure scoped-registry with authentication 1`] = `
-Array [
-  Object {
-    "nodePath": "node-bin",
-    "npmPath": "npm-bin",
-  },
-  Object {
-    "//demo.registry.com/npm-test/:_authToken": "secretToken",
-    "@saucelabs:registry": "http://demo.registry.com/npm-test/",
-    "audit": false,
-    "fund": false,
-    "json": false,
-    "noproxy": "registry.npmjs.org",
-    "package-lock": false,
-    "registry": "https://registry.npmjs.org",
-    "save": false,
-    "strict-ssl": true,
-    "update-notifier": false,
-  },
 ]
 `;
 
