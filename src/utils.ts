@@ -4,7 +4,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import yargs from 'yargs/yargs';
 import npm from './npm';
-import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext, Registry } from './types';
+import { NpmConfigContainer, PathContainer, SuitesContainer, Suite, NpmConfig, NodeContext } from './types';
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.org';
 

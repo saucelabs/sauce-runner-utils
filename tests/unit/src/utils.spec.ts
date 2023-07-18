@@ -153,7 +153,7 @@ describe('utils', function () {
     it('should use user registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.registry = 'registryland.io';
+      cfg.npm.registries = [{ url: 'registryland.io' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -172,7 +172,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = null;
-      cfg.npm.registry = 'test.strictSSL.null';
+      cfg.npm.registries = [{ url: 'test.strictSSL.null' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -181,7 +181,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = false;
-      cfg.npm.registry = 'test.strictSSL.false';
+      cfg.npm.registries = [{ url: 'test.strictSSL.false' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -190,7 +190,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = true;
-      cfg.npm.registry = 'test.strictSSL.true';
+      cfg.npm.registries = [{ url: 'test.strictSSL.true' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
