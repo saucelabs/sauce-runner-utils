@@ -24,10 +24,10 @@ describe('NPM', function () {
 
   it('.configure must invoke npm config set', async function () {
     const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
-    await NPM.configure(nodeCtx, { registry: 'myregistry' });
+    await NPM.configure(nodeCtx, { registry: 'myregistry', '@saucelabs:registry': 'https://google.com/' });
 
     expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
-    expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'config', 'set', 'registry=myregistry']);
+    expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'config', 'set', 'registry=myregistry', '@saucelabs:registry=https://google.com/']);
   });
 
   it('.rebuild must invoke npm rebuild', async function () {

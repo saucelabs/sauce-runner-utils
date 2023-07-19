@@ -6,8 +6,18 @@ export type Suite = {
   }
 }
 
+export type Registry = {
+  scope?: string;
+  url: string;
+  authToken?: string;
+};
+
 export type NpmConfig = {
+  /**
+   * @deprecated: registry should be avoided in favor of a "registries" entry.
+   */
   registry?: string;
+  registries?: Registry[];
   strictSSL?: boolean | string | null;
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };

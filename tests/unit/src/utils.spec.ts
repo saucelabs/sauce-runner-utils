@@ -153,7 +153,7 @@ describe('utils', function () {
     it('should use user registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.registry = 'registryland.io';
+      cfg.npm.registries = [{ url: 'registryland.io' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -172,7 +172,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = null;
-      cfg.npm.registry = 'test.strictSSL.null';
+      cfg.npm.registries = [{ url: 'test.strictSSL.null' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -181,7 +181,7 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = false;
-      cfg.npm.registry = 'test.strictSSL.false';
+      cfg.npm.registries = [{ url: 'test.strictSSL.false' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
@@ -190,10 +190,63 @@ describe('utils', function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = true;
-      cfg.npm.registry = 'test.strictSSL.true';
+      cfg.npm.registries = [{ url: 'test.strictSSL.true' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+    });
+    it('should configure scoped-registry', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.registries = [{
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
+      await prepareNpmEnv(cfg, nodeCtx);
+
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('https://registry.npmjs.org');
+    });
+    it('should configure scoped-registry with authentication', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.registries = [{
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+        authToken: 'secretToken',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
+      await prepareNpmEnv(cfg, nodeCtx);
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('https://registry.npmjs.org');
+    });
+    it('registries should be prioritary on registry', async function () {
+      const cfg = _.cloneDeep(runCfg);
+      cfg.npm ||= {};
+      cfg.npm.registry = 'http://demo.bad-registry.com',
+      cfg.npm.registries = [{
+        url: 'http://demo.registry.com',
+      }, {
+        url: 'http://demo.registry.com/npm-test/',
+        scope: '@saucelabs',
+        authToken: 'secretToken',
+      }];
+      const loadSpyOn = jest.spyOn(npm, 'configure');
+      loadSpyOn.mockClear();
+      await prepareNpmEnv(cfg, nodeCtx);
+      expect(loadSpyOn).toHaveBeenCalledTimes(1);
+      const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
+      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1].registry).toBe('http://demo.registry.com');
     });
     it('should use rebuild node_modules', async function () {
       const rebuildSpyOn = jest.spyOn(npm, 'rebuild');

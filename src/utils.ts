@@ -54,6 +54,7 @@ export async function setUpNpmConfig (nodeCtx: NodeContext, userConfig: NpmConfi
     registry: getDefaultRegistry(),
     'update-notifier': false
   };
+
   await npm.configure(nodeCtx, Object.assign({}, defaultConfig, userConfig));
 }
 
@@ -94,16 +95,43 @@ export function hasNodeModulesFolder (runCfg: PathContainer) {
   return false;
 }
 
+function getRegistryAuthConfigField (url: string): string {
+  let authUrl = url;
+  if (authUrl.startsWith('http://')) {
+    authUrl = url.substring(5);
+  } else if (authUrl.startsWith('https://')) {
+    authUrl = url.substring(6);
+  }
+  return `${authUrl}:_authToken`;
+}
+
 export function getNpmConfig (runnerConfig: NpmConfigContainer) {
   if (runnerConfig.npm === undefined) {
     return {};
   }
-  return {
+  const cfg: { [key:string]: string | boolean | null } = {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
     // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true
   };
+
+  // As npm config accepts only key-value pairs, we do the translation
+  if (runnerConfig.npm.registries) {
+    for (const sr of runnerConfig.npm.registries) {
+      if (sr.scope) {
+        cfg[`${sr.scope}:registry`] = sr.url;
+      } else {
+        cfg.registry = sr.url;
+      }
+
+      if (sr.authToken) {
+        const field = getRegistryAuthConfigField(sr.url);
+        cfg[field] = sr.authToken;
+      }
+    }
+  }
+  return cfg;
 }
 
 export async function prepareNpmEnv (runCfg: NpmConfigContainer & PathContainer, nodeCtx: NodeContext) {
