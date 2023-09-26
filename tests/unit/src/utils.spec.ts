@@ -110,6 +110,26 @@ describe('utils', function () {
 
       expect(npmConfig).toHaveProperty('registry', 'http://my-private-registry.com');
     });
+
+    describe.each([
+      { value: undefined, expected: true },
+      { value: null, expected: true },
+      { value: '', expected: true },
+      { value: 'true', expected: true },
+      { value: true, expected: true },
+      { value: 'false', expected: false },
+      { value: false, expected: false },
+    ])('legacy-peer-deps', function ({ value, expected }) {
+      test(`set to ${expected} when given ${value}`, function () {
+        const config = getNpmConfig({
+          npm: {
+            legacyPeerDeps: value,
+          },
+        });
+
+        expect(config['legacy-peer-deps']).toBe(expected);
+      });
+    });
   });
 
   describe('.prepareNpmEnv', function () {

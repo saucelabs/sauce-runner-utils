@@ -113,7 +113,9 @@ export function getNpmConfig (runnerConfig: NpmConfigContainer) {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL !== false,
     // Setting to false to avoid dealing with the generated file.
-    'package-lock': runnerConfig.npm.packageLock === true
+    'package-lock': runnerConfig.npm.packageLock === true,
+    'legacy-peer-deps': (runnerConfig.npm.legacyPeerDeps !== 'false' &&
+      runnerConfig.npm.legacyPeerDeps !== false),
   };
 
   // As npm config accepts only key-value pairs, we do the translation
