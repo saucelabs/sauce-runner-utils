@@ -116,6 +116,7 @@ describe('utils', function () {
       { value: null, expected: true },
       { value: '', expected: true },
       { value: 'true', expected: true },
+      { value: true, expected: true },
       { value: 'false', expected: false },
       { value: false, expected: false },
     ])('legacy-peer-deps', function ({ value, expected }) {
