@@ -21,6 +21,7 @@ export type NpmConfig = {
   strictSSL?: boolean | string | null;
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };
+  legacyPeerDeps?: boolean | string | null;
 }
 
 export interface PathContainer {
