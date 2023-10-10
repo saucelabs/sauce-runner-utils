@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "npm": "^9.0.0",
+    "npm": "^10.2.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
