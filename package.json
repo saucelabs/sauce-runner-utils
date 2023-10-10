@@ -8,9 +8,8 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "rimraf ./lib && tsc",
-    "test": "run-s test:*",
-    "test:lint": "eslint tests/ src/",
-    "test:unit": "jest --env node",
+    "lint": "eslint tests/ src/",
+    "test": "jest --env node",
     "release": "release-it --github.release",
     "release:ci": "npm run release -- --ci --npm.skipChecks --no-git.requireCleanWorkingDir",
     "release:patch": "npm run release -- patch",
