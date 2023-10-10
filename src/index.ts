@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-import * as saucectl from './saucectl';
 import * as npm from './npm';
 import * as utils from './utils';
 import * as preExec from './preExec';
@@ -24,7 +23,6 @@ import {
 
 export {
   npm,
-  saucectl,
   utils,
   preExec,
 

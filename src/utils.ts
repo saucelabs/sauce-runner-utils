@@ -200,7 +200,7 @@ export function getArgs () {
       description: 'Select the suite to run'
     })
     .demandOption(['runCfgPath', 'suiteName'])
-    .argv;
+    .parseSync();
   const { runCfgPath, suiteName } = argv;
   const nodeBin = process.argv[0];
   args = { nodeBin, runCfgPath, suiteName };
