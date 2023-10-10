@@ -1,31 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`preExec should return false when failed to start 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -34,38 +34,38 @@ Array [
 `;
 
 exports[`preExec should return false when failed to start 2`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -74,17 +74,17 @@ Array [
 `;
 
 exports[`preExec should return false when failing 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -93,24 +93,24 @@ Array [
 `;
 
 exports[`preExec should return false when timeouting 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -119,31 +119,31 @@ Array [
 `;
 
 exports[`preExec should return true when no preExecs 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -152,10 +152,10 @@ Array [
 `;
 
 exports[`preExec should return true when passing 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
@@ -164,45 +164,45 @@ Array [
 `;
 
 exports[`preExec should use cmd /C when running on windows 1`] = `
-Array [
-  Array [
+[
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "sh",
-    Array [
+    [
       "-c",
       "npm install",
     ],
   ],
-  Array [
+  [
     "cmd",
-    Array [
+    [
       "/C",
       "npm install",
     ],
