@@ -9,10 +9,10 @@ describe('preExec', function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     setTimeout(() => {
@@ -31,10 +31,10 @@ describe('preExec', function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     setTimeout(() => {
@@ -51,10 +51,10 @@ describe('preExec', function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     const hasPassed = await run({ preExec: ['npm install'] }, 1);
@@ -67,10 +67,10 @@ describe('preExec', function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     setTimeout(() => {
@@ -91,15 +91,14 @@ describe('preExec', function () {
     expect(hasPassed).toBe(true);
   });
 
-
   it('should return false when failed to start', async function () {
     jest.spyOn(os, 'platform').mockReturnValue('linux');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     setTimeout(() => {
@@ -111,15 +110,14 @@ describe('preExec', function () {
     expect(hasPassed).toBe(false);
   });
 
-
   it('should use cmd /C when running on windows', async function () {
     jest.spyOn(os, 'platform').mockReturnValue('win32');
     const spawnSpy = jest.spyOn(childProcess, 'spawn');
 
-    const fakeProc = <childProcess.ChildProcess> new events.EventEmitter();
+    const fakeProc = <childProcess.ChildProcess>new events.EventEmitter();
     fakeProc.stdin = new stream.Writable();
-    fakeProc.stdout = <stream.Readable> new events.EventEmitter();
-    fakeProc.stderr = <stream.Readable> new events.EventEmitter();
+    fakeProc.stdout = <stream.Readable>new events.EventEmitter();
+    fakeProc.stderr = <stream.Readable>new events.EventEmitter();
     spawnSpy.mockReturnValue(fakeProc);
 
     setTimeout(() => {

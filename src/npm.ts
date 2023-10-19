@@ -2,13 +2,13 @@ import { spawn } from 'child_process';
 import { lstat, rename } from 'fs/promises';
 import { NodeContext } from './types';
 
-const temporarilyMovedFiles: {[key: string]: string} = {
+const temporarilyMovedFiles: { [key: string]: string } = {
   'package.json': `.package.json-${process.pid}`,
   'package-lock.json': `.package-lock.json-${process.pid}`,
 };
 
 export default class NPM {
-  static async renamePackageJson () {
+  static async renamePackageJson() {
     for (const [name, replacement] of Object.entries(temporarilyMovedFiles)) {
       try {
         // Note: we don't need the return value.
@@ -21,7 +21,7 @@ export default class NPM {
     }
   }
 
-  static async restorePackageJson () {
+  static async restorePackageJson() {
     for (const [name, replacement] of Object.entries(temporarilyMovedFiles)) {
       try {
         // Note: we don't need the return value.
@@ -34,7 +34,7 @@ export default class NPM {
     }
   }
 
-  public static async install (nodeCtx: NodeContext, pkgs: string[]) {
+  public static async install(nodeCtx: NodeContext, pkgs: string[]) {
     await this.renamePackageJson();
     const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
     p.stdout.pipe(process.stdout);
@@ -53,10 +53,20 @@ export default class NPM {
     return exitCode;
   }
 
-  public static configure (nodeCtx: NodeContext, cfg: {[key: string]: object | string | number | boolean | null }): Promise<number | null> {
+  public static configure(
+    nodeCtx: NodeContext,
+    cfg: { [key: string]: object | string | number | boolean | null },
+  ): Promise<number | null> {
     return new Promise((resolve) => {
-      const args = Object.keys(cfg).filter((k) => cfg[k] !== null && cfg[k] !== undefined).map((k) => `${k}=${cfg[k]}`);
-      const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'config', 'set', ...args]);
+      const args = Object.keys(cfg)
+        .filter((k) => cfg[k] !== null && cfg[k] !== undefined)
+        .map((k) => `${k}=${cfg[k]}`);
+      const p = spawn(nodeCtx.nodePath, [
+        nodeCtx.npmPath,
+        'config',
+        'set',
+        ...args,
+      ]);
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', () => {
@@ -66,7 +76,10 @@ export default class NPM {
     });
   }
 
-  public static rebuild (nodeCtx: NodeContext, ...args: string[]): Promise<number | null> {
+  public static rebuild(
+    nodeCtx: NodeContext,
+    ...args: string[]
+  ): Promise<number | null> {
     return new Promise((resolve) => {
       const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
       p.stdout.pipe(process.stdout);
@@ -77,4 +90,3 @@ export default class NPM {
     });
   }
 }
-

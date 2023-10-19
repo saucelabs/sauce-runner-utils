@@ -3,8 +3,8 @@ export type Suite = {
   env?: { [key: string]: string };
   config?: {
     env?: { [key: string]: string };
-  }
-}
+  };
+};
 
 export type Registry = {
   scope?: string;
@@ -22,7 +22,7 @@ export type NpmConfig = {
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };
   legacyPeerDeps?: boolean | string | null;
-}
+};
 
 export interface PathContainer {
   path: string;
