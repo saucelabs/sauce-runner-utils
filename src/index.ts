@@ -18,7 +18,7 @@ import {
   getSuite,
   renameScreenshot,
   renameAsset,
-  escapeXML
+  escapeXML,
 } from './utils';
 
 export {
@@ -42,5 +42,5 @@ export {
   getSuite,
   renameScreenshot,
   renameAsset,
-  escapeXML
+  escapeXML,
 };

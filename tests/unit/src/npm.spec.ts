@@ -23,31 +23,56 @@ describe('NPM', function () {
   });
 
   it('.configure must invoke npm config set', async function () {
-    const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
-    await NPM.configure(nodeCtx, { registry: 'myregistry', '@saucelabs:registry': 'https://google.com/' });
+    const interceptor = spawk
+      .spawn(nodeCtx.nodePath)
+      .stdout('npm runned')
+      .exit(0);
+    await NPM.configure(nodeCtx, {
+      registry: 'myregistry',
+      '@saucelabs:registry': 'https://google.com/',
+    });
 
     expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
-    expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'config', 'set', 'registry=myregistry', '@saucelabs:registry=https://google.com/']);
+    expect(interceptor.calledWith.args).toEqual([
+      nodeCtx.npmPath,
+      'config',
+      'set',
+      'registry=myregistry',
+      '@saucelabs:registry=https://google.com/',
+    ]);
   });
 
   it('.rebuild must invoke npm rebuild', async function () {
-    const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
+    const interceptor = spawk
+      .spawn(nodeCtx.nodePath)
+      .stdout('npm runned')
+      .exit(0);
     await NPM.rebuild(nodeCtx);
     expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
     expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'rebuild']);
   });
 
   it('.install must invoke npm install', async function () {
-    const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
+    const interceptor = spawk
+      .spawn(nodeCtx.nodePath)
+      .stdout('npm runned')
+      .exit(0);
     fsMocked.lstat.mockRejectedValue('non-existing');
     await NPM.install(nodeCtx, ['cypress@12.6.0']);
     expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
-    expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'install', 'cypress@12.6.0']);
+    expect(interceptor.calledWith.args).toEqual([
+      nodeCtx.npmPath,
+      'install',
+      'cypress@12.6.0',
+    ]);
     expect(fsMocked.lstat).toBeCalledTimes(4);
   });
 
   it('.install moves package.json / package-lock.json', async function () {
-    const interceptor = spawk.spawn(nodeCtx.nodePath).stdout('npm runned').exit(0);
+    const interceptor = spawk
+      .spawn(nodeCtx.nodePath)
+      .stdout('npm runned')
+      .exit(0);
     fsMocked.lstat.mockRejectedValue('non-existing');
 
     fsMocked.lstat.mockResolvedValue({} as Stats);
@@ -56,7 +81,11 @@ describe('NPM', function () {
 
     await NPM.install(nodeCtx, ['cypress@12.6.0']);
     expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
-    expect(interceptor.calledWith.args).toEqual([nodeCtx.npmPath, 'install', 'cypress@12.6.0']);
+    expect(interceptor.calledWith.args).toEqual([
+      nodeCtx.npmPath,
+      'install',
+      'cypress@12.6.0',
+    ]);
     expect(fsMocked.rename.mock.calls).toEqual([
       ['package.json', `.package.json-${process.pid}`],
       ['package-lock.json', `.package-lock.json-${process.pid}`],

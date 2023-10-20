@@ -17,17 +17,24 @@ import {
   setUpNpmConfig,
   getNpmConfig,
   installNpmDependencies,
-  escapeXML } from '../../../src/utils';
+  escapeXML,
+} from '../../../src/utils';
 import _ from 'lodash';
 import npm from '../../../src/npm';
-import { NodeContext, NpmConfigContainer, PathContainer, SuitesContainer, Suite } from '../../../src/types';
+import {
+  NodeContext,
+  NpmConfigContainer,
+  PathContainer,
+  SuitesContainer,
+  Suite,
+} from '../../../src/types';
 
 describe('utils', function () {
   const nodeCtx: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
 
   describe('.getNpmConfig', function () {
     const emptyConfig = {
-      npm: {}
+      npm: {},
     };
 
     it('should return empty dict when runner config is empty', function () {
@@ -52,8 +59,8 @@ describe('utils', function () {
     it('should set strictSSL from runner config', function () {
       const runnerConfig: NpmConfigContainer = {
         npm: {
-          strictSSL: false
-        }
+          strictSSL: false,
+        },
       };
       let npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('strict-ssl', false);
@@ -77,8 +84,8 @@ describe('utils', function () {
     it('should set packageLock from runner config', function () {
       const runnerConfig: NpmConfigContainer = {
         npm: {
-          'packageLock': true
-        }
+          packageLock: true,
+        },
       };
       let npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('package-lock', true);
@@ -103,12 +110,15 @@ describe('utils', function () {
     it('should set registry from runner config', function () {
       const runnerConfig = {
         npm: {
-          registry: 'http://my-private-registry.com'
-        }
+          registry: 'http://my-private-registry.com',
+        },
       };
       const npmConfig = getNpmConfig(runnerConfig);
 
-      expect(npmConfig).toHaveProperty('registry', 'http://my-private-registry.com');
+      expect(npmConfig).toHaveProperty(
+        'registry',
+        'http://my-private-registry.com',
+      );
     });
 
     describe.each([
@@ -133,18 +143,18 @@ describe('utils', function () {
   });
 
   describe('.prepareNpmEnv', function () {
-    let backupEnv: {[key: string]: string | undefined};
+    let backupEnv: { [key: string]: string | undefined };
     const runCfg: NpmConfigContainer & PathContainer = {
       path: '/fake/runner/path',
       npm: {
         packages: {
           'left-pad': '1.3.0',
           jquery: 2,
-        }
-      }
+        },
+      },
     };
     beforeEach(function () {
-      backupEnv = {...process.env};
+      backupEnv = { ...process.env };
     });
     afterEach(function () {
       process.env = backupEnv;
@@ -153,22 +163,28 @@ describe('utils', function () {
       const config = {
         registry: 'my.registry',
         'strict-ssl': true,
-        'package-lock': false
+        'package-lock': false,
       };
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await setUpNpmConfig(nodeCtx, config);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should call npm install', async function () {
       const installSpyOn = jest.spyOn(npm, 'install');
-      await installNpmDependencies(nodeCtx, {'mypackage': '1.2.3'});
-      expect(installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      await installNpmDependencies(nodeCtx, { mypackage: '1.2.3' });
+      expect(
+        installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should use user registry', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -176,26 +192,34 @@ describe('utils', function () {
       cfg.npm.registries = [{ url: 'registryland.io' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should use default registry', async function () {
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should use true as the default value for strictSSL', async function () {
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
-    it('should use true as the default value for strictSSL if it\'s null in cfg', async function () {
+    it("should use true as the default value for strictSSL if it's null in cfg", async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
       cfg.npm.strictSSL = null;
       cfg.npm.registries = [{ url: 'test.strictSSL.null' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(runCfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should be able to set strictSSL to false', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -204,7 +228,9 @@ describe('utils', function () {
       cfg.npm.registries = [{ url: 'test.strictSSL.false' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should be able to set strictSSL to true', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -213,59 +239,78 @@ describe('utils', function () {
       cfg.npm.registries = [{ url: 'test.strictSSL.true' }];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should configure scoped-registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.registries = [{
-        url: 'http://demo.registry.com/npm-test/',
-        scope: '@saucelabs',
-      }];
+      cfg.npm.registries = [
+        {
+          url: 'http://demo.registry.com/npm-test/',
+          scope: '@saucelabs',
+        },
+      ];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
 
       expect(loadSpyOn).toHaveBeenCalledTimes(1);
       const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
-      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1]['@saucelabs:registry']).toBe(
+        'http://demo.registry.com/npm-test/',
+      );
       expect(call[1].registry).toBe('https://registry.npmjs.org');
     });
     it('should configure scoped-registry with authentication', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.registries = [{
-        url: 'http://demo.registry.com/npm-test/',
-        scope: '@saucelabs',
-        authToken: 'secretToken',
-      }];
+      cfg.npm.registries = [
+        {
+          url: 'http://demo.registry.com/npm-test/',
+          scope: '@saucelabs',
+          authToken: 'secretToken',
+        },
+      ];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn).toHaveBeenCalledTimes(1);
       const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
-      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
-      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe(
+        'secretToken',
+      );
+      expect(call[1]['@saucelabs:registry']).toBe(
+        'http://demo.registry.com/npm-test/',
+      );
       expect(call[1].registry).toBe('https://registry.npmjs.org');
     });
     it('registries should be prioritary on registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      cfg.npm.registry = 'http://demo.bad-registry.com',
-      cfg.npm.registries = [{
-        url: 'http://demo.registry.com',
-      }, {
-        url: 'http://demo.registry.com/npm-test/',
-        scope: '@saucelabs',
-        authToken: 'secretToken',
-      }];
+      (cfg.npm.registry = 'http://demo.bad-registry.com'),
+        (cfg.npm.registries = [
+          {
+            url: 'http://demo.registry.com',
+          },
+          {
+            url: 'http://demo.registry.com/npm-test/',
+            scope: '@saucelabs',
+            authToken: 'secretToken',
+          },
+        ]);
       const loadSpyOn = jest.spyOn(npm, 'configure');
       loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);
       expect(loadSpyOn).toHaveBeenCalledTimes(1);
       const call = loadSpyOn.mock.calls[loadSpyOn.mock.calls.length - 1];
-      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe('secretToken');
-      expect(call[1]['@saucelabs:registry']).toBe('http://demo.registry.com/npm-test/');
+      expect(call[1]['//demo.registry.com/npm-test/:_authToken']).toBe(
+        'secretToken',
+      );
+      expect(call[1]['@saucelabs:registry']).toBe(
+        'http://demo.registry.com/npm-test/',
+      );
       expect(call[1].registry).toBe('http://demo.registry.com');
     });
     it('should use rebuild node_modules', async function () {
@@ -275,8 +320,9 @@ describe('utils', function () {
       // @ts-ignore
       statSyncSpyOn.mockReturnValue({ isDirectory: () => true });
       await prepareNpmEnv(runCfg, nodeCtx);
-      expect(rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1]).toMatchSnapshot();
-
+      expect(
+        rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
     it('should use rebuild node_modules when not package installed', async function () {
       const cfg = _.cloneDeep(runCfg);
@@ -287,41 +333,62 @@ describe('utils', function () {
       // @ts-ignore
       statSyncSpyOn.mockReturnValue({ isDirectory: () => true });
       await prepareNpmEnv(cfg, nodeCtx);
-      expect(rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1]).toMatchSnapshot();
+      expect(
+        rebuildSpyOn.mock.calls[rebuildSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
     });
   });
   describe('.renameScreenshot', function () {
     it('replace path separator (backslash for Windows, forward slash for mac/linux) with __', function () {
-      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () { return undefined; });
+      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () {
+        return undefined;
+      });
       const nestedExample = path.join('nested', 'example.test.js');
-      expect(renameScreenshot(nestedExample, 'old_path', 'new_path', 'screenshot.png')).toEqual(path.join('new_path', 'nested__example.test.js__screenshot.png'));
+      expect(
+        renameScreenshot(
+          nestedExample,
+          'old_path',
+          'new_path',
+          'screenshot.png',
+        ),
+      ).toEqual(
+        path.join('new_path', 'nested__example.test.js__screenshot.png'),
+      );
       expect(spy).toHaveBeenCalled();
     });
   });
   describe('.renameAsset', function () {
     it('root folder no need to rename asset with path separator', function () {
       const nestedExampleTest = path.join('assets', 'example.test.js.xml');
-      expect(renameAsset({
-        specFile: 'example.test.js.xml',
-        oldFilePath: nestedExampleTest,
-        resultsFolder: '/new_path'
-      })).toEqual('assets/example.test.js.xml');
+      expect(
+        renameAsset({
+          specFile: 'example.test.js.xml',
+          oldFilePath: nestedExampleTest,
+          resultsFolder: '/new_path',
+        }),
+      ).toEqual('assets/example.test.js.xml');
     });
     it('asset is in nested folder and replacing path separator with __', function () {
       const nestedExampleTest = path.join('nested', 'example.test.js.xml');
-      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () { return undefined;});
-      expect(renameAsset({
-        specFile: nestedExampleTest,
-        oldFilePath: '/assets/example.test.js.xml',
-        resultsFolder: '/new_path'
-      })).toEqual(path.join(path.sep, 'new_path', 'nested__example.test.js.xml'));
+      const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () {
+        return undefined;
+      });
+      expect(
+        renameAsset({
+          specFile: nestedExampleTest,
+          oldFilePath: '/assets/example.test.js.xml',
+          resultsFolder: '/new_path',
+        }),
+      ).toEqual(path.join(path.sep, 'new_path', 'nested__example.test.js.xml'));
       expect(spy).toHaveBeenCalled();
     });
   });
   describe('.getAbsolutePath', function () {
     it('returns absolute path unmodified', function () {
       jest.mock('fs');
-      expect(getAbsolutePath('/absolute/path/to/asset/')).toEqual('/absolute/path/to/asset/');
+      expect(getAbsolutePath('/absolute/path/to/asset/')).toEqual(
+        '/absolute/path/to/asset/',
+      );
     });
     it('translates relative path to absolute', function () {
       expect(getAbsolutePath('path/to/asset/')).toMatch(/\/path\/to\/asset\/$/);
@@ -362,8 +429,10 @@ describe('utils', function () {
       process.argv = [
         '/path/to/node',
         '/path/to/sauce-cypress-runner',
-        '--suiteName', 'kitchen-sink-1',
-        '--runCfgPath', './tests/kitchen-sink-tests/sauce-runner.json'
+        '--suiteName',
+        'kitchen-sink-1',
+        '--runCfgPath',
+        './tests/kitchen-sink-tests/sauce-runner.json',
       ];
     });
     afterEach(function () {
@@ -378,21 +447,19 @@ describe('utils', function () {
   describe('.getSuite', function () {
     it('should get a suite from a list', function () {
       const runCfg: SuitesContainer = {
-        suites: [
-          {name: 'hello'}
-        ]
+        suites: [{ name: 'hello' }],
       };
       expect(getSuite(runCfg, 'hello')?.name).toEqual('hello');
       expect(getSuite(runCfg, 'non-existent')).toBeUndefined();
     });
   });
   describe('.getEnv', function () {
-    let backupEnv: {[key: string]: string | undefined};
+    let backupEnv: { [key: string]: string | undefined };
     beforeEach(function () {
       backupEnv = process.env;
       process.env = {
-        'HELLO': 'WORLD',
-        'FOO': 'BAR',
+        HELLO: 'WORLD',
+        FOO: 'BAR',
       };
     });
     afterEach(function () {
@@ -402,15 +469,15 @@ describe('utils', function () {
       const suite: Suite = {
         name: 'Demo suite',
         env: {
-          'A': '1',
-          'B': '2',
-          'HELLO': '$HELLO',
+          A: '1',
+          B: '2',
+          HELLO: '$HELLO',
         },
         config: {
           env: {
-            'C': '3',
-          }
-        }
+            C: '3',
+          },
+        },
       };
       const env = getEnv(suite);
       expect(env).toMatchSnapshot();

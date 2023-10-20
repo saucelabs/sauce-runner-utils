@@ -1,7 +1,7 @@
 import ChildProcess from 'child_process';
 import os from 'os';
 
-function spawnAsync (cmd: string, args: string[]) {
+function spawnAsync(cmd: string, args: string[]) {
   return new Promise(function (resolve) {
     const proc = ChildProcess.spawn(cmd, args);
     proc.stdout.on('data', (data) => {
@@ -20,9 +20,9 @@ function spawnAsync (cmd: string, args: string[]) {
   });
 }
 
-async function preExecRunner (preExecs: string[]) {
-  const cmdInvoker = (os.platform() === 'win32') ? 'cmd' : 'sh';
-  const cmdArg = (os.platform() === 'win32') ? '/C' : '-c';
+async function preExecRunner(preExecs: string[]) {
+  const cmdInvoker = os.platform() === 'win32' ? 'cmd' : 'sh';
+  const cmdArg = os.platform() === 'win32' ? '/C' : '-c';
 
   for (const command of preExecs) {
     console.log(`Executing pre-exec command: ${command}`);
@@ -36,7 +36,10 @@ async function preExecRunner (preExecs: string[]) {
   return true;
 }
 
-export async function run (suite: { preExec: string[] | undefined | null }, timeoutSec: number): Promise<boolean> {
+export async function run(
+  suite: { preExec: string[] | undefined | null },
+  timeoutSec: number,
+): Promise<boolean> {
   if (!suite.preExec) {
     return true;
   }
@@ -48,7 +51,10 @@ export async function run (suite: { preExec: string[] | undefined | null }, time
       resolve(false);
     }, timeoutSec * 1000);
   });
-  const hasPassed: boolean = await Promise.race([timeoutPromise, preExecRunner(suite.preExec)]) as boolean;
+  const hasPassed: boolean = (await Promise.race([
+    timeoutPromise,
+    preExecRunner(suite.preExec),
+  ])) as boolean;
   clearTimeout(timeout);
   return hasPassed;
 }
