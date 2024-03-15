@@ -26,7 +26,7 @@ function validate(source: string, dest: string, workspace: string) {
     throw new Error('Invalid source folder: the source must be a directory.');
   }
   if (!dest.endsWith('.zip')) {
-    throw new Error('Invalid zip filename: Only .zip files are permitted.');
+    throw new Error('Invalid zip filename: Only .zip file is permitted.');
   }
 }
 
@@ -56,12 +56,6 @@ export function isFolderOutside(
   )
     ? absoluteSpecifiedFolder
     : `${absoluteSpecifiedFolder}${path.sep}`;
-
-  console.log('absoluteSpecifiedFolder: ', absoluteSpecifiedFolder);
-  console.log(
-    'specifiedFolderWithTrailingSlash',
-    specifiedFolderWithTrailingSlash,
-  );
 
   // Check if the target folder is outside of the specified folder.
   return !absoluteTargetFolder.startsWith(specifiedFolderWithTrailingSlash);
