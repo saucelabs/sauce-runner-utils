@@ -45,12 +45,23 @@ export function isFolderOutside(
   const absoluteTargetFolder = path.resolve(targetFolder);
   const absoluteSpecifiedFolder = path.resolve(specifiedFolder);
 
+  // Check if the target folder is the same as the specified folder (not outside).
+  if (absoluteTargetFolder === absoluteSpecifiedFolder) {
+    return false;
+  }
+
   // Ensure the specified folder path ends with a path separator to avoid partial matches.
   const specifiedFolderWithTrailingSlash = absoluteSpecifiedFolder.endsWith(
     path.sep,
   )
     ? absoluteSpecifiedFolder
     : `${absoluteSpecifiedFolder}${path.sep}`;
+
+  console.log('absoluteSpecifiedFolder: ', absoluteSpecifiedFolder);
+  console.log(
+    'specifiedFolderWithTrailingSlash',
+    specifiedFolderWithTrailingSlash,
+  );
 
   // Check if the target folder is outside of the specified folder.
   return !absoluteTargetFolder.startsWith(specifiedFolderWithTrailingSlash);
@@ -99,6 +110,7 @@ export function zip(source: string, dest: string, workspace: string) {
     if (command) {
       execSync(getCommand(source, dest));
     }
+    console.log(`${dest} created successfully`);
   } catch (error) {
     console.error(`Error occurred: ${error}`);
   }
