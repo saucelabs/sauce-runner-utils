@@ -78,7 +78,7 @@ export function isFolderOutside(
  * specify the source and destination paths directly, and the `-Force` option to overwrite
  * any existing destination file.
  *
- * For other operating systems, throw an error to indicates an unsupported platform.
+ * For other operating systems, throw an error to indicate an unsupported platform.
  *
  * @param source The path of the directory or file to be compressed.
  * @param dest The path where the output zip file should be saved, including the file name.
