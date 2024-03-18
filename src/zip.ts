@@ -3,15 +3,12 @@ import path from 'path';
 import { execSync } from 'child_process';
 import { platform } from 'os';
 
-function validate(source: string, dest: string, workspace: string) {
+function validate(workspace: string, source: string, dest: string) {
   if (!source.trim()) {
     throw new Error('The source path cannot be empty.');
   }
   if (!dest.trim()) {
     throw new Error('The destination file cannot be empty.');
-  }
-  if (!workspace.trim()) {
-    throw new Error('The workspace path cannot be empty.');
   }
   if (path.isAbsolute(source)) {
     throw new Error('Invalid source folder: absolute path is not supported.');
@@ -64,7 +61,7 @@ export function isFolderOutside(
 /**
  * Generates a platform-specific command string for compressing files into a zip archive.
  *
- * On macOS (Darwin), it constructs a shell command using the `zip` utility with options to
+ * On macOS, it constructs a shell command using the `zip` utility with options to
  * recursively zip the content, preserve symlinks, and operate quietly.
  *
  * On Windows, it constructs a PowerShell command using `Compress-Archive` with options to
@@ -92,20 +89,20 @@ function getCommand(source: string, dest: string): string {
 /**
  * Compresses the specified source into a zip file at the destination path.
  *
+ * @param workspace The user workspace directory.
  * @param source The path of the directory or file to be compressed.
  * @param dest The path where the output zip file should be saved.
- * @param workspace The root directory to validate the source path against, ensuring the source
- *                  is within the workspace boundaries.
  */
-export function zip(source: string, dest: string, workspace: string) {
+export function zip(workspace: string, source: string, dest: string) {
   try {
-    validate(source, dest, workspace);
+    validate(workspace, source, dest);
     const command = getCommand(source, dest);
     if (command) {
       execSync(getCommand(source, dest));
     }
-    console.log(`${dest} created successfully`);
   } catch (error) {
-    console.error(`Error occurred: ${error}`);
+    console.error(
+      `Zip file creation failed for destination: "${dest}", source: "${source}". Error: ${error}.`,
+    );
   }
 }
