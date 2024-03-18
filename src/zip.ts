@@ -33,7 +33,7 @@ function validate(workspace: string, source: string, dest: string) {
     );
   }
   if (!dest.endsWith('.zip')) {
-    throw new Error('Invalid zip filename: Only .zip file is permitted');
+    throw new Error('Invalid zip filename: only .zip file is permitted');
   }
 }
 
