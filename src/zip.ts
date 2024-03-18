@@ -11,9 +11,8 @@ function validate(workspace: string, source: string, dest: string) {
   if (!dest.trim()) {
     throw new Error('The destination file cannot be empty.');
   }
-  if (path.isAbsolute(source)) {
-    throw new Error('Invalid source folder: absolute path is not supported.');
-  }
+
+  // Verify the source folder exists and is not a file.
   try {
     const stats = fs.statSync(source);
     if (!stats.isDirectory()) {
@@ -23,9 +22,12 @@ function validate(workspace: string, source: string, dest: string) {
     if (errCode(err) === 'ENOENT') {
       throw new Error('Invalid source folder: not exist.');
     }
-    throw new Error(`Failed to access source folder "${source}": ${err}`);
+    throw new Error(`Failed to access source folder: ${err}`);
   }
 
+  if (path.isAbsolute(source)) {
+    throw new Error('Invalid source folder: absolute path is not supported.');
+  }
   if (isFolderOutside(source, workspace)) {
     throw new Error(
       'Invalid source folder: the source path is outside the user workspace.',
