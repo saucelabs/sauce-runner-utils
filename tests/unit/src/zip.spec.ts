@@ -6,11 +6,11 @@ describe('isFolderOutside', () => {
   const insideFolder = path.resolve('path/to/base/inside');
   const outsideFolder = path.resolve('path/to/outside');
 
-  test('should return false for a folder inside the specified folder', () => {
+  test('should return false for a folder inside the root folder', () => {
     expect(isFolderOutside(insideFolder, baseFolder)).toBeFalsy();
   });
 
-  test('should return true for a folder outside the specified folder', () => {
+  test('should return true for a folder outside the root folder', () => {
     expect(isFolderOutside(outsideFolder, baseFolder)).toBeTruthy();
   });
 
