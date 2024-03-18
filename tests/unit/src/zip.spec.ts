@@ -19,7 +19,7 @@ describe('isFolderOutside', () => {
     expect(isFolderOutside(relativeOutside, baseFolder)).toBeTruthy();
   });
 
-  test('should return false for the same folder', () => {
-    expect(isFolderOutside(baseFolder, baseFolder)).toBeFalsy();
+  test('should return true for the same folder', () => {
+    expect(isFolderOutside(baseFolder, baseFolder)).toBeTruthy();
   });
 });

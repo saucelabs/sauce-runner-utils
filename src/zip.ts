@@ -6,40 +6,44 @@ import { errCode } from './error';
 
 function validate(workspace: string, source: string, dest: string) {
   if (!source.trim()) {
-    throw new Error('The source path cannot be empty.');
+    throw new Error('The source path cannot be empty');
   }
   if (!dest.trim()) {
-    throw new Error('The destination file cannot be empty.');
+    throw new Error('The destination file cannot be empty');
   }
 
   // Verify the source folder exists and is not a file.
   try {
     const stats = fs.statSync(source);
     if (!stats.isDirectory()) {
-      throw new Error('Invalid source folder: the source must be a directory.');
+      throw new Error('Invalid source folder: the source must be a directory');
     }
   } catch (err) {
     if (errCode(err) === 'ENOENT') {
-      throw new Error('Invalid source folder: not exist.');
+      throw new Error('Invalid source folder: not exist');
     }
-    throw new Error(`Failed to access source folder: ${err}`);
   }
 
   if (path.isAbsolute(source)) {
-    throw new Error('Invalid source folder: absolute path is not supported.');
+    throw new Error('Invalid source folder: absolute path is not supported');
   }
   if (isFolderOutside(source, workspace)) {
     throw new Error(
-      'Invalid source folder: the source path is outside the user workspace.',
+      'Invalid source folder: the source path is outside of the user workspace',
     );
   }
   if (!dest.endsWith('.zip')) {
-    throw new Error('Invalid zip filename: Only .zip file is permitted.');
+    throw new Error('Invalid zip filename: Only .zip file is permitted');
   }
 }
 
 /**
  * Checks if a folder is outside of a specified folder.
+ *
+ * Contextual note: Ordinarily, a folder cannot be considered outside of itself.
+ * However, in scenarios where the targetFolder equals the specifiedFolder,
+ * it implies an attempt to archive the entire workspace.
+ * Such actions are prohibited, thus leading to a return value of true.
  *
  * @param {string} targetFolder The path to the target folder.
  * @param {string} specifiedFolder The path to the specified folder.
@@ -52,11 +56,6 @@ export function isFolderOutside(
   // Resolve absolute paths.
   const absoluteTargetFolder = path.resolve(targetFolder);
   const absoluteSpecifiedFolder = path.resolve(specifiedFolder);
-
-  // Check if the target folder is the same as the specified folder (not outside).
-  if (absoluteTargetFolder === absoluteSpecifiedFolder) {
-    return false;
-  }
 
   // Ensure the specified folder path ends with a path separator to avoid partial matches.
   const specifiedFolderWithTrailingSlash = absoluteSpecifiedFolder.endsWith(
@@ -79,8 +78,7 @@ export function isFolderOutside(
  * specify the source and destination paths directly, and the `-Force` option to overwrite
  * any existing destination file.
  *
- * For other operating systems, an empty string is returned, indicating that no supported
- * command is available.
+ * For other operating systems, throw an error to indicates an unsupported platform.
  *
  * @param source The path of the directory or file to be compressed.
  * @param dest The path where the output zip file should be saved, including the file name.
@@ -88,13 +86,16 @@ export function isFolderOutside(
  */
 function getCommand(source: string, dest: string): string {
   const osPlatform = platform();
-  if (osPlatform === 'darwin') {
-    return `zip -ryq "${dest}" "${source}"`;
+
+  switch (osPlatform) {
+    case 'darwin':
+      return `zip -ryq "${dest}" "${source}"`;
+    case 'win32':
+      return `Compress-Archive -Path ${source} -DestinationPath ${dest} -Force`;
+    default:
+      // Throw an error if the operating system is not supported
+      throw new Error(`Unsupported operating system: ${osPlatform}`);
   }
-  if (osPlatform === 'win32') {
-    return `Compress-Archive -Path ${source} -DestinationPath ${dest} -Force`;
-  }
-  return '';
 }
 
 /**
@@ -107,10 +108,7 @@ function getCommand(source: string, dest: string): string {
 export function zip(workspace: string, source: string, dest: string) {
   try {
     validate(workspace, source, dest);
-    const command = getCommand(source, dest);
-    if (command) {
-      execSync(command);
-    }
+    execSync(getCommand(source, dest));
   } catch (error) {
     console.error(
       `Zip file creation failed for destination: "${dest}", source: "${source}". Error: ${error}.`,
