@@ -38,34 +38,32 @@ function validate(workspace: string, source: string, dest: string) {
 }
 
 /**
- * Checks if a folder is outside of a specified folder.
+ * Checks if a sub folder is outside of a root folder.
  *
  * Contextual note: Ordinarily, a folder cannot be considered outside of itself.
- * However, in scenarios where the targetFolder equals the specifiedFolder,
+ * However, in scenarios where the subFolder equals the rootFolder,
  * it implies an attempt to archive the entire workspace.
  * Such actions are prohibited, thus leading to a return value of true.
  *
- * @param {string} targetFolder The path to the target folder.
- * @param {string} specifiedFolder The path to the specified folder.
- * @returns {boolean} Returns true if the target folder is outside of the specified folder, false otherwise.
+ * @param {string} subFolder The path to the sub folder.
+ * @param {string} rootFolder The path to the root folder.
+ * @returns {boolean} Returns true if the sub folder is outside of the root folder, false otherwise.
  */
 export function isFolderOutside(
-  targetFolder: string,
-  specifiedFolder: string,
+  subFolder: string,
+  rootFolder: string,
 ): boolean {
   // Resolve absolute paths.
-  const absoluteTargetFolder = path.resolve(targetFolder);
-  const absoluteSpecifiedFolder = path.resolve(specifiedFolder);
+  const absoluteSubFolder = path.resolve(subFolder);
+  const absoluteRootFolder = path.resolve(rootFolder);
 
-  // Ensure the specified folder path ends with a path separator to avoid partial matches.
-  const specifiedFolderWithTrailingSlash = absoluteSpecifiedFolder.endsWith(
-    path.sep,
-  )
-    ? absoluteSpecifiedFolder
-    : `${absoluteSpecifiedFolder}${path.sep}`;
+  // Ensure the root folder path ends with a path separator to avoid partial matches.
+  const rootFolderWithTrailingSlash = absoluteRootFolder.endsWith(path.sep)
+    ? absoluteRootFolder
+    : `${absoluteRootFolder}${path.sep}`;
 
-  // Check if the target folder is outside of the specified folder.
-  return !absoluteTargetFolder.startsWith(specifiedFolderWithTrailingSlash);
+  // Check if the sub folder is outside of the root folder.
+  return !absoluteSubFolder.startsWith(rootFolderWithTrailingSlash);
 }
 
 /**
