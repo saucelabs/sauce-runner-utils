@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { platform } from 'os';
+import { errCode } from './error';
 
 function validate(workspace: string, source: string, dest: string) {
   if (!source.trim()) {
@@ -13,14 +14,22 @@ function validate(workspace: string, source: string, dest: string) {
   if (path.isAbsolute(source)) {
     throw new Error('Invalid source folder: absolute path is not supported.');
   }
+  try {
+    const stats = fs.statSync(source);
+    if (!stats.isDirectory()) {
+      throw new Error('Invalid source folder: the source must be a directory.');
+    }
+  } catch (err) {
+    if (errCode(err) === 'ENOENT') {
+      throw new Error('Invalid source folder: not exist.');
+    }
+    throw new Error(`Failed to access source folder "${source}": ${err}`);
+  }
+
   if (isFolderOutside(source, workspace)) {
     throw new Error(
       'Invalid source folder: the source path is outside the user workspace.',
     );
-  }
-  const stats = fs.statSync(source);
-  if (!stats.isDirectory()) {
-    throw new Error('Invalid source folder: the source must be a directory.');
   }
   if (!dest.endsWith('.zip')) {
     throw new Error('Invalid zip filename: Only .zip file is permitted.');
