@@ -109,7 +109,7 @@ export function zip(workspace: string, source: string, dest: string) {
     validate(workspace, source, dest);
     const command = getCommand(source, dest);
     if (command) {
-      execSync(getCommand(source, dest));
+      execSync(command);
     }
   } catch (error) {
     console.error(
