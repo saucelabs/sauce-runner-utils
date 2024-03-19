@@ -89,7 +89,7 @@ function getCommand(source: string, dest: string): string {
     case 'darwin':
       return `zip -ryq "${dest}" "${source}"`;
     case 'win32':
-      return `Compress-Archive -Path ${source} -DestinationPath ${dest} -Force`;
+      return `powershell -Command "Compress-Archive -Path ${source} -DestinationPath ${dest} -Force"`;
     default:
       throw new Error(`Unsupported operating system: ${osPlatform}`);
   }
@@ -103,12 +103,6 @@ function getCommand(source: string, dest: string): string {
  * @param dest The path where the output zip file should be saved.
  */
 export function zip(workspace: string, source: string, dest: string) {
-  try {
-    validate(workspace, source, dest);
-    execSync(getCommand(source, dest));
-  } catch (error) {
-    console.error(
-      `Zip file creation failed for destination: "${dest}", source: "${source}". Error: ${error}.`,
-    );
-  }
+  validate(workspace, source, dest);
+  execSync(getCommand(source, dest));
 }
