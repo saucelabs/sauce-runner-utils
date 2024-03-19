@@ -91,7 +91,6 @@ function getCommand(source: string, dest: string): string {
     case 'win32':
       return `Compress-Archive -Path ${source} -DestinationPath ${dest} -Force`;
     default:
-      // Throw an error if the operating system is not supported
       throw new Error(`Unsupported operating system: ${osPlatform}`);
   }
 }
