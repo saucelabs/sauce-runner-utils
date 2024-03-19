@@ -2,6 +2,7 @@
 import * as npm from './npm';
 import * as utils from './utils';
 import * as preExec from './preExec';
+import { zip } from './zip';
 import {
   getAbsolutePath,
   shouldRecordVideo,
@@ -25,6 +26,7 @@ export {
   npm,
   utils,
   preExec,
+  zip,
 
   // Exporting all to keep compatibility with previous API
   getAbsolutePath,
