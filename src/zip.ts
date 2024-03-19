@@ -89,7 +89,7 @@ function getCommand(source: string, dest: string): string {
     case 'darwin':
       return `zip -ryq "${dest}" "${source}"`;
     case 'win32':
-      return `Compress-Archive -Path ${source} -DestinationPath ${dest} -Force`;
+      return `powershell -Command "Compress-Archive -Path ${source} -DestinationPath ${dest} -Force"`;
     default:
       throw new Error(`Unsupported operating system: ${osPlatform}`);
   }
