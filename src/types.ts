@@ -10,6 +10,10 @@ export type Registry = {
   scope?: string;
   url: string;
   authToken?: string;
+  auth?: string;
+  username?: string;
+  password?: string;
+  email?: string;
 };
 
 export type NpmConfig = {
