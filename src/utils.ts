@@ -114,7 +114,7 @@ export function hasNodeModulesFolder(runCfg: PathContainer) {
 
 // Extracts and formats the URI fragment required for npm auth configuration.
 // Expected URI format: "//registry.npmjs.org/:" or "//my-custom-registry.org/unique/path:"
-export function getRegistryURI(url: string): string {
+export function getRegistryURIFragment(url: string): string {
   let uri = url;
 
   if (uri.startsWith('http://')) {
@@ -150,7 +150,7 @@ export function getNpmConfig(runnerConfig: NpmConfigContainer) {
 
       // Configures npm auth fields by prefixing a scoped URI.
       // For more info, check the npm doc https://docs.npmjs.com/cli/v10/configuring-npm/npmrc#auth-related-configuration
-      const uri = getRegistryURI(r.url);
+      const uri = getRegistryURIFragment(r.url);
       if (r.authToken) {
         cfg[`${uri}_authToken`] = r.authToken;
       }

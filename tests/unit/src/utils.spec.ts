@@ -18,7 +18,7 @@ import {
   getNpmConfig,
   installNpmDependencies,
   escapeXML,
-  getRegistryURI,
+  getRegistryURIFragment,
 } from '../../../src/utils';
 import _ from 'lodash';
 import npm from '../../../src/npm';
@@ -340,14 +340,14 @@ describe('utils', function () {
     });
   });
 
-  describe('.getRegistryURI', function () {
+  describe('.getRegistryURIFragment', function () {
     it('should get uri from http registry url', function () {
       const url = 'http://my_registry/';
-      expect(getRegistryURI(url)).toEqual('//my_registry/:');
+      expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
     });
     it('should get uri from https registry url', function () {
       const url = 'https://my_registry/';
-      expect(getRegistryURI(url)).toEqual('//my_registry/:');
+      expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
     });
   });
 
