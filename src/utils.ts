@@ -113,7 +113,7 @@ export function hasNodeModulesFolder(runCfg: PathContainer) {
 }
 
 // Extracts and formats the URI fragment required for npm auth configuration.
-// Expected URI format: "//registry.npmjs.org/:" or "//my-custom-registry.org/unique/path:"
+// Expected URI fragment format: "//registry.npmjs.org/:" or "//my-custom-registry.org/unique/path:"
 export function getRegistryURIFragment(url: string): string {
   let uri = url;
 
