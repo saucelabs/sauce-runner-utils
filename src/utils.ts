@@ -148,23 +148,23 @@ export function getNpmConfig(runnerConfig: NpmConfigContainer) {
         cfg.registry = r.url;
       }
 
-      // Configures npm auth fields by prefixing a scoped URI.
+      // Configures npm auth fields by prefixing a scoped URI Fragment.
       // For more info, check the npm doc https://docs.npmjs.com/cli/v10/configuring-npm/npmrc#auth-related-configuration
-      const uri = getRegistryURIFragment(r.url);
+      const uriFragment = getRegistryURIFragment(r.url);
       if (r.authToken) {
-        cfg[`${uri}_authToken`] = r.authToken;
+        cfg[`${uriFragment}_authToken`] = r.authToken;
       }
       if (r.auth) {
-        cfg[`${uri}_auth`] = r.auth;
+        cfg[`${uriFragment}_auth`] = r.auth;
       }
       if (r.username) {
-        cfg[`${uri}username`] = r.username;
+        cfg[`${uriFragment}username`] = r.username;
       }
       if (r.password) {
-        cfg[`${uri}_password`] = r.password;
+        cfg[`${uriFragment}_password`] = r.password;
       }
       if (r.email) {
-        cfg[`${uri}email`] = r.email;
+        cfg[`${uriFragment}email`] = r.email;
       }
     }
   }
