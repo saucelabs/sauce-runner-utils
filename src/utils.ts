@@ -112,14 +112,17 @@ export function hasNodeModulesFolder(runCfg: PathContainer) {
   return false;
 }
 
-function getRegistryAuthConfigField(url: string): string {
-  let authUrl = url;
-  if (authUrl.startsWith('http://')) {
-    authUrl = url.substring(5);
-  } else if (authUrl.startsWith('https://')) {
-    authUrl = url.substring(6);
+// Extracts and formats the URI fragment required for npm auth configuration.
+// Expected URI fragment format: "//registry.npmjs.org/:" or "//my-custom-registry.org/unique/path:"
+export function getRegistryURIFragment(url: string): string {
+  let uriFragment = url;
+
+  if (url.startsWith('http://')) {
+    uriFragment = url.substring(5);
+  } else if (url.startsWith('https://')) {
+    uriFragment = url.substring(6);
   }
-  return `${authUrl}:_authToken`;
+  return `${uriFragment}:`;
 }
 
 export function getNpmConfig(runnerConfig: NpmConfigContainer) {
@@ -136,18 +139,32 @@ export function getNpmConfig(runnerConfig: NpmConfigContainer) {
       runnerConfig.npm.legacyPeerDeps !== false,
   };
 
-  // As npm config accepts only key-value pairs, we do the translation
+  // As npm config accepts only key-value pairs, we do the translation.
   if (runnerConfig.npm.registries) {
-    for (const sr of runnerConfig.npm.registries) {
-      if (sr.scope) {
-        cfg[`${sr.scope}:registry`] = sr.url;
+    for (const r of runnerConfig.npm.registries) {
+      if (r.scope) {
+        cfg[`${r.scope}:registry`] = r.url;
       } else {
-        cfg.registry = sr.url;
+        cfg.registry = r.url;
       }
 
-      if (sr.authToken) {
-        const field = getRegistryAuthConfigField(sr.url);
-        cfg[field] = sr.authToken;
+      // Configures npm auth fields by prefixing a scoped URI Fragment.
+      // For more info, check the npm doc https://docs.npmjs.com/cli/v10/configuring-npm/npmrc#auth-related-configuration
+      const uriFragment = getRegistryURIFragment(r.url);
+      if (r.authToken) {
+        cfg[`${uriFragment}_authToken`] = r.authToken;
+      }
+      if (r.auth) {
+        cfg[`${uriFragment}_auth`] = r.auth;
+      }
+      if (r.username) {
+        cfg[`${uriFragment}username`] = r.username;
+      }
+      if (r.password) {
+        cfg[`${uriFragment}_password`] = r.password;
+      }
+      if (r.email) {
+        cfg[`${uriFragment}email`] = r.email;
       }
     }
   }

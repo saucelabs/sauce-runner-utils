@@ -18,6 +18,7 @@ import {
   getNpmConfig,
   installNpmDependencies,
   escapeXML,
+  getRegistryURIFragment,
 } from '../../../src/utils';
 import _ from 'lodash';
 import npm from '../../../src/npm';
@@ -338,6 +339,18 @@ describe('utils', function () {
       ).toMatchSnapshot();
     });
   });
+
+  describe('.getRegistryURIFragment', function () {
+    it('should get the uri fragment from http registry url', function () {
+      const url = 'http://my_registry/';
+      expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
+    });
+    it('should get the uri fragment from https registry url', function () {
+      const url = 'https://my_registry/';
+      expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
+    });
+  });
+
   describe('.renameScreenshot', function () {
     it('replace path separator (backslash for Windows, forward slash for mac/linux) with __', function () {
       const spy = jest.spyOn(fs, 'renameSync').mockImplementation(function () {
