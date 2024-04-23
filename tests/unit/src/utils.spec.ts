@@ -341,11 +341,11 @@ describe('utils', function () {
   });
 
   describe('.getRegistryURIFragment', function () {
-    it('should get uri from http registry url', function () {
+    it('should get the uri fragment from http registry url', function () {
       const url = 'http://my_registry/';
       expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
     });
-    it('should get uri from https registry url', function () {
+    it('should get the uri fragment from https registry url', function () {
       const url = 'https://my_registry/';
       expect(getRegistryURIFragment(url)).toEqual('//my_registry/:');
     });
