@@ -12,8 +12,8 @@ sauceRunnerUtils.prepareNpmEnv();
 
 ## Publishing
 
-This package is published through a GitHub workflow. In order to trigger a new release, do the following steps:
+This package is published through a GitHub workflow. To trigger a new release, follow these steps:
 
-* Open the [workflow page](https://github.com/saucelabs/sauce-runner-utils/actions/workflows/release.yml)
-* Click on the `Run workflow` drop down menu
-* Enter a release type (`patch`, `minor` or `major`) - please follow [semver](https://semver.org/) semantics
+1. Open the [workflow page](https://github.com/saucelabs/sauce-runner-utils/actions/workflows/release.yml).
+2. Click on the `Run workflow` drop-down menu.
+3. Enter a release type (`patch`, `minor`, or `major`) - please follow [semver](https://semver.org/) semantics.
