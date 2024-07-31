@@ -1,6 +1,6 @@
 {
   "name": "sauce-testrunner-utils",
-  "version": "3.0.2-beta.0",
+  "version": "3.0.3-beta.1.0",
   "description": "Sauce Labs test runner helper libary.",
   "author": "devx <dev@saucelabs.com>",
   "license": "MIT",
