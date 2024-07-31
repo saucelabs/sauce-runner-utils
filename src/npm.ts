@@ -39,7 +39,10 @@ export default class NPM {
 
     let p;
 
-    if (nodeCtx.nodePath == 'node' && nodeCtx.npmPath == 'npm') {
+    if (
+      nodeCtx.nodePath.startsWith('node') &&
+      nodeCtx.npmPath.startsWith('npm')
+    ) {
       p = spawn(nodeCtx.npmPath, ['install', ...pkgs]);
     } else {
       p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
@@ -71,7 +74,10 @@ export default class NPM {
 
       let p;
 
-      if (nodeCtx.nodePath == 'node' && nodeCtx.npmPath == 'npm') {
+      if (
+        nodeCtx.nodePath.startsWith('node') &&
+        nodeCtx.npmPath.startsWith('npm')
+      ) {
         p = spawn(nodeCtx.npmPath, ['config', 'set', ...args]);
       } else {
         p = spawn(nodeCtx.nodePath, [
@@ -96,7 +102,10 @@ export default class NPM {
   ): Promise<number | null> {
     return new Promise((resolve) => {
       let p;
-      if (nodeCtx.nodePath == 'node' && nodeCtx.npmPath == 'npm') {
+      if (
+        nodeCtx.nodePath.startsWith('node') &&
+        nodeCtx.npmPath.startsWith('npm')
+      ) {
         p = spawn(nodeCtx.npmPath, ['rebuild', ...args]);
       } else {
         p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
