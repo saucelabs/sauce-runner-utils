@@ -43,7 +43,7 @@ export default class NPM {
       nodeCtx.nodePath.startsWith('node') &&
       nodeCtx.npmPath.startsWith('npm')
     ) {
-      p = spawn(nodeCtx.npmPath, ['install', ...pkgs]);
+      p = spawn(nodeCtx.npmPath, ['install', ...pkgs], { shell: true });
     } else {
       p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
     }
@@ -78,7 +78,7 @@ export default class NPM {
         nodeCtx.nodePath.startsWith('node') &&
         nodeCtx.npmPath.startsWith('npm')
       ) {
-        p = spawn(nodeCtx.npmPath, ['config', 'set', ...args]);
+        p = spawn(nodeCtx.npmPath, ['config', 'set', ...args], { shell: true });
       } else {
         p = spawn(nodeCtx.nodePath, [
           nodeCtx.npmPath,
@@ -106,7 +106,7 @@ export default class NPM {
         nodeCtx.nodePath.startsWith('node') &&
         nodeCtx.npmPath.startsWith('npm')
       ) {
-        p = spawn(nodeCtx.npmPath, ['rebuild', ...args]);
+        p = spawn(nodeCtx.npmPath, ['rebuild', ...args], { shell: true });
       } else {
         p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
       }
