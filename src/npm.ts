@@ -72,13 +72,9 @@ export default class NPM {
       let p;
 
       if (nodeCtx.nodePath == 'node' && nodeCtx.npmPath == 'npm') {
-        p = spawn(nodeCtx.npmPath, [
-          'config',
-          'set',
-          ...args,
-        ]);
+        p = spawn(nodeCtx.npmPath, ['config', 'set', ...args]);
       } else {
-         p = spawn(nodeCtx.nodePath, [
+        p = spawn(nodeCtx.nodePath, [
           nodeCtx.npmPath,
           'config',
           'set',
