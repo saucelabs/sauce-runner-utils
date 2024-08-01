@@ -36,7 +36,14 @@ export default class NPM {
 
   public static async install(nodeCtx: NodeContext, pkgs: string[]) {
     await this.renamePackageJson();
-    const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
+
+    let p;
+
+    if (nodeCtx.useGlobals) {
+      p = spawn('npm', ['install', ...pkgs], { shell: true });
+    } else {
+      p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
+    }
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);
 
@@ -61,12 +68,19 @@ export default class NPM {
       const args = Object.keys(cfg)
         .filter((k) => cfg[k] !== null && cfg[k] !== undefined)
         .map((k) => `${k}=${cfg[k]}`);
-      const p = spawn(nodeCtx.nodePath, [
-        nodeCtx.npmPath,
-        'config',
-        'set',
-        ...args,
-      ]);
+
+      let p;
+
+      if (nodeCtx.useGlobals) {
+        p = spawn('npm', ['config', 'set', ...args], { shell: true });
+      } else {
+        p = spawn(nodeCtx.nodePath, [
+          nodeCtx.npmPath,
+          'config',
+          'set',
+          ...args,
+        ]);
+      }
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', () => {
@@ -81,7 +95,12 @@ export default class NPM {
     ...args: string[]
   ): Promise<number | null> {
     return new Promise((resolve) => {
-      const p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
+      let p;
+      if (nodeCtx.useGlobals) {
+        p = spawn('npm', ['rebuild', ...args], { shell: true });
+      } else {
+        p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
+      }
       p.stdout.pipe(process.stdout);
       p.stderr.pipe(process.stderr);
       p.on('exit', (exitCode) => {

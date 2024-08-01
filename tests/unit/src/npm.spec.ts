@@ -4,13 +4,18 @@ import { Stats } from 'fs';
 
 jest.mock('fs/promises');
 import fs from 'fs/promises';
+
 const fsMocked = fs as jest.Mocked<typeof fs>;
 
 import NPM from '../../../src/npm';
 import { NodeContext } from '../../../src/types';
 
 describe('NPM', function () {
-  const nodeCtx: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+  const nodeCtx: NodeContext = {
+    nodePath: 'node-bin',
+    npmPath: 'npm-bin',
+    useGlobals: false,
+  };
 
   beforeEach(function () {
     spawk.load();
