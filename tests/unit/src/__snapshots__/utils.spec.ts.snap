@@ -22,6 +22,7 @@ exports[`utils .prepareNpmEnv should be able to set strictSSL to false 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -43,6 +44,7 @@ exports[`utils .prepareNpmEnv should be able to set strictSSL to true 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -64,6 +66,7 @@ exports[`utils .prepareNpmEnv should call npm install 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   [
     "mypackage@1.2.3",
@@ -76,6 +79,7 @@ exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -96,6 +100,7 @@ exports[`utils .prepareNpmEnv should use default registry 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -117,6 +122,7 @@ exports[`utils .prepareNpmEnv should use env var for registry 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -138,6 +144,7 @@ exports[`utils .prepareNpmEnv should use rebuild node_modules 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   "--prefix",
   "/fake/runner",
@@ -149,6 +156,7 @@ exports[`utils .prepareNpmEnv should use rebuild node_modules when not package i
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   "--prefix",
   "/fake/runner",
@@ -160,6 +168,7 @@ exports[`utils .prepareNpmEnv should use true as the default value for strictSSL
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -181,6 +190,7 @@ exports[`utils .prepareNpmEnv should use true as the default value for strictSSL
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
@@ -202,6 +212,7 @@ exports[`utils .prepareNpmEnv should use user registry 1`] = `
   {
     "nodePath": "node-bin",
     "npmPath": "npm-bin",
+    "useGlobals": false,
   },
   {
     "audit": false,
