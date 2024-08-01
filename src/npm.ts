@@ -40,7 +40,7 @@ export default class NPM {
     let p;
 
     if (nodeCtx.useGlobals) {
-      p = spawn("npm", ['install', ...pkgs], { shell: true });
+      p = spawn('npm', ['install', ...pkgs], { shell: true });
     } else {
       p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
     }
@@ -72,7 +72,7 @@ export default class NPM {
       let p;
 
       if (nodeCtx.useGlobals) {
-        p = spawn("npm", ['config', 'set', ...args], { shell: true });
+        p = spawn('npm', ['config', 'set', ...args], { shell: true });
       } else {
         p = spawn(nodeCtx.nodePath, [
           nodeCtx.npmPath,
@@ -97,7 +97,7 @@ export default class NPM {
     return new Promise((resolve) => {
       let p;
       if (nodeCtx.useGlobals) {
-        p = spawn("npm", ['rebuild', ...args], { shell: true });
+        p = spawn('npm', ['rebuild', ...args], { shell: true });
       } else {
         p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'rebuild', ...args]);
       }
