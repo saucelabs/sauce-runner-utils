@@ -43,4 +43,8 @@ export interface SuitesContainer {
 export interface NodeContext {
   nodePath: string;
   npmPath: string;
+
+  // Ignore the specific binary paths provided and rely on the binaries
+  // from PATH.
+  useGlobals: boolean;
 }
