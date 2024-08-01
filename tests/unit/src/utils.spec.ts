@@ -31,7 +31,11 @@ import {
 } from '../../../src/types';
 
 describe('utils', function () {
-  const nodeCtx: NodeContext = { nodePath: 'node-bin', npmPath: 'npm-bin' };
+  const nodeCtx: NodeContext = {
+    nodePath: 'node-bin',
+    npmPath: 'npm-bin',
+    useGlobals: false,
+  };
 
   describe('.getNpmConfig', function () {
     const emptyConfig = {
