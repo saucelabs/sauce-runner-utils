@@ -46,5 +46,5 @@ export interface NodeContext {
 
   // Ignore the specific binary paths provided and rely on the binaries
   // from PATH.
-  useGlobals: boolean;
+  useGlobals?: boolean;
 }
