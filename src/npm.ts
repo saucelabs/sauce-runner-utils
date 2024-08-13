@@ -42,7 +42,12 @@ export default class NPM {
     if (nodeCtx.useGlobals) {
       p = spawn('npm', ['install', ...pkgs], { shell: true });
     } else {
-      p = spawn(nodeCtx.nodePath, [nodeCtx.npmPath, 'install', ...pkgs]);
+      p = spawn(nodeCtx.nodePath, [
+        nodeCtx.npmPath,
+        'install',
+        '--verbose',
+        ...pkgs,
+      ]);
     }
     p.stdout.pipe(process.stdout);
     p.stderr.pipe(process.stderr);

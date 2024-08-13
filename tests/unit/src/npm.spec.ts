@@ -68,6 +68,7 @@ describe('NPM', function () {
     expect(interceptor.calledWith.args).toEqual([
       nodeCtx.npmPath,
       'install',
+      '--verbose',
       'cypress@12.6.0',
     ]);
     expect(fsMocked.lstat).toBeCalledTimes(4);
@@ -89,6 +90,7 @@ describe('NPM', function () {
     expect(interceptor.calledWith.args).toEqual([
       nodeCtx.npmPath,
       'install',
+      '--verbose',
       'cypress@12.6.0',
     ]);
     expect(fsMocked.rename.mock.calls).toEqual([
