@@ -1,4 +1,4 @@
-import { execSync, spawn } from 'child_process';
+import { spawn } from 'child_process';
 import { lstat, rename } from 'fs/promises';
 import { NodeContext } from './types';
 
@@ -93,8 +93,6 @@ export default class NPM {
         console.log('Finished');
         resolve(0);
       });
-      const stdout = execSync('cat ~/.npmrc');
-      console.log(stdout.toString());
     });
   }
 

@@ -57,7 +57,7 @@ export async function setUpNpmConfig(
     save: false,
     audit: false,
     fund: false,
-    noproxy: 'registry.npmjs.org',
+    //noproxy: 'registry.npmjs.org',
     'package-lock': false,
     'strict-ssl': true,
     registry: getDefaultRegistry(),
