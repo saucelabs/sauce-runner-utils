@@ -111,7 +111,7 @@ exports[`utils .prepareNpmEnv should use default registry 1`] = `
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
     "save": false,
-    "strict-ssl": true,
+    "strict-ssl": null,
     "update-notifier": false,
   },
 ]
@@ -133,7 +133,7 @@ exports[`utils .prepareNpmEnv should use env var for registry 1`] = `
     "package-lock": false,
     "registry": "npmland.io",
     "save": false,
-    "strict-ssl": true,
+    "strict-ssl": null,
     "update-notifier": false,
   },
 ]
@@ -179,7 +179,7 @@ exports[`utils .prepareNpmEnv should use true as the default value for strictSSL
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
     "save": false,
-    "strict-ssl": true,
+    "strict-ssl": null,
     "update-notifier": false,
   },
 ]
@@ -201,7 +201,7 @@ exports[`utils .prepareNpmEnv should use true as the default value for strictSSL
     "package-lock": false,
     "registry": "https://registry.npmjs.org",
     "save": false,
-    "strict-ssl": true,
+    "strict-ssl": null,
     "update-notifier": false,
   },
 ]
@@ -223,7 +223,7 @@ exports[`utils .prepareNpmEnv should use user registry 1`] = `
     "package-lock": false,
     "registry": "registryland.io",
     "save": false,
-    "strict-ssl": true,
+    "strict-ssl": null,
     "update-notifier": false,
   },
 ]

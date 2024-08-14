@@ -131,7 +131,7 @@ export function getNpmConfig(runnerConfig: NpmConfigContainer) {
   }
   const cfg: { [key: string]: string | boolean | null } = {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
-    'strict-ssl': runnerConfig.npm.strictSSL !== false,
+    'strict-ssl': runnerConfig.npm.strictSSL ?? null,
     // Setting to false to avoid dealing with the generated file.
     'package-lock': runnerConfig.npm.packageLock === true,
     'legacy-peer-deps':
