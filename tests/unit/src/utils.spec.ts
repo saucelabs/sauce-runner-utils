@@ -56,9 +56,9 @@ describe('utils', function () {
       expect(npmConfig).toHaveProperty('package-lock');
     });
 
-    it('should set strictSSL to null if not set', function () {
+    it('should set strictSSL to undefined if not set', function () {
       const npmConfig = getNpmConfig(emptyConfig);
-      expect(npmConfig).toHaveProperty('strict-ssl', null);
+      expect(npmConfig).toHaveProperty('strict-ssl', undefined);
     });
 
     it('should set strictSSL from runner config', function () {

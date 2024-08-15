@@ -22,7 +22,7 @@ export type NpmConfig = {
    */
   registry?: string;
   registries?: Registry[];
-  strictSSL?: boolean | string | null;
+  strictSSL?: boolean | null;
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };
   legacyPeerDeps?: boolean | string | null;
