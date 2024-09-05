@@ -42,16 +42,32 @@ jobs:
       - name: Login to NPM
         run: npm set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
 
-      - name: Pre-Release
-        if: ${{ github.event.inputs.preReleaseFlavor != '' }}
-        run: npm run release:ci -- ${{ github.event.inputs.releaseType }} --preRelease=${{ github.event.inputs.preReleaseFlavor }}
+      - name: Generate (Pre-)Release Draft
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "${{ github.event.inputs.releaseType }}" ] && [ -z "${{ github.event.inputs.preReleaseFlavor }}" ];then
+            echo "No release type provided."
+            exit 1
+          fi
 
-      - name: Release
-        if: ${{ github.event.inputs.preReleaseFlavor == '' }}
-        run: npm run release:ci -- ${{ github.event.inputs.releaseType }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TYPE="${{ github.event.inputs.releaseType }}"
+
+          if [ -n "${{ github.event.inputs.preReleaseFlavor }}" ];then
+            LATEST_TAG=$(gh release list --limit 1 --json tagName --jq '.[] | .tagName')
+            # NOTE: Expected tag format is {VERSION}-{FLAVOR}.{FLAVOR_VERSION}
+            LATEST_FLAVOR=$(echo ${LATEST_TAG} | awk -F'-' '{ print $2 }' | awk -F'.' '{ print $1 }')
+
+            if [ "${LATEST_FLAVOR}" == "${{ github.event.inputs.preReleaseFlavor}}" ];then
+              # NOTE: If the inputted pre-release flavor matches the current pre-release flavor, we only
+              # want to increment the pre-release version instead of a full version bump.
+              PRE_RELEASE_ARGS="--preRelease"
+              RELEASE_TYPE=""
+            else
+              PRE_RELEASE_ARGS="--preRelease=${{ github.event.inputs.preReleaseFlavor }} --github.preRelease"
+            fi
+          fi
+
+          npm run release:ci -- ${RELEASE_TYPE} ${PRE_RELEASE_ARGS}
