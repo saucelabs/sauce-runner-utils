@@ -201,10 +201,6 @@ export async function prepareNpmEnv(
     npmMetrics.data.rebuild = { duration: endTime - startTime };
   }
 
-  if (Object.keys(packageList).length === 0) {
-    return npmMetrics;
-  }
-
   // Ensure version is a string value as NPM only accepts strings.
   const fixedPackageList = Object.fromEntries(
     Object.entries(packageList).map(([k, v]) => [k, String(v)]),
