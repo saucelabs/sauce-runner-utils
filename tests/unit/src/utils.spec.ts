@@ -53,7 +53,6 @@ describe('utils', function () {
 
       expect(npmConfig).toHaveProperty('strict-ssl');
       expect(npmConfig).toHaveProperty('registry');
-      expect(npmConfig).toHaveProperty('package-lock');
     });
 
     it('should set strictSSL to undefined if not set', function () {
@@ -74,31 +73,6 @@ describe('utils', function () {
       runnerConfig.npm.strictSSL = true;
       npmConfig = getNpmConfig(runnerConfig);
       expect(npmConfig).toHaveProperty('strict-ssl', true);
-    });
-
-    it('should set packageLock to false by default', function () {
-      const npmConfig = getNpmConfig(emptyConfig);
-
-      expect(npmConfig).toHaveProperty('package-lock', false);
-    });
-
-    it('should set packageLock from runner config', function () {
-      const runnerConfig: NpmConfigContainer = {
-        npm: {
-          packageLock: true,
-        },
-      };
-      let npmConfig = getNpmConfig(runnerConfig);
-      expect(npmConfig).toHaveProperty('package-lock', true);
-
-      runnerConfig.npm ||= {};
-      runnerConfig.npm.packageLock = false;
-      npmConfig = getNpmConfig(runnerConfig);
-      expect(npmConfig).toHaveProperty('package-lock', false);
-
-      runnerConfig.npm.packageLock = 'truthy?';
-      npmConfig = getNpmConfig(runnerConfig);
-      expect(npmConfig).toHaveProperty('package-lock', false);
     });
 
     it('should set the default npm registry by default', function () {
@@ -164,7 +138,6 @@ describe('utils', function () {
       const config = {
         registry: 'my.registry',
         'strict-ssl': true,
-        'package-lock': false,
       };
       const loadSpyOn = jest.spyOn(npm, 'configure');
       await setUpNpmConfig(nodeCtx, config);
