@@ -104,7 +104,7 @@ export function hasNodeModulesFolder(runCfg: PathContainer) {
     if (st && st.isDirectory()) {
       return true;
     }
-  } catch (e) {
+  } catch {
     /* empty */
   }
   return false;

@@ -263,17 +263,17 @@ describe('utils', function () {
     it('registries should be prioritary on registry', async function () {
       const cfg = _.cloneDeep(runCfg);
       cfg.npm ||= {};
-      (cfg.npm.registry = 'http://demo.bad-registry.com'),
-        (cfg.npm.registries = [
-          {
-            url: 'http://demo.registry.com',
-          },
-          {
-            url: 'http://demo.registry.com/npm-test/',
-            scope: '@saucelabs',
-            authToken: 'secretToken',
-          },
-        ]);
+      cfg.npm.registry = 'http://demo.bad-registry.com';
+      cfg.npm.registries = [
+        {
+          url: 'http://demo.registry.com',
+        },
+        {
+          url: 'http://demo.registry.com/npm-test/',
+          scope: '@saucelabs',
+          authToken: 'secretToken',
+        },
+      ];
       const loadSpyOn = jest.spyOn(npm, 'configure');
       loadSpyOn.mockClear();
       await prepareNpmEnv(cfg, nodeCtx);

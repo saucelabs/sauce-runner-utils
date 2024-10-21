@@ -11,7 +11,7 @@ export default ts.config(
     ignores: ['lib/**'],
   },
   {
-    files: ['**/*.js'],
+    files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
     },

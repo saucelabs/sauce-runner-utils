@@ -15,7 +15,7 @@ export default class NPM {
         // lstat is only used to check that the file exists.
         await lstat(name);
         await rename(name, replacement);
-      } catch (e) {
+      } catch {
         console.debug(`no ${name} to archive`);
       }
     }
@@ -28,7 +28,7 @@ export default class NPM {
         // lstat is only used to check that the file exists.
         await lstat(replacement);
         await rename(replacement, name);
-      } catch (e) {
+      } catch {
         console.debug(`no ${name} was archived`);
       }
     }
