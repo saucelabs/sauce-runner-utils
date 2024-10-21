@@ -58,7 +58,6 @@ export async function setUpNpmConfig(
     audit: false,
     fund: false,
     noproxy: 'registry.npmjs.org',
-    'package-lock': false,
     registry: getDefaultRegistry(),
     'update-notifier': false,
   };
@@ -131,8 +130,6 @@ export function getNpmConfig(runnerConfig: NpmConfigContainer) {
   const cfg: { [key: string]: string | boolean | null | undefined } = {
     registry: runnerConfig.npm.registry || getDefaultRegistry(),
     'strict-ssl': runnerConfig.npm.strictSSL,
-    // Setting to false to avoid dealing with the generated file.
-    'package-lock': runnerConfig.npm.packageLock === true,
     'legacy-peer-deps':
       runnerConfig.npm.legacyPeerDeps !== 'false' &&
       runnerConfig.npm.legacyPeerDeps !== false,
