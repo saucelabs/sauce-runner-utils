@@ -26,6 +26,7 @@ export type NpmConfig = {
   packageLock?: boolean | string | null;
   packages?: { [key: string]: string | number };
   legacyPeerDeps?: boolean | string | null;
+  usePackageLock?: boolean;
 };
 
 export interface PathContainer {

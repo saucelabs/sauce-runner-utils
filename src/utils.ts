@@ -208,6 +208,9 @@ export async function prepareNpmEnv(
   );
 
   // install npm packages
+  if (runCfg.npm?.usePackageLock !== true) {
+    await npm.renamePackageJson();
+  }
   startTime = new Date().getTime();
   await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = new Date().getTime();
