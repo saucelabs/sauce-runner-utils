@@ -35,8 +35,6 @@ export default class NPM {
   }
 
   public static async install(nodeCtx: NodeContext, pkgs: string[]) {
-    await this.renamePackageJson();
-
     let p;
 
     if (nodeCtx.useGlobals) {
