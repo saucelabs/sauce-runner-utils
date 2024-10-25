@@ -203,19 +203,29 @@ export async function prepareNpmEnv(
     Object.entries(packageList).map(([k, v]) => [k, String(v)]),
   );
 
-  // install npm packages
-  if (runCfg.npm?.usePackageLock !== true) {
-    if (Object.keys(fixedPackageList).length === 0) {
-      return npmMetrics;
-    }
+  // NOTE: If there are no packages to install, we generally skip the
+  // install step unless usePackageLock is enabled.
+  const skipInstall =
+    runCfg.npm?.usePackageLock !== true &&
+    Object.keys(fixedPackageList).length === 0;
 
+  if (skipInstall) {
+    return npmMetrics;
+  }
+
+  if (runCfg.npm?.usePackageLock !== true) {
     await npm.renamePackageJson();
   }
+
+  // install npm packages
   startTime = new Date().getTime();
   await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = new Date().getTime();
 
-  await npm.restorePackageJson();
+  if (runCfg.npm?.usePackageLock !== true) {
+    await npm.restorePackageJson();
+  }
+
   npmMetrics.data.install = { duration: endTime - startTime };
   return npmMetrics;
 }
