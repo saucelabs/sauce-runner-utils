@@ -198,10 +198,6 @@ export async function prepareNpmEnv(
     npmMetrics.data.rebuild = { duration: endTime - startTime };
   }
 
-  if (Object.keys(packageList).length === 0) {
-    return npmMetrics;
-  }
-
   // Ensure version is a string value as NPM only accepts strings.
   const fixedPackageList = Object.fromEntries(
     Object.entries(packageList).map(([k, v]) => [k, String(v)]),
@@ -209,11 +205,17 @@ export async function prepareNpmEnv(
 
   // install npm packages
   if (runCfg.npm?.usePackageLock !== true) {
+    if (Object.keys(fixedPackageList).length === 0) {
+      return npmMetrics;
+    }
+
     await npm.renamePackageJson();
   }
   startTime = new Date().getTime();
   await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = new Date().getTime();
+
+  await npm.restorePackageJson();
   npmMetrics.data.install = { duration: endTime - startTime };
   return npmMetrics;
 }

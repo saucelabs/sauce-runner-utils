@@ -53,8 +53,6 @@ export default class NPM {
 
     const exitCode = await exitPromise;
 
-    await this.restorePackageJson();
-
     return exitCode;
   }
 
