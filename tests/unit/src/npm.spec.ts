@@ -1,6 +1,5 @@
 import spawk from 'spawk';
 
-// import { Stats } from 'fs';
 
 jest.mock('fs/promises');
 import fs from 'fs/promises';
