@@ -35,8 +35,6 @@ export default class NPM {
   }
 
   public static async install(nodeCtx: NodeContext, pkgs: string[]) {
-    await this.renamePackageJson();
-
     let p;
 
     if (nodeCtx.useGlobals) {
@@ -54,8 +52,6 @@ export default class NPM {
     });
 
     const exitCode = await exitPromise;
-
-    await this.restorePackageJson();
 
     return exitCode;
   }

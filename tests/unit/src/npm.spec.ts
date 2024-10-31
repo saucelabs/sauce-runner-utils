@@ -1,7 +1,5 @@
 import spawk from 'spawk';
 
-import { Stats } from 'fs';
-
 jest.mock('fs/promises');
 import fs from 'fs/promises';
 
@@ -69,39 +67,6 @@ describe('NPM', function () {
       nodeCtx.npmPath,
       'install',
       'cypress@12.6.0',
-    ]);
-    expect(fsMocked.lstat).toBeCalledTimes(4);
-  });
-
-  it('.install moves package.json / package-lock.json', async function () {
-    const interceptor = spawk
-      .spawn(nodeCtx.nodePath)
-      .stdout('npm runned')
-      .exit(0);
-    fsMocked.lstat.mockRejectedValue('non-existing');
-
-    fsMocked.lstat.mockResolvedValue({} as Stats);
-    fsMocked.rename.mockResolvedValue();
-    fsMocked.writeFile.mockResolvedValue();
-
-    await NPM.install(nodeCtx, ['cypress@12.6.0']);
-    expect(interceptor.calledWith.command).toEqual(nodeCtx.nodePath);
-    expect(interceptor.calledWith.args).toEqual([
-      nodeCtx.npmPath,
-      'install',
-      'cypress@12.6.0',
-    ]);
-    expect(fsMocked.rename.mock.calls).toEqual([
-      ['package.json', `.package.json-${process.pid}`],
-      ['package-lock.json', `.package-lock.json-${process.pid}`],
-      [`.package.json-${process.pid}`, 'package.json'],
-      [`.package-lock.json-${process.pid}`, 'package-lock.json'],
-    ]);
-    expect(fsMocked.lstat.mock.calls).toEqual([
-      ['package.json'],
-      ['package-lock.json'],
-      [`.package.json-${process.pid}`],
-      [`.package-lock.json-${process.pid}`],
     ]);
   });
 });

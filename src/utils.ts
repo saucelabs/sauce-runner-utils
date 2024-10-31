@@ -198,19 +198,34 @@ export async function prepareNpmEnv(
     npmMetrics.data.rebuild = { duration: endTime - startTime };
   }
 
-  if (Object.keys(packageList).length === 0) {
-    return npmMetrics;
-  }
-
   // Ensure version is a string value as NPM only accepts strings.
   const fixedPackageList = Object.fromEntries(
     Object.entries(packageList).map(([k, v]) => [k, String(v)]),
   );
 
+  // NOTE: If there are no packages to install, we generally skip the
+  // install step unless usePackageLock is enabled.
+  const skipInstall =
+    runCfg.npm?.usePackageLock !== true &&
+    Object.keys(fixedPackageList).length === 0;
+
+  if (skipInstall) {
+    return npmMetrics;
+  }
+
+  if (runCfg.npm?.usePackageLock !== true) {
+    await npm.renamePackageJson();
+  }
+
   // install npm packages
   startTime = new Date().getTime();
   await installNpmDependencies(nodeCtx, fixedPackageList);
   endTime = new Date().getTime();
+
+  if (runCfg.npm?.usePackageLock !== true) {
+    await npm.restorePackageJson();
+  }
+
   npmMetrics.data.install = { duration: endTime - startTime };
   return npmMetrics;
 }
