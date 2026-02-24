@@ -72,6 +72,21 @@ exports[`utils .prepareNpmEnv should call npm install 1`] = `
 ]
 `;
 
+exports[`utils .prepareNpmEnv should call npm install with --prefix when projectPath is provided 1`] = `
+[
+  {
+    "nodePath": "node-bin",
+    "npmPath": "npm-bin",
+    "useGlobals": false,
+  },
+  [
+    "--prefix",
+    "/fake/project",
+    "mypackage@1.2.3",
+  ],
+]
+`;
+
 exports[`utils .prepareNpmEnv should set right registry for npm 1`] = `
 [
   {

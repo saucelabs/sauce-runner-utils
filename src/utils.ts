@@ -68,10 +68,15 @@ export async function setUpNpmConfig(
 export async function installNpmDependencies(
   nodeCtx: NodeContext,
   packageList: { [key: string]: string },
+  projectPath?: string,
 ) {
   const packages = Object.entries(packageList).map(([k, v]) => `${k}@${v}`);
   console.log(`\nInstalling packages: ${packages.join(' ')}`);
-  await npm.install(nodeCtx, packages);
+  if (projectPath) {
+    await npm.install(nodeCtx, ['--prefix', projectPath, ...packages]);
+  } else {
+    await npm.install(nodeCtx, packages);
+  }
 }
 
 export async function rebuildNpmDependencies(
@@ -218,8 +223,9 @@ export async function prepareNpmEnv(
   }
 
   // install npm packages
+  const projectPath = path.dirname(runCfg.path);
   startTime = new Date().getTime();
-  await installNpmDependencies(nodeCtx, fixedPackageList);
+  await installNpmDependencies(nodeCtx, fixedPackageList, projectPath);
   endTime = new Date().getTime();
 
   if (runCfg.npm?.usePackageLock !== true) {

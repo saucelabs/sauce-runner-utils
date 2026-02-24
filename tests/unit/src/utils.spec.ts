@@ -152,6 +152,17 @@ describe('utils', function () {
         installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1],
       ).toMatchSnapshot();
     });
+    it('should call npm install with --prefix when projectPath is provided', async function () {
+      const installSpyOn = jest.spyOn(npm, 'install');
+      await installNpmDependencies(
+        nodeCtx,
+        { mypackage: '1.2.3' },
+        '/fake/project',
+      );
+      expect(
+        installSpyOn.mock.calls[installSpyOn.mock.calls.length - 1],
+      ).toMatchSnapshot();
+    });
     it('should use env var for registry', async function () {
       process.env.SAUCE_NPM_CACHE = 'npmland.io';
       const loadSpyOn = jest.spyOn(npm, 'configure');
