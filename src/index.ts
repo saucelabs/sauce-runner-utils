@@ -3,6 +3,8 @@ import * as npm from './npm';
 import * as utils from './utils';
 import * as preExec from './preExec';
 import { zip } from './zip';
+import { runWithStdoutWatchdog } from './watchdog';
+import type { WatchdogOptions, WatchdogResult } from './watchdog';
 import {
   getAbsolutePath,
   shouldRecordVideo,
@@ -27,6 +29,7 @@ export {
   utils,
   preExec,
   zip,
+  runWithStdoutWatchdog,
 
   // Exporting all to keep compatibility with previous API
   getAbsolutePath,
@@ -46,3 +49,5 @@ export {
   renameAsset,
   escapeXML,
 };
+
+export type { WatchdogOptions, WatchdogResult };
